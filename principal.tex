@@ -1,8 +1,8 @@
 \documentclass[a4paper,12pt,openright,titlepage,oneside]{book}
 
-%\usepackage[english,brazil]{babel} 
-%Define regra de gramática para separar síbalas {babel}
-%e altera os títulos (como chapters, sections, references) para português
+% \usepackage[english,brazil]{babel}
+% Define regra de gramática para separar sílabas {babel}
+% e altera os títulos (como chapters, sections, references) para português
 \usepackage[brazil]{babel}
 
 % Define uso de caracteres acentuados no PDF gerado
@@ -13,34 +13,34 @@
 % Adição do pacote do template da UnB
 \usepackage{template-FT-UnB/ft2unb}
 
-\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png,.gif, .eps}
-\graphicspath{imagens} %define diretório de imagens
+\DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png,.gif,.eps}
+\graphicspath{imagens} % Define diretório de imagens
 
-%Arquivo com lista com hifenização correta de algumas palavras.
-%Defina novas palavras no arquivo a medida que verificar que a hifenização automática
-%etá errada para tais palavras.
+% Arquivo com lista de hifenização correta de algumas palavras.
+% Defina novas palavras no arquivo à medida que verificar que a hifenização automática
+% está errada para tais palavras.
 \input{hifenizacao}
 
 % ALTERE OS VALORES DENTRO DAS CHAVES DOS COMANDOS NESTA SEÇÃO PARA INCLUIR OS SEUS DADOS E DADOS DA SUA
 % DISSERTAÇÃO DE MESTRADO OU TESE DE DOUTORADO
 % -----------------------------------------------------------------------------------------------------
 
-%\onehalfspacing
+% \onehalfspacing
 \title{TÍTULO DA DISSERTAÇÃO/TESE}
 \author{NOME DO AUTOR}
-\date{2011-03-16} %data da defesa
+\date{2011-03-16} % Data da defesa
 
-\grau{Mestre} %Mestre ou Doutor
-\area{Transportes} %Nome do curso
-\siglaarea{ENC} %Sigla do departamento (ENC = Engenharia Civil e Ambiental)
-\tipodemonografia{Dissertação} %Dissertação ou Tese
-\programa{Mestrado} %Mestrado ou Doutorado
-\autorendereco{ENDEREÇO DO AUTOR.} %Endereço do autor da dissertação/tese
-\totalpgs{147} %total de páginas atualmente na sua dissertação
-\dia{16} %dia da defesa
-\mes{Junho} %mês da defesa
-\ano{2011} %ano da defesa
-\numpublicacao{T.DM-XXX/AAAA} %número da publicação (após a defesa, tal número deve ser obtido na secretaria)
+\grau{Mestre} % Mestre ou Doutor
+\area{Transportes} % Nome do curso
+\siglaarea{ENC} % Sigla do departamento (ENC = Engenharia Civil e Ambiental)
+\tipodemonografia{Dissertação} % Dissertação ou Tese
+\programa{Mestrado} % Mestrado ou Doutorado
+\autorendereco{ENDEREÇO DO AUTOR.} % Endereço do autor da dissertação/tese
+\totalpgs{147} % Total de páginas atualmente na sua dissertação
+\dia{16} % Dia da defesa
+\mes{Junho} % Mês da defesa
+\ano{2011} % Ano da defesa
+\numpublicacao{T.DM-XXX/AAAA} % Número da publicação (após a defesa, tal número deve ser obtido na secretaria)
 
 \titulolinhai{TÍTULO DA DISSERTAÇÃO/TESE}
 \titulolinhaii{}
@@ -48,9 +48,9 @@
 \titulolinhaiv{}
 
 \autori{NOME DO AUTOR}
-%Caso seu nome não caiba em uma única linha, divida ele nos comandos abaixo
-%\autorii{} 
-%\autoriii{}
+% Caso seu nome não caiba em uma única linha, divida-o nos comandos abaixo
+% \autorii{}
+% \autoriii{}
 
 \membrodabancai{Prof. Dr. NOME DO ORIENTADOR, Titulação (Instituição)}
 \membrodabancaifuncao{Orientador}
@@ -64,10 +64,10 @@
 \membrodabancavfuncao{}
 % -----------------------------------------------------------------------------------------------------
 
-%line-numbers, inputencoding=utf8/latin1
-%Define o estilo para listagens de código fonte
+% line-numbers, inputencoding=utf8/latin1
+% Define o estilo para listagens de código fonte
 \lstset{
-  numbers=left, %numeração de linhas à esquerda
+  numbers=left, % Numeração de linhas à esquerda
   stepnumber=1,
   firstnumber=1,
   numberstyle=\tiny,
@@ -76,91 +76,89 @@
   basicstyle=\footnotesize,
   stringstyle=\ttfamily,
   showstringspaces=false,
-  %language=Java, %deve ser definida na inclusão de cada trecho de código, pois podem existir linguagens diferentes em exemplos diferentes
+  % language=Java, % Deve ser definida na inclusão de cada trecho de código, pois podem existir linguagens diferentes em exemplos diferentes
   breaklines=true,
   breakautoindent=true,
-  %estilos de comentário de uma e várias linhas
+  % Estilos de comentário de uma e várias linhas
   morecomment=[l]{--}, morecomment=[s]{/*}{*/}, morecomment=[s]{<!--}{-->}, morecomment=[s]{--[[}{--]]}
 }
 
 % Adição de metadados no PDF (propriedades do documento PDF)
 \makeatletter
-	 \hypersetup{
-		 pdftoolbar=true,        % show Acrobat’s toolbar?
-		 pdfmenubar=true,        % show Acrobat’s menu?
-		 pdffitwindow=false,     % window fit to page when opened
-		 pdfstartview={FitH},    % fits the width of the page to the window	 
-		 pdftitle={\@title},
-		 pdfauthor={\@author},
-		 pdfsubject={\tipodemonografianome \ de\ \programastr \ em\ \areastr},   % subject of the document
-		 pdfcreationdate={\pdfdate}
-	 }
+\hypersetup{
+  pdftoolbar=true,        % Show Acrobat’s toolbar?
+  pdfmenubar=true,        % Show Acrobat’s menu?
+  pdffitwindow=false,     % Window fit to page when opened
+  pdfstartview={FitH},    % Fits the width of the page to the window
+  pdftitle={\@title},
+  pdfauthor={\@author},
+  pdfsubject={\tipodemonografianome\ de\ \programastr\ em\ \areastr}, % Subject of the document
+  pdfcreationdate={\pdfdate}
+}
 \makeatother
 
-
 \makeindex
-\makenomenclature %Necessário para gerar lista de siglas
-
+\makenomenclature % Necessário para gerar lista de siglas
 
 \begin{document}
-	
-	% Ordem dos elementos pré-textuais conforme PPGT:
-	% DEDICATÓRIA (opcional)
-	\include{capitulos/agradecimentos}
-	% RESUMO
-	\include{capitulos/resumo}
-	% ABSTRACT
-  	\include{capitulos/abstract}
-	
-	% ÍNDICE (sumário)
-	\pdfbookmark[0]{Sumário}{sumario}
-	\sumario
-	
-	% LISTA DE TABELAS
-	\pdfbookmark[0]{Lista de Tabelas}{listatabelas}
-	\listadetabelas
-	
-	% LISTA DE FIGURAS
-	\pdfbookmark[0]{Lista de Figuras}{listafiguras}
-	\listadefiguras
 
-	% LISTA DE QUADROS (PPGT)
-	\pdfbookmark[0]{Lista de Quadros}{listaquadros}
-	\listadequadros
-	
-	% LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES
-	\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES} %Define um caption à lista de siglas
-	\pdfbookmark[0]{Lista de Termos e Siglas}{nomenclatura}
-	\printnomenclature[2.5cm] 
-	
-	\mainmatter %Inicia a numeracao normal cardinal
-	\setcounter{page}{1} \pagenumbering{arabic}
-	% Numeração de páginas no rodapé, alinhada à direita (PPGT 2023)
-	\pagestyle{fancy}
-	\fancyhf{}
-	\renewcommand{\headrulewidth}{0pt}
-	\fancyfoot[R]{\thepage}
-	\fancypagestyle{plain}{%
-		\fancyhf{}%
-		\renewcommand{\headrulewidth}{0pt}%
-		\fancyfoot[R]{\thepage}%
-	}
+  % Ordem dos elementos pré-textuais conforme PPGT:
+  % DEDICATÓRIA (opcional)
+  \include{capitulos/agradecimentos}
+  % RESUMO
+  \include{capitulos/resumo}
+  % ABSTRACT
+  \include{capitulos/abstract}
 
-	\include{capitulos/introducao}
-	\include{capitulos/capitulo1}
-	\include{capitulos/capitulo2}
-	\include{capitulos/capitulo3}
-	\include{capitulos/conclusao}
+  % ÍNDICE (sumário)
+  \pdfbookmark[0]{Sumário}{sumario}
+  \sumario
 
-	%\bibliographystyle{bibliografia/abnt-num} % estilo bibliográfico ABNT numérico
-	\bibliographystyle{bibliografia/abnt-alf} % estilo bibliográfico ABNT alfabético (PPGT)
-	%\bibliographystyle{bibliografia/sbc}  % estilo bibliográfico da Sociedade Brasileira de Computação (SBC)
+  % LISTA DE TABELAS
+  \pdfbookmark[0]{Lista de Tabelas}{listatabelas}
+  \listadetabelas
 
-	%\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS} %Define o Caption da seção de bibliografia
-	%\addcontentsline{toc}{chapter}{REFERÊNCIAS BIBLIOGRÁFICAS}
-	
-	%não pode ter espaço entre os nomes dos arquivos bib
-	\bibliography{bibliografia/referencias}
+  % LISTA DE FIGURAS
+  \pdfbookmark[0]{Lista de Figuras}{listafiguras}
+  \listadefiguras
 
-	\include{capitulos/apendice}
+  % LISTA DE QUADROS (PPGT)
+  \pdfbookmark[0]{Lista de Quadros}{listaquadros}
+  \listadequadros
+
+  % LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES
+  \renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES} % Define um caption à lista de siglas
+  \pdfbookmark[0]{Lista de Termos e Siglas}{nomenclatura}
+  \printnomenclature[2.5cm]
+
+  \mainmatter % Inicia a numeração normal cardinal
+  \setcounter{page}{1} \pagenumbering{arabic}
+  % Numeração de páginas no rodapé, alinhada à direita (PPGT 2023)
+  \pagestyle{fancy}
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[R]{\thepage}
+  \fancypagestyle{plain}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyfoot[R]{\thepage}%
+  }
+
+  \include{capitulos/introducao}
+  \include{capitulos/capitulo1}
+  \include{capitulos/capitulo2}
+  \include{capitulos/capitulo3}
+  \include{capitulos/conclusao}
+
+  % \bibliographystyle{bibliografia/abnt-num} % Estilo bibliográfico ABNT numérico
+  \bibliographystyle{bibliografia/abnt-alf} % Estilo bibliográfico ABNT alfabético (PPGT)
+  % \bibliographystyle{bibliografia/sbc} % Estilo bibliográfico da Sociedade Brasileira de Computação (SBC)
+
+  % \renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS} % Define o caption da seção de bibliografia
+  % \addcontentsline{toc}{chapter}{REFERÊNCIAS BIBLIOGRÁFICAS}
+
+  % Não pode ter espaço entre os nomes dos arquivos bib
+  \bibliography{bibliografia/referencias}
+
+  \include{capitulos/apendice}
 \end{document}
