@@ -621,11 +621,27 @@
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
                                      {\normalfont\normalsize\bfseries}}
+
+% Formatação do 3º nível de subitem conforme PPGT:
+% Formato (a), (b), (c)... em vez de 1.1.1, sem negrito e não numerado no sumário
+\renewcommand{\thesubsubsection}{(\alph{subsubsection})}
+\renewcommand{\p@subsubsection}{}
+
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\bfseries}}
-\makeatother
+                                     {\normalfont\normalsize}}
+
+% Espaçamento do número do subitem: espaço simples para (a), e \quad para seções/subseções
+\def\@seccntformat#1{%
+  \csname the#1\endcsname
+  \csname #1@cntsep\endcsname
+}
+\def\section@cntsep{\quad}
+\def\subsection@cntsep{\quad}
+\def\subsubsection@cntsep{\space}
+\def\paragraph@cntsep{\quad}
+\def\subparagraph@cntsep{\quad}
 
 \AfterEndPreamble{%
 	\sloppy %formata o texto de forma justificado
