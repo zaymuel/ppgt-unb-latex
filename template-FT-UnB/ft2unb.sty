@@ -23,11 +23,10 @@
 % Define as margens do documento (PPGT 2023: todas as margens com 25 mm)
 \usepackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
 
-
-%Acesso aos dados do documento como autor, título e data por meio dos comandos \MyAuthor, \MyTitle e \MyDate
-%Download do pacote em http://tug.ctan.org/tex-archive/macros/latex/contrib/authoraftertitle/
-%O mesmo foi extraído na pasta da dissertação
-\usepackage{authoraftertitle}
+% Acesso aos dados do documento (\@title, \@author, \@date)
+\def\MyTitle{\begingroup\def\\{ }\@title\endgroup}
+\def\MyAuthor{\begingroup\def\\{, }\@author\endgroup}
+\def\MyDate{\@date}
 
 \usepackage{listings,lipsum}
 %\usepackage{listingsutf8} 
@@ -80,29 +79,57 @@
 %% Now actually use the newly defined style.
 \urlstyle{leostyle}
 
-
-%%% Fonte
-%\usepackage{times}
-%\renewcommand{\sfdefault}{phv}
-%\renewcommand{\rmdefault}{ptm}
-%\renewcommand{\ttdefault}{pcr}
-%\normalfont\selectfont
-
-%%% Dados do trabalho
+% -------------------------------------------------------------------------
+% Dados do trabalho
+% -------------------------------------------------------------------------
 \newcommand{\totalpgs}[1]{\def\totalpgsstr{#1}}
 \newcommand{\numpublicacao}[1]{\def\numpublicacaostr{#1}}
 \newcommand{\siglapublicacao}[1]{\def\siglapublicacaostr{#1}}
 \newcommand{\autorendereco}[1]{\def\autorenderecostr{#1}}
+
+% Data da defesa: \date{YYYY-MM-DD} extrai automaticamente dia, mês e ano por extenso.
+% Valores padrão caso \date não seja chamado
+\def\dianum{\the\day}
+\def\mesnum{\the\month}
+\def\anonome{\the\year}
+\def\mesnome{%
+  \ifcase\mesnum\or
+    Janeiro\or Fevereiro\or Março\or Abril\or Maio\or Junho\or
+    Julho\or Agosto\or Setembro\or Outubro\or Novembro\or Dezembro\fi
+}
+
+\def\ft@parse@iso@date#1-#2-#3\@nil{%
+  \def\anonome{#1}%
+  \def\mesnum{\number#2}%
+  \def\dianum{\number#3}%
+}
+
+\renewcommand{\date}[1]{%
+  \gdef\@date{#1}%
+  % Verifica se está no formato ISO (YYYY-MM-DD)
+  \in@{-}{#1}%
+  \ifin@
+    \ft@parse@iso@date#1\@nil
+  \fi
+}
+
+% Comandos legados para sobrescrever dia, mês ou ano caso desejado
 \newcommand{\dia}[1]{\def\dianum{#1}}
 \newcommand{\mes}[1]{\def\mesnome{#1}}
 \newcommand{\ano}[1]{\def\anonome{#1}}
-\newcommand{\autori}[1]{\def\autorinome{#1}}
-\newcommand{\autorii}[1]{\def\autoriinome{#1}}
-\newcommand{\autoriii}[1]{\def\autoriiinome{#1}}
-\newcommand{\titulolinhai}[1]{\def\titulolinhainome{#1}}
-\newcommand{\titulolinhaii}[1]{\def\titulolinhaiinome{#1}}
-\newcommand{\titulolinhaiii}[1]{\def\titulolinhaiiinome{#1}}
-\newcommand{\titulolinhaiv}[1]{\def\titulolinhaivnome{#1}}
+
+% Membros da banca (com valores padrão vazios)
+\def\membrodabancainome{}
+\def\membrodabancaifuncaonome{Orientador}
+\def\membrodabancaiinome{}
+\def\membrodabancaiifuncaonome{Examinador interno}
+\def\membrodabancaiiinome{}
+\def\membrodabancaiiifuncaonome{Examinador externo}
+\def\membrodabancaivnome{}
+\def\membrodabancaivfuncaonome{}
+\def\membrodabancavnome{}
+\def\membrodabancavfuncaonome{}
+
 \newcommand{\membrodabancai}[1]{\def\membrodabancainome{#1}}
 \newcommand{\membrodabancaii}[1]{\def\membrodabancaiinome{#1}}
 \newcommand{\membrodabancaiii}[1]{\def\membrodabancaiiinome{#1}}
@@ -113,158 +140,143 @@
 \newcommand{\membrodabancaiiifuncao}[1]{\def\membrodabancaiiifuncaonome{#1}}
 \newcommand{\membrodabancaivfuncao}[1]{\def\membrodabancaivfuncaonome{#1}}
 \newcommand{\membrodabancavfuncao}[1]{\def\membrodabancavfuncaonome{#1}}
+
+% Comandos semânticos adicionais para membros da banca
+\newcommand{\orientador}[2][Orientador]{\membrodabancai{#2}\membrodabancaifuncao{#1}}
+\newcommand{\examinadorinterno}[2][Examinador interno]{\membrodabancaii{#2}\membrodabancaiifuncao{#1}}
+\newcommand{\examinadorexterno}[2][Examinador externo]{\membrodabancaiii{#2}\membrodabancaiiifuncao{#1}}
+
 \newcommand{\tipodemonografia}[1]{\def\tipodemonografianome{#1}}
 \newcommand{\grau}[1]{\def\graunome{#1}}
 \newcommand{\area}[1]{\def\areastr{#1}}
 \newcommand{\siglaarea}[1]{\def\siglaareastr{#1}}
 \newcommand{\programa}[1]{\def\programastr{#1}}
 
-%%% Capa:
+% Compatibilidade com comandos legados (\titulolinhai... e \autori...)
+\newcommand{\titulolinhai}[1]{\title{#1}}
+\newcommand{\titulolinhaii}[1]{\def\temp@t{#1}\ifx\temp@t\@empty\else\g@addto@macro\@title{\\#1}\fi}
+\newcommand{\titulolinhaiii}[1]{\def\temp@t{#1}\ifx\temp@t\@empty\else\g@addto@macro\@title{\\#1}\fi}
+\newcommand{\titulolinhaiv}[1]{\def\temp@t{#1}\ifx\temp@t\@empty\else\g@addto@macro\@title{\\#1}\fi}
+
+\newcommand{\autori}[1]{\author{#1}}
+\newcommand{\autorii}[1]{\def\temp@a{#1}\ifx\temp@a\@empty\else\g@addto@macro\@author{\\#1}\fi}
+\newcommand{\autoriii}[1]{\def\temp@a{#1}\ifx\temp@a\@empty\else\g@addto@macro\@author{\\#1}\fi}
+
+\def\autorinome{\@author}
+\def\autoriinome{}
+\def\autoriiinome{}
+
+% Desativa quebras de linha em strings PDF (evita avisos no hyperref)
+\pdfstringdefDisableCommands{%
+  \def\\{ }%
+}
+
+% -------------------------------------------------------------------------
+% Capa
+% -------------------------------------------------------------------------
 \newcommand{\capaprincipal}{
 \begin{titlepage}
 \AddToShipoutPicture*{\BackgroundPicture{template-FT-UnB/logotipos/capa_fundo.png}{21cm}}
 \begin{center}
-\vspace*{8.5cm}
+\vspace*{8.2cm}
 
-\begin{tabular}{>{\PreserveBacklash}c}
-{\Large\bf \ifthenelse{\equal{\titulolinhainome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhainome}}\\
-{\Large\bf \ifthenelse{\equal{\titulolinhaiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiinome}}\\
-{\Large\bf \ifthenelse{\equal{\titulolinhaiiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiiinome}}\\ 
-{\Large\bf \ifthenelse{\equal{\titulolinhaivnome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaivnome}}
-\end{tabular}\\[0.5cm]
+{\Large\bfseries\MakeUppercase{\@title}\par}
+\vspace{0.8cm}
 
-\begin{tabular}{>{\PreserveBacklash}c}
-  {\large\bf\MakeUppercase\autorinome\vspace*{2mm}}
-\end{tabular}\\[0.5cm]
-\ifthenelse{\equal{\autoriinome}{}}{\vspace*{6mm}}{
-	\begin{tabular}{>{\PreserveBacklash}c}
-	{\large\bf\MakeUppercase\autoriinome\vspace*{2mm}}
-	\end{tabular}\\}
-\ifthenelse{\equal{\autoriiinome}{}}{\vspace*{6mm}}{
-	\begin{tabular}{>{\PreserveBacklash}c}
-	{\large\bf\MakeUppercase\autoriiinome\vspace*{2mm}}
-	\end{tabular}\\}
-	
-{\bf\MakeUppercase{\tipodemonografianome \space de \space \programastr \space em \areastr}}\\
+{\large\bfseries\MakeUppercase{\@author}\par}
+\vspace{0.8cm}
 
-\vspace{4.8cm}
-{\Large\bf FACULDADE DE TECNOLOGIA}\\[1cm]
-{\Large\bf UNIVERSIDADE DE BRASÍLIA}
+{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \programastr\ em\ \areastr}\par}
+
+\vfill
+{\Large\bfseries FACULDADE DE TECNOLOGIA}\\[1cm]
+{\Large\bfseries UNIVERSIDADE DE BRASÍLIA}
 \end{center}
 \end{titlepage}
 }
 
-%%% Contra Capa:
+% -------------------------------------------------------------------------
+% Contracapa
+% -------------------------------------------------------------------------
 \newcommand{\contracapa}{
 \begin{titlepage}
 \begin{center}
-{\large\bf UNIVERSIDADE DE BRASÍLIA}\\[0.2cm]
-{\large\bf FACULDADE DE TECNOLOGIA}\\[0.2cm]
-{\large\bf DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[0.2cm]
+{\large\bfseries UNIVERSIDADE DE BRASÍLIA}\\[0.2cm]
+{\large\bfseries FACULDADE DE TECNOLOGIA}\\[0.2cm]
+{\large\bfseries DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[0.2cm]
 
-\vspace*{6cm}
+\vspace*{3.0cm}
 
-\begin{tabular}{>{\PreserveBacklash}c}
-{\Large\bf \ifthenelse{\equal{\titulolinhainome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhainome}}\\
-{\Large\bf \ifthenelse{\equal{\titulolinhaiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiinome}}\\
-{\Large\bf \ifthenelse{\equal{\titulolinhaiiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiiinome}}\\ 
-{\Large\bf \ifthenelse{\equal{\titulolinhaivnome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaivnome}}
-\end{tabular}\\
+{\Large\bfseries\MakeUppercase{\@title}\par}
 
-\vspace{0.8cm}
-\begin{tabular}{>{\PreserveBacklash}c}
-  {\Large\bf\MakeUppercase\autorinome\vspace*{2mm}}
-\end{tabular}\\
-\ifthenelse{\equal{\autoriinome}{}}{\vspace*{6mm}}{
-	\begin{tabular}{>{\PreserveBacklash}c}
-	{\Large\bf\MakeUppercase\autoriinome\vspace*{2mm}}
-	\end{tabular}\\}
-\ifthenelse{\equal{\autoriiinome}{}}{\vspace*{6mm}}{
-	\begin{tabular}{>{\PreserveBacklash}c}
-	{\Large\bf\MakeUppercase\autoriiinome\vspace*{2mm}}
-	\end{tabular}\\}
+\vspace{1.0cm}
 
-\vspace*{1cm}
+{\large\bfseries\MakeUppercase{\@author}\par}
 
-{\large\bf ORIENTADOR: \space \MakeUppercase{\membrodabancainome}}\\[0.8cm]
+\vspace{1.5cm}
 
-{\large\bf\MakeUppercase{\tipodemonografianome de \programastr em \areastr}}
+{\large\bfseries ORIENTADOR:\space\MakeUppercase{\membrodabancainome}}\\[0.8cm]
+
+{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \programastr\ em\ \areastr}}
 \vspace{\fill}
 
-{\large\bf\MakeUppercase{PUBLICAÇÃO: \numpublicacaostr}}\\[0.2cm]
-{\large\bf\MakeUppercase{BRASÍLIA-DF: \mesnome/\anonome.}}\\
+{\large\bfseries\MakeUppercase{PUBLICAÇÃO:\space\numpublicacaostr}}\\[0.2cm]
+{\large\bfseries\MakeUppercase{BRASÍLIA-DF:\space\mesnome/\anonome.}}\\
+\vspace*{0.5cm}
 \end{center}
 \end{titlepage}
 }
 
-
-%%% Lista assinaturas
+% -------------------------------------------------------------------------
+% Folha de assinaturas
+% -------------------------------------------------------------------------
 \newcommand{\capaassinaturas}{
 \begin{titlepage}
 \renewcommand{\baselinestretch}{1.15}\selectfont
   \begin{center}
-    {\large \bf UNIVERSIDADE DE BRASÍLIA}\\
-    {\large \bf FACULDADE DE TECNOLOGIA}\\
-    {\large \bf DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[0.8cm]
+    {\large\bfseries UNIVERSIDADE DE BRASÍLIA}\\
+    {\large\bfseries FACULDADE DE TECNOLOGIA}\\
+    {\large\bfseries DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[1.5cm]
 
-    % Título (até 4 linhas, conforme variáveis)
-    \begin{tabular}{>{\PreserveBacklash}c}
-    {\Large \MakeUppercase\titulolinhainome}\\
-    {\Large \MakeUppercase\titulolinhaiinome}\\
-    {\Large \MakeUppercase\titulolinhaiiinome}\\
-    {\Large \MakeUppercase\titulolinhaivnome}
-    \end{tabular}\\[0.8cm]
+    {\large\bfseries\MakeUppercase{\@title}\par}\vspace{0.8cm}
 
-    {\large\bf\MakeUppercase\autorinome}\\[0.8cm]
+    {\large\bfseries\MakeUppercase{\@author}\par}
   \end{center}
 
   % Texto central do tipo de trabalho
-  \begin{center}
-  \begin{minipage}{13cm}
-  \small
-  \centering
-  \MakeUppercase{\tipodemonografianome\ DE \programastr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM TRANSPORTES DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM TRANSPORTES.}
-  \end{minipage}
-  \end{center}
+  {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \programastr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM TRANSPORTES DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM TRANSPORTES.}}
 
   \vspace{0.8cm}
 
-  \begin{flushleft}
-  {\large APROVADA POR:}
-  \end{flushleft}
+  {\bfseries \large APROVADA POR:}
 
   \vspace{0.6cm}
 
-  \begin{center}
-  \begin{tabular}{c}
+  \textbf{\begin{tabular}{l}
   \ifthenelse{\equal{\membrodabancainome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancainome \\
-      (\membrodabancaifuncaonome) \\[0.6cm]}%
+      (\membrodabancaifuncaonome) \\[1cm]}%
   \ifthenelse{\equal{\membrodabancaiinome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaiinome \\
-      (\membrodabancaiifuncaonome) \\[0.6cm]}%
+      (\membrodabancaiifuncaonome) \\[1cm]}%
   \ifthenelse{\equal{\membrodabancaiiinome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaiiinome \\
-      (\membrodabancaiiifuncaonome) \\[0.6cm]}%
+      (\membrodabancaiiifuncaonome) \\[1cm]}%
   \ifthenelse{\equal{\membrodabancaivnome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaivnome \\
-      (\membrodabancaivfuncaonome) \\[0.6cm]}%
+      (\membrodabancaivfuncaonome) \\[1cm]}%
   \ifthenelse{\equal{\membrodabancavnome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancavnome \\
       (\membrodabancavfuncaonome)}%
   \end{tabular}
-  \end{center}
+  }
 
-  \vspace{0.8cm}
-
-  \begin{flushleft}
-  {\normalsize\bf\MakeUppercase{BRASÍLIA/DF, \dianum\ DE \mesnome\ DE \anonome.}}
-  \end{flushleft}
+  {\bfseries\MakeUppercase{BRASÍLIA/DF, \dianum\ DE\ \mesnome\ DE\ \anonome.}}
 \end{titlepage}
 }
 
