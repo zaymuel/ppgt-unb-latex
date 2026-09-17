@@ -196,10 +196,13 @@
 }
 
 % -------------------------------------------------------------------------
-% Contracapa
+% Contracapa (Folha de Rosto: página i dos preliminares, número não exibido)
 % -------------------------------------------------------------------------
 \newcommand{\contracapa}{
-\begin{titlepage}
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\thispagestyle{empty}
 \begin{center}
 {\large\bfseries UNIVERSIDADE DE BRASÍLIA}\\[0.2cm]
 {\large\bfseries FACULDADE DE TECNOLOGIA}\\[0.2cm]
@@ -224,14 +227,16 @@
 {\large\bfseries\MakeUppercase{BRASÍLIA-DF:\space\mesnome/\anonome.}}\\
 \vspace*{0.5cm}
 \end{center}
-\end{titlepage}
+\clearpage
 }
 
 % -------------------------------------------------------------------------
-% Folha de assinaturas
+% Folha de assinaturas (Folha de Aprovação: página ii, número visível)
 % -------------------------------------------------------------------------
 \newcommand{\capaassinaturas}{
-\begin{titlepage}
+\clearpage
+\pagestyle{fancy}
+\thispagestyle{fancy}
 \renewcommand{\baselinestretch}{1.15}\selectfont
   \begin{center}
     {\large\bfseries UNIVERSIDADE DE BRASÍLIA}\\
@@ -277,11 +282,12 @@
   }
 
   {\bfseries\MakeUppercase{BRASÍLIA/DF, \dianum\ DE\ \mesnome\ DE\ \anonome.}}
-\end{titlepage}
+\clearpage
 }
 
-
-%%%Ficha catalográfica:
+% -------------------------------------------------------------------------
+% Ficha catalográfica (página iii, número visível)
+% -------------------------------------------------------------------------
 \newcommand{\fichacatalografica}{
 \begin{titlepage}
 \renewcommand{\baselinestretch}{1.15}\selectfont
