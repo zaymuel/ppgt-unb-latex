@@ -165,32 +165,34 @@
 \vspace*{6cm}
 
 \begin{tabular}{>{\PreserveBacklash}c}
-{\Large \ifthenelse{\equal{\titulolinhainome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhainome}}\\
-{\Large \ifthenelse{\equal{\titulolinhaiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiinome}}\\
-{\Large \ifthenelse{\equal{\titulolinhaiiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiiinome}}\\ 
-{\Large \ifthenelse{\equal{\titulolinhaivnome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaivnome}}
+{\Large\bf \ifthenelse{\equal{\titulolinhainome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhainome}}\\
+{\Large\bf \ifthenelse{\equal{\titulolinhaiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiinome}}\\
+{\Large\bf \ifthenelse{\equal{\titulolinhaiiinome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaiiinome}}\\ 
+{\Large\bf \ifthenelse{\equal{\titulolinhaivnome}{}}{\vspace*{7pt}}{\MakeUppercase\titulolinhaivnome}}
 \end{tabular}\\
 
 \vspace{0.8cm}
 \begin{tabular}{>{\PreserveBacklash}c}
-  {\large\bf\MakeUppercase\autorinome\vspace*{2mm}}
+  {\Large\bf\MakeUppercase\autorinome\vspace*{2mm}}
 \end{tabular}\\
 \ifthenelse{\equal{\autoriinome}{}}{\vspace*{6mm}}{
 	\begin{tabular}{>{\PreserveBacklash}c}
-	{\large\bf\MakeUppercase\autoriinome\vspace*{2mm}}
+	{\Large\bf\MakeUppercase\autoriinome\vspace*{2mm}}
 	\end{tabular}\\}
 \ifthenelse{\equal{\autoriiinome}{}}{\vspace*{6mm}}{
 	\begin{tabular}{>{\PreserveBacklash}c}
-	{\large\bf\MakeUppercase\autoriiinome\vspace*{2mm}}
+	{\Large\bf\MakeUppercase\autoriiinome\vspace*{2mm}}
 	\end{tabular}\\}
 
 \vspace*{1cm}
 
-{\bf Orientador: \space \MakeUppercase{\membrodabancainome}}\\[0.8cm]
+{\large\bf ORIENTADOR: \space \MakeUppercase{\membrodabancainome}}\\[0.8cm]
 
-{\bf\MakeUppercase{\tipodemonografianome \space de \space \programastr \space em \areastr}}\\[1cm]
-{\bf\MakeUppercase{PUBLICAÇÃO: \numpublicacaostr}}\\[0.2cm]
-{\normalsize\bf\MakeUppercase{BRASÍLIA-DF, \dianum \space DE \space \mesnome \space DE \anonome.}}\\
+{\large\bf\MakeUppercase{\tipodemonografianome de \programastr em \areastr}}
+\vspace{\fill}
+
+{\large\bf\MakeUppercase{PUBLICAÇÃO: \numpublicacaostr}}\\[0.2cm]
+{\large\bf\MakeUppercase{BRASÍLIA-DF: \mesnome/\anonome.}}\\
 \end{center}
 \end{titlepage}
 }
