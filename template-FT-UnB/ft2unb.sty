@@ -9,7 +9,7 @@
 %%               Inclusão de comando para geração de lista de termos e siglas e listas de códigos fonte 
 %%               Incluída contra-capa, folha de assinaturas e ficha catalográfica. 
 %%               Adicionados novos comandos \dia (dia da defesa), \numpublicacao, \siglapublicacao (por exemplo: PPGENE.DM),
-%%               \area (por Exemplo, Engenharia Elétrica), \programa (Mestrado, Doutorado) 
+%%               \area (por Exemplo, Engenharia Elétrica), \titulacao (Mestrado, Doutorado) 
 %%               \siglaarea (por exemplo, ENE)
 %%               \autorendereco (endereço do autor). (por Manoel Campos da Silva Filho. http://manoelcampos.com)
 %% - 2007/04/09: Package incorporates a page for bibliographic information. Contributions from Nathalie Pinheiro, André Calmon and Renan Utida)
@@ -20,7 +20,6 @@
 
 \usepackage[pdftex]{color,graphicx}
 
-
 % Define as margens do documento (PPGT 2023: todas as margens com 25 mm)
 \usepackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
 
@@ -30,11 +29,11 @@
 \def\MyDate{\@date}
 
 \usepackage{listings,lipsum}
-%\usepackage{listingsutf8} 
+% \usepackage{listingsutf8} 
 
 \usepackage{caption}
 \usepackage{newfloat} % Para criar ambiente de quadros (PPGT)
-\usepackage{nomencl} % Gerar lista de abreviações - http://franz.kollmann.in/latex/latex.html
+\usepackage{nomencl} % Gerar lista de abreviações
 \usepackage{epsfig}  % Usar formato de figura .eps
 \usepackage{colortbl}
 
@@ -67,17 +66,11 @@
 \usepackage{latexsym}
 \usepackage{setspace}
 \usepackage[notlof,notlot,nottoc]{tocbibind}
-
-%http://www.tex.ac.uk/cgi-bin/texfaq2html?label=casechange
 \usepackage{textcase}
 
-
-%% Define a new 'leo' style for the package that will use a smaller font.
-\makeatletter
+% Define estilo de fonte menor para URLs
 \def\url@leostyle{%
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
-\makeatother
-%% Now actually use the newly defined style.
 \urlstyle{leostyle}
 
 % -------------------------------------------------------------------------
@@ -187,7 +180,7 @@
 {\large\bfseries\MakeUppercase{\@author}\par}
 \vspace{0.8cm}
 
-{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \programastr\ em\ \areastr}\par}
+{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}\par}
 
 \vfill
 {\Large\bfseries FACULDADE DE TECNOLOGIA}\\[1cm]
@@ -221,7 +214,7 @@
 
 {\large\bfseries ORIENTADOR:\space\MakeUppercase{\membrodabancainome}}\\[0.8cm]
 
-{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \programastr\ em\ \areastr}}
+{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}}
 \vspace{\fill}
 
 {\large\bfseries\MakeUppercase{PUBLICAÇÃO:\space\numpublicacaostr}}\\[0.2cm]
@@ -250,7 +243,7 @@
   \end{center}
 
   % Texto central do tipo de trabalho
-  {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \programastr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM TRANSPORTES DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM TRANSPORTES.}}
+  {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \titulacaostr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM \areastr DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM \areastr.}}
 
   \vspace{0.8cm}
 
@@ -325,7 +318,7 @@
   	\vspace{1cm}
   	
   	\begin{tabular}{p{15cm}}    
-    É concedida à Universidade de Brasília permissão para reproduzir cópias desta \MakeLowercase\tipodemonografianome\ de \programastr\ e para emprestar ou vender tais cópias somente para propósitos acadêmicos e científicos. O autor se reserva a outros direitos de publicação e nenhuma parte desta \MakeLowercase\tipodemonografianome\ de \programastr\ pode ser reproduzida sem a autorização por escrito do autor.
+    É concedida à Universidade de Brasília permissão para reproduzir cópias desta \MakeLowercase\tipodemonografianome\ de \titulacaostr\ e para emprestar ou vender tais cópias somente para propósitos acadêmicos e científicos. O autor se reserva a outros direitos de publicação e nenhuma parte desta \MakeLowercase\tipodemonografianome\ de \titulacaostr\ pode ser reproduzida sem a autorização por escrito do autor.
   	\end{tabular}        
   	
   	\vspace{1cm}
@@ -339,7 +332,9 @@
 \end{titlepage}
 }
 
-%%% Decicatória
+% -------------------------------------------------------------------------
+% Dedicatória
+% -------------------------------------------------------------------------
 \newcommand{\dedicatoriaautori}[1]{\def\dedicatoriaautorinome{#1}}
 \newcommand{\dedicatoriaautorii}[1]{\def\dedicatoriaautoriinome{#1}}
 \newcommand{\dedicatoriaautoriii}[1]{\def\dedicatoriaautoriiinome{#1}}
@@ -409,7 +404,9 @@
 \end{titlepage}
 }
 
-%%% Agradecimentos
+% -------------------------------------------------------------------------
+% Agradecimentos
+% -------------------------------------------------------------------------
 \newcommand{\agradecimentosautori}[1]{\def\agradecimentosautorinome{#1}}
 \newcommand{\agradecimentosautorii}[1]{\def\agradecimentosautoriinome{#1}}
 \newcommand{\agradecimentosautoriii}[1]{\def\agradecimentosautoriiinome{#1}}
@@ -417,7 +414,7 @@
 \newcommand{\agradecimentos}{
 \begin{titlepage}
 \begin{flushleft}
-\large\bf Agradecimentos 
+\large\bfseries Agradecimentos 
 \end{flushleft}
 \begin{center}
 	\vspace*{1cm}
@@ -446,7 +443,9 @@
 \end{titlepage}
 }
 
-%%% Resumos opcionais do início de cada capítulo
+% -------------------------------------------------------------------------
+% Resumos opcionais no início dos capítulos
+% -------------------------------------------------------------------------
 \newcommand{\resumodocapitulo}[1]{
 \vspace*{-0.8cm}
 \begin{flushright}
@@ -457,24 +456,23 @@
 \end{flushright}
 }
 
-%%% Cabeçalhos dos resumos:
+% Cabeçalhos dos resumos
 \newcommand{\resumo}[2]{
 \begin{flushright}
 \hrule
-\vspace*{4mm}\large\bf\uppercase{#1} \\
+\vspace*{4mm}\large\bfseries\uppercase{#1} \\
 \end{flushright}
 {\normalsize\noindent#2}
 }
 
-%%% Fontes:
+% Comandos legados de fontes
 \newcommand{\setfontarial}{}
 \newcommand{\setfonttimes}{}
 
-%%% Estilo dos capítulos, seções, sub-seções:
-\makeatletter
-
+% -------------------------------------------------------------------------
+% Anexos
+% -------------------------------------------------------------------------
 \newcommand{\anexos}{
-%	\chapter*{\mdseries ANEXOS}
 	\chapter*{ANEXOS}
 	\addcontentsline{toc}{chapter}{{Anexos}}
 	\renewcommand{\appendixname}{ANEXO}
@@ -484,7 +482,7 @@
 	\setcounter{noAnexo}{1}
 }
 
-%%% Figura de fundo da capa:
+% Imagem de fundo da capa
 \usepackage{eso-pic,graphicx}
 \newcommand\BackgroundPicture[2]{%
   \setlength{\unitlength}{1pt}%
@@ -495,7 +493,9 @@
     \vfill
 }}} 
 
-%%% Formatação do sumário:
+% -------------------------------------------------------------------------
+% Formatação do Sumário (TOC)
+% -------------------------------------------------------------------------
 \renewcommand*\l@chapter[2]{%
   \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
@@ -515,13 +515,14 @@
 \renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{3.6em}}
 \renewcommand*\l@subsubsection{\@dottedtocline{3}{1.5em}{3.6em}}
 
-%%% Sumário:
 \newcommand{\sumario}{
 	\renewcommand{\contentsname}{SUMÁRIO}
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\mdseries\scshape\tableofcontents}
 }
 
-%%% Lista de figuras:
+% -------------------------------------------------------------------------
+% Listas pré-textuais
+% -------------------------------------------------------------------------
 \newcommand{\listadefiguras}{
 	\renewcommand{\listfigurename}{LISTA DE FIGURAS}
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listoffigures}
@@ -540,7 +541,7 @@
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listoftables}
 }
 
-%%% Lista de quadros (PPGT):
+% Lista de quadros (PPGT)
 \DeclareFloatingEnvironment[
 	fileext=loq,
 	listname={LISTA DE QUADROS},
@@ -552,43 +553,33 @@
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listofquadros}
 }
 
-%%% Lista de símbolos: apenas o formato do título.
+% Lista de símbolos
 \newcommand{\listadesimbolos}{
 	\renewcommand{\contentsname}{LISTA DE SIMBOLOS}
 	\listoftables 
 }
 
-\makeatother
- 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Lengths e Espaçamento (PPGT: margens 2,5 cm, entrelinhas 1,5)
-
+% -------------------------------------------------------------------------
+% Espaçamentos e comprimentos (PPGT: margens 2,5 cm, entrelinhas 1,5)
+% -------------------------------------------------------------------------
 \renewcommand{\baselinestretch}{1.5}  % Espaçamento 1,5 linhas (PPGT)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Macros
 \newcommand{\PreserveBacklash}[1]{\let\temp=\\#1\let\\=\temp}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Espaço entre parágrafos (PPGT: sem recuo, espaçamento 18pt)
-\setlength{\parindent}{0pt}      % sem recuo de parágrafo
-\parskip=18pt                     % espaçamento entre parágrafos
+\setlength{\parindent}{0pt}
+\parskip=18pt
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Red\'{e}finition de cleardoublepage pour que les pages vides s\'{e}parant
-% les chapitres soient vraiment vides 
-\makeatletter
+% Redefinição de cleardoublepage para limpar páginas vazias
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
  \hbox{}
- \vspace*{\fill}% test \vspace{\fill}
+ \vspace*{\fill}
  \thispagestyle{empty}
  \newpage
  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
-\makeatother
 
-%Define captions em português para figuras, tabelas, capítulos, etc
+% Nomes em português para elementos
 \renewcommand\figurename{Figura}
 \renewcommand\tablename{Tabela}
 
@@ -596,10 +587,11 @@
 \renewcommand\lstlistingname{Listagem}
 \renewcommand{\chaptername}{Capítulo}
 \renewcommand{\nomname}{LISTA DE TERMOS E SIGLAS}
-\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS} %Define o Caption da seção de bibliografia
+\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}
 
-%%% Formatação de capítulos (PPGT: apenas número + título, centralizado)
-\makeatletter
+% -------------------------------------------------------------------------
+% Formatação de Capítulos (PPGT: número + título, centralizado)
+% -------------------------------------------------------------------------
 \def\@makechapterhead#1{%
   \vspace*{0pt}%
   {\parindent \z@ \centering \normalfont
@@ -619,7 +611,7 @@
     \vskip 40\p@
   }}
 
-% Ajustar tamanho das seções e subseções (12pt para seções)
+% Seções e subseções (12pt para seções)
 \renewcommand\section{\@startsection {section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
@@ -672,7 +664,6 @@
 	\capaprincipal
 	\contracapa
 	\capaassinaturas
-	\frontmatter %inicia a numeração em romanos
 	\fichacatalografica	
 }
 
