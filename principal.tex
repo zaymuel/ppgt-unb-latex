@@ -33,7 +33,11 @@
 % Caso o título tenha mais de uma linha, use \\ para quebrar:
 % \title{PRIMEIRA LINHA DO TÍTULO \\ SEGUNDA LINHA DO TÍTULO}
 
-\author{NOME DO AUTOR}
+% Informe o último sobrenome e os prenomes separadamente:
+\ultimosobrenomeautor{Último-SOBRENOME}
+\prenomesautor{Nome e Primeiro Sobrenome}
+% \author{NOME DO AUTOR} será gerado automaticamente = prenomes + último sobrenome
+
 % Caso haja mais de um autor ou queira quebrar linha, use \\ :
 % \author{PRIMEIRO AUTOR \\ SEGUNDO AUTOR}
 
@@ -43,10 +47,19 @@
 \area{Transportes} % Nome do curso
 \siglaarea{ENC} % Sigla do departamento (ENC = Engenharia Civil e Ambiental)
 \tipodemonografia{Dissertação} % Dissertação ou Tese
-\programa{Mestrado} % Mestrado ou Doutorado
+\titulacao{Mestrado} % Mestrado ou Doutorado
+\autoremail{EMAIL DO AUTOR.} % e-mail do autor da dissertação/tese
 \autorendereco{ENDEREÇO DO AUTOR.} % Endereço do autor da dissertação/tese
-\totalpgs{147} % Total de páginas atualmente na sua dissertação
 \numpublicacao{T.DM-XXX/AAAA} % Número da publicação (após a defesa, tal número deve ser obtido na secretaria)
+
+% ADICIONE AS PALAVRAS-CHAVE DA SUA DISSERTAÇÃO/TESE AQUI
+% caso necessário, remova as linhas correspondentes às palavras-chave que não forem utilizadas.
+\palavrachavei{PALAVRA-CHAVE 1}
+\palavrachaveii{PALAVRA-CHAVE 2}
+\palavrachaveiii{PALAVRA-CHAVE 3}
+\palavrachaveiv{PALAVRA-CHAVE 4}
+\palavrachavev{PALAVRA-CHAVE 5}
+\palavrachavevi{PALAVRA-CHAVE 6}
 
 \membrodabancai{Prof. Dr. NOME DO ORIENTADOR, Titulação (Instituição)}
 \membrodabancaifuncao{Orientador}
@@ -89,7 +102,7 @@
   pdfstartview={FitH},    % Fits the width of the page to the window
   pdftitle={\@title},
   pdfauthor={\@author},
-  pdfsubject={\tipodemonografianome\ de\ \programastr\ em\ \areastr}, % Subject of the document
+  pdfsubject={\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}, % Subject of the document
   pdfcreationdate={\pdfdate}
 }
 \makeatother
@@ -112,8 +125,8 @@
   \include{capitulos/abstract}
 
   % ÍNDICE (sumário)
-  \pdfbookmark[0]{Sumário}{sumario}
-  \sumario
+  \pdfbookmark[0]{Sumário}{indice}
+  \indice
 
   % LISTA DE TABELAS
   \pdfbookmark[0]{Lista de Tabelas}{listatabelas}
