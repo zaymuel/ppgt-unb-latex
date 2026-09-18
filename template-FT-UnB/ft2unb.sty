@@ -33,7 +33,8 @@
 
 \usepackage{caption}
 \usepackage{newfloat} % Para criar ambiente de quadros (PPGT)
-\usepackage{nomencl} % Gerar lista de abreviações
+\usepackage{nomencl} % Gerar lista de abreviações e símbolos
+\makenomenclature   % Inicializa a geração do arquivo .nlo
 \usepackage{epsfig}  % Usar formato de figura .eps
 \usepackage{colortbl}
 
@@ -76,7 +77,6 @@
 % -------------------------------------------------------------------------
 % Dados do trabalho
 % -------------------------------------------------------------------------
-\newcommand{\totalpgs}[1]{\def\totalpgsstr{#1}}
 \newcommand{\numpublicacao}[1]{\def\numpublicacaostr{#1}}
 \newcommand{\siglapublicacao}[1]{\def\siglapublicacaostr{#1}}
 \newcommand{\autoremail}[1]{\def\autoremailstr{#1}}
@@ -742,11 +742,19 @@
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listofquadros}
 }
 
-% Lista de símbolos
-\newcommand{\listadesimbolos}{
-	\renewcommand{\contentsname}{LISTA DE SIMBOLOS}
-	\listoftables 
+% Lista de símbolos, nomenclatura e abreviações (PPGT)
+\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}
+\newcommand{\listadesimbolos}[1][2.5cm]{%
+	\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}%
+	\pdfbookmark[0]{\nomname}{nomenclatura}%
+	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\printnomenclature[#1]}%
 }
+\newcommand{\listadenomenclaturas}[1][2.5cm]{\listadesimbolos[#1]}
+\newcommand{\listadesiglas}[1][2.5cm]{\listadesimbolos[#1]}
+
+% Atalhos semânticos para inserção de itens na lista
+\newcommand{\simbolo}[2]{\nomenclature{#1}{#2}}
+\newcommand{\sigla}[2]{\nomenclature{#1}{#2}}
 
 % -------------------------------------------------------------------------
 % Espaçamentos e comprimentos (PPGT: margens 2,5 cm, entrelinhas 1,5)

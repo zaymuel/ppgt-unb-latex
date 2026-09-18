@@ -141,9 +141,9 @@
   \listadequadros
 
   % LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES
-  \renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES} % Define um caption à lista de siglas
-  \pdfbookmark[0]{Lista de Termos e Siglas}{nomenclatura}
-  \printnomenclature[2.5cm]
+  % Use \nomenclature{<símbolo ou sigla>}{<descrição>} no texto
+  % ou os atalhos: \simbolo{<símbolo>}{<descrição>} / \sigla{<sigla>}{<descrição>}
+  \listadesimbolos
 
   \mainmatter % Inicia a numeração normal cardinal
   \setcounter{page}{1} \pagenumbering{arabic}
