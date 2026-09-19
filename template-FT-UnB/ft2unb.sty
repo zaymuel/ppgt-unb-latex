@@ -18,29 +18,54 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 \ProvidesPackage{template-FT-UnB/ft2unb}[2011/05/27 v1.5]
 
-\usepackage[pdftex]{color,graphicx}
+\RequirePackage{graphicx}
+\RequirePackage[table]{xcolor}
 
 % Define as margens do documento (PPGT 2023: todas as margens com 25 mm)
-\usepackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
+\RequirePackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
 
 % Acesso aos dados do documento (\@title, \@author, \@date)
 \def\MyTitle{\begingroup\def\\{ }\@title\endgroup}
 \def\MyAuthor{\begingroup\def\\{, }\@author\endgroup}
 \def\MyDate{\@date}
 
-\usepackage{listings,lipsum}
-% \usepackage{listingsutf8} 
+\RequirePackage{listings,lipsum}
+% \RequirePackage{listingsutf8} 
 
-\usepackage{caption}
+\RequirePackage{caption}
 \captionsetup{font=small, labelfont=bf, justification=centering}
-\usepackage{newfloat} % Para criar ambiente de quadros (PPGT)
-\usepackage{nomencl} % Gerar lista de abreviações e símbolos
+\RequirePackage{newfloat} % Para criar ambiente de quadros (PPGT)
+\RequirePackage{nomencl} % Gerar lista de abreviações e símbolos
 \makenomenclature   % Inicializa a geração do arquivo .nlo
-\usepackage{epsfig}  % Usar formato de figura .eps
-\usepackage{colortbl}
 
-\usepackage{hyperref, datetime}
-\usepackage{url}
+\RequirePackage{hyperref, datetime}
+\RequirePackage{url}
+
+\RequirePackage{array}
+\RequirePackage{subfigure}
+\RequirePackage{amsfonts}
+\RequirePackage{amstext}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage[thmmarks,amsmath]{ntheorem}
+\RequirePackage{boxedminipage}
+\RequirePackage{theorem}
+\RequirePackage{fancybox}
+\RequirePackage{enumerate}
+\RequirePackage{fancyhdr}
+\RequirePackage{ifthen}
+\RequirePackage{multirow}
+\RequirePackage{mathptmx}
+\RequirePackage{afterpage}
+\RequirePackage{rotating}
+\RequirePackage{makeidx}
+\RequirePackage{indentfirst}
+\RequirePackage{epigraph}
+\RequirePackage{latexsym}
+\RequirePackage{setspace}
+\RequirePackage[notlof,notlot,nottoc]{tocbibind}
+\RequirePackage{textcase}
+\RequirePackage{etoolbox} % Necessário para o comando \AfterEndPreamble funcionar
 
 % -------------------------------------------------------------------------
 % Formatação das Referências Bibliográficas (Normas PPGT 2019/2023)
@@ -56,6 +81,7 @@
 % Garante que o título do capítulo de referências siga o padrão não numerado no sumário
 \renewcommand{\bibsection}{%
   \chapter*{\bibname}%
+  \phantomsection % <--- Cria a âncora invisível para o link do sumário
   \addcontentsline{toc}{chapter}{\bibname}%
 }
 
@@ -478,16 +504,14 @@
   	\end{tabular}\\[0.8cm]
 
   	\begin{tabular}{p{15cm}}
-	  	{\large\bfseries REFERÊNCIA BIBLIOGRÁFICA}\\
-  		\\
+	  	{\large\bfseries REFERÊNCIA BIBLIOGRÁFICA}\\[0.3cm]
 	  	\autorreferenciabibliografica (\anonome)\ {\begingroup\def\\{ }\@title\endgroup}. Publicação \numpublicacaostr. Departamento de Engenharia Civil e Ambiental, Universidade de Brasília, Brasília, DF, \totalpgsstr\ p.\\
   	\end{tabular}
   	
   	\vspace{1cm}
   	
   	\begin{tabular}{p{15cm}}
-    {\large\bfseries CESSÃO DE DIREITOS}\\
-    \\
+    {\large\bfseries CESSÃO DE DIREITOS}\\[0.3cm]
     AUTOR: \nomecompletoautor \\ 
     TÍTULO: {\begingroup\def\\{ }\@title\endgroup}. \\ 
     GRAU: \graunome \quad\quad ANO: \anonome
@@ -653,6 +677,7 @@
 % -------------------------------------------------------------------------
 \newcommand{\anexos}{
 	\chapter*{ANEXOS}
+  \phantomsection % <--- Cria a âncora invisível para o link do sumário
 	\addcontentsline{toc}{chapter}{{Anexos}}
 	\renewcommand{\appendixname}{ANEXO}
 	\appendix
@@ -662,7 +687,7 @@
 }
 
 % Imagem de fundo da capa
-\usepackage{eso-pic,graphicx}
+\RequirePackage{eso-pic,graphicx}
 \newcommand\BackgroundPicture[2]{%
   \setlength{\unitlength}{1pt}%
   \put(0,\strip@pt\paperheight){%
@@ -797,7 +822,7 @@
 \renewcommand\figurename{Figura}
 \renewcommand\tablename{Tabela}
 
-\usepackage{listings}  
+\RequirePackage{listings}  
 \renewcommand\lstlistingname{Listagem}
 \renewcommand{\chaptername}{Capítulo}
 \renewcommand{\nomname}{LISTA DE TERMOS E SIGLAS}
