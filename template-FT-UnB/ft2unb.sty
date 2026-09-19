@@ -32,6 +32,7 @@
 % \usepackage{listingsutf8} 
 
 \usepackage{caption}
+\captionsetup{font=small, labelfont=bf, justification=centering}
 \usepackage{newfloat} % Para criar ambiente de quadros (PPGT)
 \usepackage{nomencl} % Gerar lista de abreviações e símbolos
 \makenomenclature   % Inicializa a geração do arquivo .nlo
@@ -419,7 +420,7 @@
   \end{center}
 
   % Texto central do tipo de trabalho
-  {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \titulacaostr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM \areastr DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM \areastr.}}
+  {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \titulacaostr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM \areastr\ DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM \areastr.}}
 
   \vspace{0.8cm}
 
@@ -825,7 +826,7 @@
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize}}
+                                     {\normalfont\normalsize\itshape}}
 
 % Espaçamento do número do subitem: espaço simples para (a), e \quad para seções/subseções
 \def\@seccntformat#1{%
