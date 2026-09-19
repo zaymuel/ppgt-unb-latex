@@ -113,7 +113,7 @@
   \ifx\ft@pretextual@recorded\@undefined
     \global\let\ft@pretextual@recorded\@empty
     \if@openright\cleardoublepage\else\clearpage\fi
-    \edef\ft@last@roman{\romannumeral\numexpr\c@page\relax}%
+    \edef\ft@last@roman{\romannumeral\numexpr\c@page-1\relax}% <-- Correção: -1 adicionado aqui
     \if@filesw
       \immediate\write\@auxout{\string\ft@save@pretextual@pages{\ft@last@roman}}%
     \fi
