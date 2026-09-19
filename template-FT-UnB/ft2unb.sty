@@ -42,33 +42,22 @@
 \usepackage{hyperref, datetime}
 \usepackage{url}
 
-\usepackage{array}
-\usepackage{subfigure}
-\usepackage{amsfonts}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[thmmarks,amsmath]{ntheorem}
-\usepackage{boxedminipage}
-\usepackage{theorem}
-\usepackage{fancybox}
-\usepackage{enumerate}
-\usepackage{fancyhdr}
-\usepackage{ifthen}
-\usepackage{multirow}
-\usepackage{times}
-\usepackage{afterpage}
-\usepackage{color}
-\usepackage{colortbl}
-\usepackage{rotating}
-\usepackage{makeidx}
-\usepackage{indentfirst}
-\usepackage{epigraph}
-\usepackage{amsmath}
-\usepackage{latexsym}
-\usepackage{setspace}
-\usepackage[notlof,notlot,nottoc]{tocbibind}
-\usepackage{textcase}
+% -------------------------------------------------------------------------
+% Formatação das Referências Bibliográficas (Normas PPGT 2019/2023)
+% -------------------------------------------------------------------------
+% Utiliza o pacote natbib para gerenciar o padrão Autor-Data integrado a arquivos .bib externos
+\RequirePackage[round, authoryear]{natbib}
+
+% Configurações físicas exigidas pelas normas do PPGT:
+\setlength{\bibhang}{1.25cm} % Recuo especial (hanging indent) de 1,25 cm
+\setlength{\bibsep}{12pt}    % Espaçamento exato de 12pt entre as referências
+\renewcommand{\bibfont}{\singlespacing} % Espaçamento simples dentro da referência
+
+% Garante que o título do capítulo de referências siga o padrão não numerado no sumário
+\renewcommand{\bibsection}{%
+  \chapter*{\bibname}%
+  \addcontentsline{toc}{chapter}{\bibname}%
+}
 
 % Define estilo de fonte menor para URLs
 \def\url@leostyle{%

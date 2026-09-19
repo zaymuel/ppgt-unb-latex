@@ -3,7 +3,7 @@
 % \usepackage[english,brazil]{babel}
 % Define regra de gramática para separar sílabas {babel}
 % e altera os títulos (como chapters, sections, references) para português
-\usepackage[brazil]{babel}
+\usepackage[brazilian]{babel}
 
 % Define uso de caracteres acentuados no PDF gerado
 % e permite copiar corretamente o texto do PDF.
@@ -100,7 +100,9 @@
   pdftitle={\@title},
   pdfauthor={\@author},
   pdfsubject={\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}, % Subject of the document
-  pdfcreationdate={\pdfdate}
+  pdfcreationdate={\pdfdate},
+  plainpages=false,   % Diferencia numeração romana (i, ii) de arábica (1, 2) nos links internos
+  pdfpagelabels=true  % Exibe a numeração correta (ex: 'ii' ou '1') no leitor de PDF
 }
 \makeatother
 
@@ -161,15 +163,10 @@
   \include{capitulos/capitulo4-resultados-analise}
   \include{capitulos/capitulo5-conclusao}
 
-  % \bibliographystyle{bibliografia/abnt-num} % Estilo bibliográfico ABNT numérico
-  \bibliographystyle{bibliografia/abnt-alf} % Estilo bibliográfico ABNT alfabético (PPGT)
-  % \bibliographystyle{bibliografia/sbc} % Estilo bibliográfico da Sociedade Brasileira de Computação (SBC)
-
-  % \renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS} % Define o caption da seção de bibliografia
-  % \addcontentsline{toc}{chapter}{REFERÊNCIAS BIBLIOGRÁFICAS}
-
+  % Configuração da Bibliografia (Usa natbib configurado no ft2unb.sty)
+  \bibliographystyle{bibliografia/normas-ppgt}
   % Não pode ter espaço entre os nomes dos arquivos bib
   \bibliography{bibliografia/referencias}
 
-  \include{capitulos/apendice}
+  \include{capitulos/zz-apendices}
 \end{document}

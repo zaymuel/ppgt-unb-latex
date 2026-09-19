@@ -1,4 +1,4 @@
-%% copy of "apalike" for SBC (no comma before year in citation label)
+%% copy of "apalike" for PPGT
 
 % BibTeX `apalike' bibliography style (24-Jan-88 version)
 % Adapted from the `alpha' style, version 0.99a; for BibTeX version 0.99a.
@@ -119,8 +119,8 @@ FUNCTION {output.year.check}
 { year empty$
     { "empty year in " cite$ * warning$ }
     { write$
-      " (" year * extra.label * ")" *
-      mid.sentence 'output.state :=
+      " (" year * extra.label * ") " * write$
+      "" before.all 'output.state :=
     }
   if$
 }
@@ -210,22 +210,44 @@ FUNCTION {format.names}
   s num.names$ 'numnames :=
   numnames 'namesleft :=
     { namesleft #0 > }
-    { s nameptr "{vv~}{ll}{, jj}{, f.}" format.name$ 't :=   % last name first
+    { s nameptr "{vv~}{ll}{, jj}{, f.}" format.name$ 't :=   
       nameptr #1 >
-	{ namesleft #1 >
-	    { ", " * t * }
-	    { numnames #2 >
-		{ "," * }
-		'skip$
-	      if$
-	      t "others" =
-		{ " et~al." * }
-		{ " and " * t * }
-	      if$
-	    }
-	  if$
-	}
-	't
+        { namesleft #1 >
+            { ", " * t * }
+            { t "others" =
+                { " et~al." * }
+                { " \& " * t * }
+              if$
+            }
+          if$
+        }
+        't
+      if$
+      nameptr #1 + 'nameptr :=
+      namesleft #1 - 'namesleft :=
+    }
+  while$
+}
+
+FUNCTION {format.author.names}
+{ 's :=
+  #1 'nameptr :=
+  s num.names$ 'numnames :=
+  numnames 'namesleft :=
+    { namesleft #0 > }
+    { s nameptr "{vv~}{ll}" format.name$ "u" change.case$
+      s nameptr "{, jj}{, f.}" format.name$ * 't :=
+      nameptr #1 >
+        { namesleft #1 >
+            { ", " * t * }
+            { t "others" =
+                { " et~al." * }
+                { " \& " * t * }
+              if$
+            }
+          if$
+        }
+        't
       if$
       nameptr #1 + 'nameptr :=
       namesleft #1 - 'namesleft :=
@@ -236,7 +258,7 @@ FUNCTION {format.names}
 FUNCTION {format.authors}
 { author empty$
     { "" }
-    { author format.names }
+    { author format.author.names }
   if$
 }
 
@@ -252,8 +274,8 @@ FUNCTION {format.editors}
     { "" }
     { editor format.names
       editor num.names$ #1 >
-	{ ", editors" * }
-	{ ", editor" * }
+        { " (eds.)" * }
+        { " (ed.)" * }
       if$
     }
   if$
@@ -902,9 +924,11 @@ FUNCTION {calc.label}
       if$
     }
   if$
-  " "							% these three lines are
-  *							% for apalike, which
-  year field.or.null purify$ #-1 #4 substring$		% uses all four digits
+  "("
+  *
+  year field.or.null purify$ #-1 #4 substring$
+  *
+  ")"
   *
   'label :=
 }
