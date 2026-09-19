@@ -460,7 +460,7 @@
 % Ficha catalográfica (página iii, número visível)
 % -------------------------------------------------------------------------
 \newcommand{\fichakeys}[6]{%
-  \begin{tabular}{@{} p{7cm} p{7.5cm} @{}}
+  \begin{tabular}{@{} p{\dimexpr 0.5\linewidth - \tabcolsep \relax} p{\dimexpr 0.5\linewidth - \tabcolsep \relax} @{}}
     1 -- #1 \ifthenelse{\equal{#2}{}}{}{& 2 -- #2} \\
     \ifthenelse{\equal{#3}{}}{}{3 -- #3 \ifthenelse{\equal{#4}{}}{}{& 4 -- #4} \\}%
     \ifthenelse{\equal{#5}{}}{}{5 -- #5 \ifthenelse{\equal{#6}{}}{}{& 6 -- #6} \\}%
@@ -715,20 +715,41 @@
 % -------------------------------------------------------------------------
 \newcommand{\listadefiguras}{
 	\renewcommand{\listfigurename}{LISTA DE FIGURAS}
+	\begingroup
+	\makeatletter
+	\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{6.5em}}
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}[1]{\oldnumberline{\figurename~##1 \textendash}}
+	\makeatother
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listoffigures}
+	\endgroup
 }
 
 %%% Lista de Códigos fonte (por Manoel Campos):
 \newcommand{\listadecodigosfonte}{
 	\renewcommand{\lstlistlistingname}{LISTA DE CÓDIGOS FONTE}
+	\begingroup
+	\makeatletter
+	\renewcommand*\l@lstlisting{\@dottedtocline{1}{1.5em}{6.5em}}
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}[1]{\oldnumberline{\lstlistingname~##1 \textendash}}
+	\makeatother
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\lstlistoflistings}
+	\endgroup
 }
 
 
 %%% Lista de tabelas:
 \newcommand{\listadetabelas}{
 	\renewcommand{\listtablename}{LISTA DE TABELAS}
+	\begingroup
+	\makeatletter
+	\renewcommand*\l@table{\@dottedtocline{1}{1.5em}{6.5em}}
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}[1]{\oldnumberline{\tablename~##1 \textendash}}
+	\makeatother
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listoftables}
+	\endgroup
 }
 
 % Lista de quadros (PPGT)
@@ -740,7 +761,14 @@
 ]{quadro}
 
 \newcommand{\listadequadros}{
+	\begingroup
+	\makeatletter
+	\renewcommand*\l@quadro{\@dottedtocline{1}{1.5em}{6.5em}}
+	\let\oldnumberline\numberline
+	\renewcommand{\numberline}[1]{\oldnumberline{Quadro~##1 \textendash}}
+	\makeatother
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listofquadros}
+	\endgroup
 }
 
 % Lista de símbolos, nomenclatura e abreviações (PPGT)
@@ -877,6 +905,3 @@
 	\capaassinaturas
 	\fichacatalografica	
 }
-
-
-
