@@ -235,7 +235,7 @@ FUNCTION {format.author.names}
   s num.names$ 'numnames :=
   numnames 'namesleft :=
     { namesleft #0 > }
-    { s nameptr "{vv~}{ll}" format.name$ "u" change.case$
+    { "\MakeUppercase{" s nameptr "{vv~}{ll}" format.name$ * "}" *
       s nameptr "{, jj}{, f.}" format.name$ * 't :=
       nameptr #1 >
         { namesleft #1 >
