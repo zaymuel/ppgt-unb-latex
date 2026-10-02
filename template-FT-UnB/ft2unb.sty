@@ -292,38 +292,58 @@
 % Nome formatado para a Ficha Catalográfica: SOBRENOME, PRENOMES
 \newcommand{\autorreferenciacatalografica}{%
   \ifx\ultimosobrenomeautorstr\@empty
-    \MakeUppercase{\begingroup\def\\{, }\@author\endgroup}%
+    \begingroup
+      \def\\{, }%
+      \MakeTextUppercase{\@author}%
+    \endgroup
   \else
-    \MakeUppercase{\ultimosobrenomeautorstr, \prenomesautorstr}%
+    \MakeTextUppercase{\ultimosobrenomeautorstr, \prenomesautorstr}%
   \fi
 }
 
-% Extração de iniciais dos prenomes (ex: João da Silva -> J. S.)
-\newcommand{\iniciais}[1]{%
-  \@for\ft@elem:=#1\do{%
-    \ifx\ft@elem\@empty\else
-      \expandafter\ft@check@particle\ft@elem\@nil
-    \fi
-  }%
+% Extração de iniciais dos prenomes (separados por espaço)
+\def\ft@process@initials#1 {%
+  \def\ft@temp{#1}%
+  \def\ft@stop{ENDINITIALS}%
+  \ifx\ft@temp\ft@stop
+    % Encontrou o sentinela, encerra a recursão em segurança.
+  \else
+    \ft@check@particle{#1}%
+    \expandafter\ft@process@initials
+  \fi
 }
 
-\def\ft@check@particle#1\@nil{%
-  \ifthenelse{%
-    \equal{#1}{da}\OR\equal{#1}{de}\OR\equal{#1}{do}\OR%
-    \equal{#1}{das}\OR\equal{#1}{dos}\OR\equal{#1}{e}\OR%
-    \equal{#1}{Da}\OR\equal{#1}{De}\OR\equal{#1}{Do}\OR%
-    \equal{#1}{Das}\OR\equal{#1}{Dos}\OR\equal{#1}{E}%
-  }{%
-    % Partículas conectivas são ignoradas nas iniciais
-  }{%
-    \MakeUppercase{\expandafter\@car#1\@nil}.\space
-  }%
+% A trava \@empty garante que o TeX preserve o espaço obrigatório após ENDINITIALS
+\def\ft@invoke@initials#1{\ft@process@initials#1 ENDINITIALS \@empty}
+
+\newcommand{\iniciais}[1]{%
+  \expandafter\ft@invoke@initials\expandafter{#1}%
+}
+
+% Filtro de partículas (inclui as notórias estrangeiras)
+\def\ft@check@particle#1{%
+  \def\ft@temp{#1}%
+  \ifx\ft@temp\@empty\else % Proteção extra contra espaços duplicados
+    \ifthenelse{%
+      \equal{#1}{da}\OR\equal{#1}{de}\OR\equal{#1}{do}\OR%
+      \equal{#1}{das}\OR\equal{#1}{dos}\OR\equal{#1}{e}\OR%
+      \equal{#1}{Da}\OR\equal{#1}{De}\OR\equal{#1}{Do}\OR%
+      \equal{#1}{Das}\OR\equal{#1}{Dos}\OR\equal{#1}{E}\OR%
+      \equal{#1}{van}\OR\equal{#1}{von}\OR\equal{#1}{la}\OR\equal{#1}{di}\OR%
+      \equal{#1}{del}\OR\equal{#1}{du}\OR\equal{#1}{des}\OR\equal{#1}{der}\OR%
+      \equal{#1}{ten}\OR\equal{#1}{zu}\OR\equal{#1}{le}\OR\equal{#1}{y}%
+    }{%
+      % Ignora a partícula conectiva e não imprime a inicial
+    }{%
+      \MakeTextUppercase{\expandafter\@car#1\@nil}.\space
+    }%
+  \fi
 }
 
 % Iniciais dos prenomes do autor (utiliza \prenomesautorstr ou inicial do autor)
 \newcommand{\iniciaisautor}{%
   \ifx\prenomesautorstr\@empty
-    \MakeUppercase{\expandafter\@car\@author\@nil}.%
+    \MakeTextUppercase{\expandafter\@car\@author\@nil}.%
   \else
     \iniciais{\prenomesautorstr}%
   \fi
@@ -332,9 +352,12 @@
 % Nome do autor para a Referência Bibliográfica: SOBRENOME, I. N.
 \newcommand{\autorreferenciabibliografica}{%
   \ifx\ultimosobrenomeautorstr\@empty
-    \MakeUppercase{\begingroup\def\\{, }\@author\endgroup}%
+    \begingroup
+      \def\\{, }%
+      \MakeTextUppercase{\@author}%
+    \endgroup
   \else
-    \MakeUppercase{\ultimosobrenomeautorstr}, \iniciaisautor
+    \MakeTextUppercase{\ultimosobrenomeautorstr}, \iniciaisautor
   \fi
 }
 

@@ -1,0 +1,32 @@
+\begin{document}
+
+\newpage
+\thispagestyle{empty}
+\section*{Bateria de Testes: Nomes Complexos}
+
+\newcommand{\testanome}[2]{%
+  \ultimosobrenomeautor{#1}%
+  \prenomesautor{#2}%
+  \noindent\textbf{Input:} \texttt{\textbackslash prenomesautor\{#2\}} e \texttt{\textbackslash ultimosobrenomeautor\{#1\}} \\[0.1cm]
+  \textbf{Cessão (Completo):} \nomecompletoautor \\[0.1cm]
+  \textbf{Ficha Catalográfica:} \autorreferenciacatalografica \\[0.1cm]
+  \textbf{Bibliografia:} \autorreferenciabibliografica \\[0.3cm]
+  \hrule\vspace{0.3cm}
+}
+
+% 1. Teste de Sobrenome Composto (Grau de parentesco - Exigência da norma PPGT)
+\testanome{Silva Júnior}{José Augusto da}
+
+% 2. Teste de Nome Real (Dom Pedro I - Múltiplas partículas e tamanho extremo)
+\testanome{Bragança}{Pedro de Alcântara Francisco Antônio João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de}
+
+% 3. Teste de Nome com Hífen
+\testanome{Rousseau}{Jean-Jacques}
+
+% 4. Teste de Partícula Estrangeira e Sobrenome Duplo com Hífen
+\testanome{García-Márquez}{Gabriel José de la Concordia}
+
+% 5. Teste de Partícula "van" / "von"
+\testanome{Gassen}{Win van}
+
+\end{document} % Para a compilação aqui para você ler os resultados
