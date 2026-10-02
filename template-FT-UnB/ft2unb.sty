@@ -34,6 +34,15 @@
 
 \RequirePackage{caption}
 \captionsetup{font=small, labelfont=bf, justification=centering}
+
+% Comando para padronização da indicação de fonte em elementos ilustrativos
+% Normas PPGT: Fonte tamanho 10pt (footnotesize), centralizada, abaixo do elemento.
+\newcommand{\fonte}[1]{%
+  \par\vspace{6pt}%
+  {\centering\footnotesize Fonte: #1\par}%
+}
+
+
 \RequirePackage{newfloat} % Para criar ambiente de quadros (PPGT)
 \RequirePackage{nomencl} % Gerar lista de abreviações e símbolos
 \makenomenclature   % Inicializa a geração do arquivo .nlo
