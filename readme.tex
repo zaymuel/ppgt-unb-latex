@@ -1,0 +1,51 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage[margin=2.5cm]{geometry}
+
+\title{Manual do Template LaTeX PPGT \\ Guia de Transição e Uso}
+\author{Samuel Seixas Martin}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introdução: A Transição do Microsoft Word}
+
+O objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O LaTeX retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
+
+\section{Principais Dificuldades na Adaptação (Word para LaTeX)}
+
+A migração de um processador de texto visual para um sistema de preparação de documentos algorítmico impõe desafios iniciais notórios:
+
+\begin{itemize}
+    \item \textbf{Paradigma Visual vs. Lógico:} No Word, opera-se no modelo WYSIWYG (\textit{What You See Is What You Get}), onde a formatação é aplicada diretamente na tela. No LaTeX, trabalha-se com estrutura semântica (declarando o que é um capítulo, uma citação ou uma equação), confiando ao motor tipográfico a responsabilidade pelo layout final. O autor precisa abrir mão da ilusão de "controle manual" em prol da consistência sistêmica.
+    \item \textbf{Curva de Aprendizado e Depuração de Erros:} A necessidade de balancear chaves \texttt{\{\}}, declarar ambientes estritos (\texttt{\textbackslash begin} e \texttt{\textbackslash end}) e compilar o código repetidamente exige uma postura metódica. Diferente do Word, onde erros tipográficos apenas sujam a página, no LaTeX um erro de sintaxe pode interromper toda a compilação.
+    \item \textbf{Gestão de Elementos Flutuantes (Floats):} Tabelas, quadros e figuras não ficam "presos" exatamente na linha de código onde foram declarados. O algoritmo do LaTeX calcula matematicamente o local ideal (topo, base da página ou página isolada) para não gerar espaços em branco ou quebrar o fluxo de leitura, o que muitas vezes frustra quem está acostumado a "empurrar" imagens no texto com a tecla Enter.
+\end{itemize}
+
+\section{Sintaxe Básica e Formatação Textual}
+
+Para os iniciantes na linguagem LaTeX, alguns comandos fundamentais substituem os botões tradicionais da interface gráfica:
+
+\begin{itemize}
+    \item \textbf{Comentários (\texttt{\%}):} Qualquer caractere inserido após o símbolo de porcentagem em uma linha é ignorado pelo compilador. É a ferramenta ideal para deixar anotações estruturais no código ou desativar trechos de texto temporariamente sem apagá-los.
+    \item \textbf{Itálico (\texttt{\textbackslash textit\{...\}}):} Inclina a fonte. Segundo as normas do PPGT, palavras em língua estrangeira à língua principal do texto devem obrigatoriamente ser escritas em itálico[cite: 5].
+    \item \textbf{Negrito (\texttt{\textbackslash textbf\{...\}}):} Aplica peso à fonte. Contudo, atenção ao rigor do PPGT: o manual especifica que palavras que se desejam dar destaque devem ser escritas entre aspas duplas ou com as iniciais em maiúsculo[cite: 5]. Portanto, reserve o negrito estritamente para títulos de seções, numeração de ilustrações e elementos estruturais.
+    \item \textbf{Listas Não Ordenadas (\texttt{itemize}):} Cria listas com marcadores (bullet points). Utiliza-se o ambiente \texttt{\textbackslash begin\{itemize\}} e \texttt{\textbackslash end\{itemize\}}, declarando cada nova linha interna com o comando \texttt{\textbackslash item}.
+    \item \textbf{Listas Numeradas (\texttt{enumerate}):} Cria listas sequenciais e numeradas automaticamente. O funcionamento lógico é idêntico ao ambiente de marcadores, bastando usar \texttt{\textbackslash begin\{enumerate\}} e \texttt{\textbackslash end\{enumerate\}}.
+\end{itemize}
+
+\section{Tópicos Avançados: Por que não utilizar o pacote \texttt{abntex2}?}
+
+Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro é importar o pacote \texttt{abntex2} para gerenciar a formatação. Neste projeto, essa prática foi terminantemente descartada por razões arquiteturais e normativas:
+
+\begin{itemize}
+    \item \textbf{Divergência Normativa Explícita:} O manual de referências do programa é taxativo ao afirmar que estas normas não seguem o padrão definido pela Associação Brasileira de Normas Técnicas (ABNT). A simples inclusão do \texttt{abntex2} envenenaria o documento com padrões estruturais proibidos pela secretaria do programa, que exige formatações singulares como a ausência de ponto final após o ano e recuo de 1,25 cm nas referências.
+    \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nosso próprio estilo bibliográfico (\texttt{normas-ppgt.bst}) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
+\end{itemize}
+
+\end{document}
