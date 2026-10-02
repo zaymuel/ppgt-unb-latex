@@ -410,21 +410,23 @@ FUNCTION {format.pages}
 }
 
 FUNCTION {format.vol.num.pages}
-{ volume field.or.null
+{ volume empty$
+    { "" }
+    { "v. " volume * }
+  if$
   number empty$
     'skip$
-    { "(" number * ")" * *
-      volume empty$
-	{ "there's a number but no volume in " cite$ * warning$ }
-	'skip$
+    { duplicate$ empty$
+        { pop$ "(" number * ")" * }
+        { " (" number * ")" * * }
       if$
     }
   if$
   pages empty$
     'skip$
     { duplicate$ empty$
-	{ pop$ format.pages }
-	{ ":" * pages n.dashify * }
+        { pop$ "p. " pages n.dashify * }
+        { ", p. " * pages n.dashify * }
       if$
     }
   if$
