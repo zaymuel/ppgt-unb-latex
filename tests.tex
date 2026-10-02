@@ -1,8 +1,117 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcase}
+\usepackage{ifthen}
+\usepackage[margin=2.5cm]{geometry}
+
+\makeatletter
+% -------------------------------------------------------------------------
+% 1. VARIÁVEIS E DEFINIÇÕES BÁSICAS DO AUTOR
+% -------------------------------------------------------------------------
+\def\ultimosobrenomeautorstr{}
+\def\prenomesautorstr{}
+
+\newcommand{\nomecompletoautor}{\prenomesautorstr\ \ultimosobrenomeautorstr}
+
+\def\ft@define@author{%
+  \gdef\@author{\nomecompletoautor}%
+}
+
+\newcommand{\ultimosobrenomeautor}[1]{%
+  \def\ultimosobrenomeautorstr{#1}%
+  \ft@define@author
+}
+\newcommand{\prenomesautor}[1]{%
+  \def\prenomesautorstr{#1}%
+  \ft@define@author
+}
+
+% Inicializa @author
+\ft@define@author
+
+% -------------------------------------------------------------------------
+% 2. MOTOR DE CAPITALIZAÇÃO E EXTRAÇÃO DE INICIAIS
+% -------------------------------------------------------------------------
+% Nome formatado para a Ficha Catalográfica: SOBRENOME, PRENOMES
+\newcommand{\autorreferenciacatalografica}{%
+  \ifx\ultimosobrenomeautorstr\@empty
+    \begingroup
+      \def\\{, }%
+      \MakeTextUppercase{\@author}%
+    \endgroup
+  \else
+    \MakeTextUppercase{\ultimosobrenomeautorstr, \prenomesautorstr}%
+  \fi
+}
+
+% Extração recursiva de iniciais dos prenomes (separados por espaço)
+\def\ft@process@initials#1 {%
+  \def\ft@temp{#1}%
+  \def\ft@stop{ENDINITIALS}%
+  \ifx\ft@temp\ft@stop
+    % Sentinela encontrado, encerra a recursão
+  \else
+    \ft@check@particle{#1}%
+    \expandafter\ft@process@initials
+  \fi
+}
+
+% Invoca a macro adicionando o sentinela de parada
+\def\ft@invoke@initials#1{\ft@process@initials#1 ENDINITIALS \@empty}
+
+\newcommand{\iniciais}[1]{%
+  \expandafter\ft@invoke@initials\expandafter{#1}%
+}
+
+% Filtro de partículas (inclui as notórias estrangeiras)
+\def\ft@check@particle#1{%
+  \def\ft@temp{#1}%
+  \ifx\ft@temp\@empty\else % Proteção contra espaços duplos
+    \ifthenelse{%
+      \equal{#1}{da}\OR\equal{#1}{de}\OR\equal{#1}{do}\OR%
+      \equal{#1}{das}\OR\equal{#1}{dos}\OR\equal{#1}{e}\OR%
+      \equal{#1}{Da}\OR\equal{#1}{De}\OR\equal{#1}{Do}\OR%
+      \equal{#1}{Das}\OR\equal{#1}{Dos}\OR\equal{#1}{E}\OR%
+      \equal{#1}{van}\OR\equal{#1}{von}\OR\equal{#1}{la}\OR\equal{#1}{di}\OR%
+      \equal{#1}{del}\OR\equal{#1}{du}\OR\equal{#1}{des}\OR\equal{#1}{der}\OR%
+      \equal{#1}{ten}\OR\equal{#1}{zu}\OR\equal{#1}{le}\OR\equal{#1}{y}%
+    }{%
+      % Ignora a partícula e não imprime inicial
+    }{%
+      \MakeTextUppercase{\expandafter\@car#1\@nil}.\space
+    }%
+  \fi
+}
+
+% Iniciais dos prenomes
+\newcommand{\iniciaisautor}{%
+  \ifx\prenomesautorstr\@empty
+    \MakeTextUppercase{\expandafter\@car\@author\@nil}.%
+  \else
+    \iniciais{\prenomesautorstr}%
+  \fi
+}
+
+% Nome para a Referência Bibliográfica: SOBRENOME, I. N.
+\newcommand{\autorreferenciabibliografica}{%
+  \ifx\ultimosobrenomeautorstr\@empty
+    \begingroup
+      \def\\{, }%
+      \MakeTextUppercase{\@author}%
+    \endgroup
+  \else
+    \MakeTextUppercase{\ultimosobrenomeautorstr}, \iniciaisautor
+  \fi
+}
+\makeatother
+
+% -------------------------------------------------------------------------
+% 3. AMBIENTE DE TESTES
+% -------------------------------------------------------------------------
 \begin{document}
 
-\newpage
-\thispagestyle{empty}
-\section*{Bateria de Testes: Nomes Complexos}
+\section*{Bateria de Testes: Tratamento de Nomes Complexos}
 
 \newcommand{\testanome}[2]{%
   \ultimosobrenomeautor{#1}%
@@ -14,19 +123,24 @@
   \hrule\vspace{0.3cm}
 }
 
-% 1. Teste de Sobrenome Composto (Grau de parentesco - Exigência da norma PPGT)
+% Teste 1: Padrão brasileiro com Grau de Parentesco
 \testanome{Silva Júnior}{José Augusto da}
 
-% 2. Teste de Nome Real (Dom Pedro I - Múltiplas partículas e tamanho extremo)
+% Teste 2: Tamanho extremo com múltiplas partículas
 \testanome{Bragança}{Pedro de Alcântara Francisco Antônio João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de}
 
-% 3. Teste de Nome com Hífen
+% Teste 3: Hífen (O motor extrai o 'J' de Jean-Jacques corretamente)
 \testanome{Rousseau}{Jean-Jacques}
 
-% 4. Teste de Partícula Estrangeira e Sobrenome Duplo com Hífen
+% Teste 4: Partícula e Sobrenome duplo hífen
 \testanome{García-Márquez}{Gabriel José de la Concordia}
 
-% 5. Teste de Partícula "van" / "von"
-\testanome{Gassen}{Win van}
+% Teste 5: Partículas Germânicas e Holandesas (van, der, von)
+\testanome{Gassen}{Win van der}
+\testanome{Helmholtz}{Hermann von}
 
-\end{document} % Para a compilação aqui para você ler os resultados
+% Teste 6: Partículas Italianas e Espanholas (di, y)
+\testanome{Vinci}{Leonardo di ser Piero}
+\testanome{Cervantes}{Miguel de Cervantes y Saavedra}
+
+\end{document}
