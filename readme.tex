@@ -34,7 +34,7 @@ A migração de um processador de texto visual para um sistema de preparação d
 
 \begin{itemize}
     \item \textbf{Paradigma Visual vs. Lógico:} No Word, opera-se no modelo WYSIWYG (\textit{What You See Is What You Get}), onde a formatação é aplicada diretamente na tela. No \LaTeX, trabalha-se com estrutura semântica (declarando o que é um capítulo, uma citação ou uma equação), confiando ao motor tipográfico a responsabilidade pelo layout final. O autor precisa abrir mão da ilusão de ``controle manual'' em prol da consistência sistêmica.
-    \item \textbf{Curva de Aprendizado e Depuração de Erros:} A necessidade de que cada chave aberta  \texttt{\{} precise ter sua correspondente fechada \texttt{\}}, declarar ambientes estritos (\texttt{\textbackslash begin} e \texttt{\textbackslash end}) e compilar o código repetidamente exige uma postura metódica. Diferente do Word, onde erros tipográficos apenas sujam a página, no \LaTeX \ um erro de sintaxe pode interromper toda a compilação.
+    \item \textbf{Curva de Aprendizado e Depuração de Erros:} A regra de que cada chave aberta \texttt{\{} precisa ter sua correspondente fechada \texttt{\}}, declarar ambientes estritos (\texttt{\textbackslash begin} e \texttt{\textbackslash end}) e compilar o código repetidamente exige uma postura metódica. Diferente do Word, onde erros tipográficos apenas sujam a página, no \LaTeX \ um erro de sintaxe pode interromper toda a compilação.
     \item \textbf{Gestão de Elementos Flutuantes (Floats):} Tabelas, quadros e figuras não ficam ``presos'' exatamente na linha de código onde foram declarados. O algoritmo do \LaTeX \ calcula matematicamente o local ideal (topo, base da página ou página isolada) para não gerar espaços em branco ou quebrar o fluxo de leitura, o que muitas vezes frustra quem está acostumado a ``empurrar'' imagens no texto com a tecla Enter (isso é muito bom também, porque sabemos como é frustrante no Word tentar manter o layout manualmente, especialmente quando adicionamos mais texto).
 \end{itemize}
 
@@ -105,7 +105,10 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \end{itemize}
     \end{atencao}
 
-    \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente o número da figura ou tabela, como ``Figura 1'' ou ``conforme a Tabela 2''. Não só porque se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado, mas porque o \LaTeX \ é inteligente e atualiza todos os números automaticamente. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. Dessa forma, suas referências estarão sempre corretas, independentemente de alterações na ordem ou na quantidade de figuras e tabelas.
+    \item \textbf{Fórmulas Matemáticas:} Para inserir equações na mesma linha do texto, envolva a expressão com cifrões (ex: \texttt{\$E=mc\textasciicircum 2\$}). Para equações destacadas, centralizadas e numeradas automaticamente, utilize o ambiente \texttt{\textbackslash begin\{equation\}} e \texttt{\textbackslash end\{equation\}}.
+    \item \textbf{O Desafio das Tabelas:} A formatação nativa de tabelas no \LaTeX \ pode ser frustrante inicialmente. A recomendação de ouro é utilizar ferramentas visuais online, como o \href{https://www.tablesgenerator.com/}{TablesGenerator.com}. Você constrói sua tabela graficamente (ou cola do Excel) e o site gera o código \LaTeX \ pronto para ser copiado para o seu documento.
+
+    \item \textbf{Referências Cruzadas Inteligentes (\texttt{\textbackslash autoref}):} Jamais digite textualmente nomes e números como ``Figura 1'' ou ``Tabela 2''. O \LaTeX \ atualiza a numeração dinamicamente de acordo com a posição dos elementos. Adicione um \texttt{\textbackslash label\{nome-do-marcador\}} imediatamente após criar a legenda da sua figura ou tabela, e cite-a no texto exclusivamente com \texttt{\textbackslash autoref\{nome-do-marcador\}}. O comando \texttt{\textbackslash autoref} identifica automaticamente a natureza do elemento e imprime o prefixo correto com a inicial maiúscula (ex: Figura 1, Tabela 2, Seção 3.1), transformando tudo em um link clicável e evitando inconsistências no texto.
 \end{itemize}
 
 \section{Configuração Inicial do Documento Principal}
@@ -129,14 +132,21 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
 O template conta com atalhos e pacotes configurados para otimizar o fluxo de trabalho e garantir aderência às normas sem esforço manual:
 
 \begin{itemize}
-    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{imagens/\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, ao inserir uma figura, basta usar o nome do arquivo (ex: \texttt{\textbackslash includegraphics\{foto.png\}}), sem a necessidade de digitar o caminho completo.
-    \item \textbf{Numeração Automática (O fim da neurose):} No Word, inserir uma nova figura no meio do capítulo gera a neurose de ter que caçar e renumerar manualmente todas as imagens e menções subsequentes no texto. No \LaTeX, isso não existe. O compilador numera figuras, tabelas e quadros de forma autônoma. Basta adicionar um \texttt{\textbackslash label\{marcador\}} logo após a legenda da imagem e chamá-la no texto com \texttt{\textbackslash ref\{marcador\}}. Se a ordem das imagens mudar, o motor recalcula e atualiza todos os números magicamente na próxima compilação.
-    \item \textbf{Guia Rápido de Citações:} A formatação do autor e do ano muda de acordo com a posição da citação na frase.
+    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{imagens/\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, basta usar o nome do arquivo (ex: \texttt{\textbackslash includegraphics\{foto.png\}}). 
+    
+    \begin{atencao}[Nomes de Arquivos de Imagem]
+    A mesma regra dos arquivos \texttt{.tex} se aplica rigorosamente aqui: jamais utilize espaços, acentos ou cedilha nos nomes das suas imagens. Um arquivo chamado \texttt{grafico fluxo.png} fará a compilação falhar silenciosamente. Renomeie sempre para formatos como \texttt{grafico-fluxo.png}.
+    \end{atencao}
+    
+    \item \textbf{Numeração Automática (O fim da neurose):} No Word, inserir uma nova figura no meio do capítulo gera a neurose de ter que caçar e renumerar manualmente todas as imagens e menções subsequentes. No \LaTeX, isso não existe. O compilador numera figuras, tabelas e quadros de forma autônoma. Basta adicionar um \texttt{\textbackslash label\{marcador\}} logo após a legenda e chamá-la no texto com \texttt{\textbackslash autoref\{marcador\}}.
+    
+    \item \textbf{Gestão Bibliográfica e Citações:} As suas referências não são redigidas manualmente no texto. Elas ficam armazenadas estruturalmente em um arquivo externo chamado \texttt{referencias.bib}. Recomenda-se o uso de gerenciadores como Mendeley, Zotero ou a exportação do Google Acadêmico para popular esse arquivo. No texto, a formatação muda de acordo com a chamada:
     \begin{itemize}
         \item Use \texttt{\textbackslash citet\{chave\}} para citações \textbf{TEXTUAIS} (citação indireta integrada). O autor faz parte da frase e apenas o ano fica entre parênteses.\\ \textit{Exemplo no código:} Segundo \texttt{\textbackslash citet\{davis2004\}}, os acidentes...\\ \textit{Resultado no PDF:} Segundo Davis (2004), os acidentes...
         \item Use \texttt{\textbackslash citep\{chave\}} para citações com \textbf{PARÊNTESES} (no fim da afirmação). O autor e o ano ficam isolados entre parênteses no final da ideia.\\ \textit{Exemplo no código:} ... na modelagem de acidentes \texttt{\textbackslash citep\{davis2004\}}.\\ \textit{Resultado no PDF:} ... na modelagem de acidentes (DAVIS, 2004).
     \end{itemize}
-    \item \textbf{Siglas e Símbolos:} Para gerar as listas de forma automatizada, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. Para maior conveniência, o template também oferece os atalhos diretos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}, com os mesmos argumentos do comando principal.
+    
+    \item \textbf{Siglas e Símbolos:} Para gerar as listas pré-textuais, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. O template oferece os atalhos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}. Fique tranquilo: o motor do \LaTeX \ cuidará de organizar todas as entradas em estrita ordem alfabética de forma autônoma durante a compilação.
 \end{itemize}
 
 \section{Estrutura e Inclusão de Capítulos}
@@ -202,7 +212,23 @@ Em termos simples, o GitHub atua como uma ``máquina do tempo'' e um diário de 
 
 Embora exija o aprendizado de alguns conceitos novos (como \textit{commit}, \textit{push} e \textit{pull}), usar o GitHub transforma a ansiedade de perder dados em uma tranquilidade absoluta, permitindo que você escreva e reescreva sua pesquisa com total liberdade e rastreabilidade.
 
-\section{Apêndice A: Por que não utilizar o pacote \texttt{abntex2}?}
+\section{Apêndice A: Comportamento das Nomenclaturas e Siglas}
+
+A geração das listas de siglas e símbolos costuma ser um ponto de grande frustração na reta final da escrita de uma dissertação. No fluxo tradicional, o pesquisador anota manualmente cada nova sigla em um arquivo separado e depois luta para colocá-las em estrita ordem alfabética, revisando se não esqueceu nenhuma.
+
+No template do PPGT, esse processo é inteiramente abstraído. O comportamento das nomenclaturas segue uma lógica declarativa e descentralizada:
+
+\begin{itemize}
+    \item \textbf{Declaração Contextual:} Você não precisa manter uma lista separada. Quando utilizar uma sigla pela primeira vez no meio de qualquer capítulo, declare-a imediatamente usando o comando \texttt{\textbackslash sigla\{IBGE\}\{Instituto Brasileiro de Geografia e Estatística\}}. 
+    \item \textbf{Ordenação Alfabética Autônoma:} Não se preocupe com a ordem em que as siglas ou símbolos aparecem no seu texto. Durante o processo de compilação, o motor do \LaTeX \ varre todos os capítulos, coleta cada comando \texttt{\textbackslash sigla} ou \texttt{\textbackslash simbolo} declarado, remove duplicatas automaticamente e processa a lista pré-textual em rigorosa ordem alfabética.
+    \item \textbf{Diferenciação Semântica:} Mantenha a organização lógica do seu código utilizando \texttt{\textbackslash sigla\{...\}\{...\}} para instituições e acrônimos, e \texttt{\textbackslash simbolo\{...\}\{...\}} para variáveis matemáticas e grandezas físicas (ex: \texttt{\textbackslash simbolo\{\$v\_m\$\}\{Velocidade média\}}). O sistema separará e construirá a Lista de Abreviaturas e Siglas e a Lista de Símbolos nas páginas corretas.
+\end{itemize}
+
+\begin{atencao}[A Compilação das Listas]
+Para que a ordenação alfabética seja gerada corretamente, ferramentas auxiliares como o \textit{MakeIndex} entram em ação nos bastidores. Se você estiver usando o Overleaf, isso ocorre de forma invisível. Caso compile localmente, lembre-se de que pode ser necessário compilar o documento duas vezes para que a lista reflita as últimas siglas adicionadas.
+\end{atencao}
+
+\section{Apêndice B: Por que não utilizar o pacote \texttt{abntex2}?}
 
 Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro é importar o pacote \texttt{abntex2} para gerenciar a formatação. Neste projeto, essa prática foi terminantemente descartada por razões arquiteturais e normativas:
 
