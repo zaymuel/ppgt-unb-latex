@@ -20,6 +20,7 @@
 
 \RequirePackage{graphicx}
 \RequirePackage[table]{xcolor}
+\definecolor{unbblue}{HTML}{003a7a}
 
 % Define as margens do documento (PPGT 2023: todas as margens com 25 mm)
 \RequirePackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
@@ -394,7 +395,16 @@
 % -------------------------------------------------------------------------
 \newcommand{\capaprincipal}{
 \begin{titlepage}
-\AddToShipoutPicture*{\BackgroundPicture{template-FT-UnB/logotipos/capa_fundo.png}{21cm}}
+\AddToShipoutPictureBG*{%
+  % Places logo_unb.pdf at the top edge
+  \AtPageUpperLeft{%
+    \raisebox{-\height}{\includegraphics[width=\paperwidth]{template-FT-UnB/logotipos/logo_unb.pdf}}%
+  }%
+  % Places the blue rectangle at the bottom edge
+  \AtPageLowerLeft{%
+    \color{unbblue}\rule{\paperwidth}{9cm} % Adjust 'X cm' to change the banner's height
+  }%
+}
 \begin{center}
 \vspace*{8.2cm}
 
@@ -407,8 +417,10 @@
 {\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}\par}
 
 \vfill
+{\color{white}
 {\Large\bfseries FACULDADE DE TECNOLOGIA}\\[1cm]
-{\Large\bfseries UNIVERSIDADE DE BRASÍLIA}
+{\huge\bfseries UNIVERSIDADE DE BRASÍLIA}
+}
 \end{center}
 \end{titlepage}
 }
