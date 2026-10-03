@@ -5,6 +5,7 @@
 \usepackage[brazilian]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{upquote}
+\usepackage{hyperref}
 \usepackage{tcolorbox}
 
 % Criação de um ambiente padrão para alertas e armadilhas comuns
@@ -83,8 +84,28 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \item \textbf{Listas Numeradas (\texttt{enumerate}):} Cria listas sequenciais e numeradas automaticamente. O funcionamento lógico é idêntico ao ambiente de marcadores, bastando usar \texttt{\textbackslash begin\{enumerate\}} e \texttt{\textbackslash end\{enumerate\}}.
     \item \textbf{Aspas Duplas (\texttt{``...''}):} O caractere de aspas retas do teclado (\verb|"|) não funciona corretamente no LaTeX. Para criar aspas duplas tipograficamente exatas, utilize duas crases juntas para abrir (\verb|``|) e dois apóstrofos simples para fechar (\verb|''|).
     \item \textbf{Aspas Simples (\texttt{`...'}):} Para criar aspas simples tipograficamente corretas, utilize uma crase (\verb|`|) para abrir e um apóstrofo simples (\verb|'|) para fechar. O manual do PPGT recomenda o uso de aspas simples para citações dentro de citações, mantendo a consistência tipográfica.
-    \item \textbf{Parágrafos e Quebras de Linha:} No Word, apertar ``Enter'' uma vez muda de linha. No \LaTeX, uma única quebra de linha no código é ignorada no pdf final. Para iniciar um novo parágrafo, é necessário pular uma linha em branco no código (apertar ``Enter'' duas vezes). Evite usar \texttt{\textbackslash\textbackslash} no meio do texto, pois isso força uma quebra de linha sem o recuo semântico adequado do parágrafo.
-    \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente "veja a Figura 1" ou "conforme a Tabela 2". Se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. O \LaTeX \ atualizará todos os números automaticamente. 
+    \item \textbf{Parágrafos e Quebras de Linha:} O \LaTeX \ separa drasticamente a forma como você digita da forma como o documento é impresso. No Word, apertar a tecla \texttt{Enter} quebra a linha imediatamente, mas se você fizer o mesmo no \LaTeX, você será solenemente ignorado e o texto continuará fluindo no mesmo parágrafo no PDF, porque uma única quebra de linha no código-fonte é para critérios de organização do código e não para espaçamento visual no documento final.
+
+    Para iniciar um novo parágrafo e garantir que o recuo da primeira linha seja aplicado corretamente (conforme exigido pelas normas do PPGT), é estritamente necessário \textbf{deixar uma linha em branco no código} (ou seja, apertar \texttt{Enter} duas vezes). Cada bloco de texto separado por uma linha em branco no código será interpretado como um novo parágrafo autônomo.
+
+    \begin{atencao}[A Ilusão do Espaçamento e a Quebra Forçada]
+    A transição do Word geralmente traz dois vícios de formatação que quebram o documento no LaTeX:
+
+    \textbf{1. Apertar Enter várias vezes para criar espaço:} No Word, se você apertar \texttt{Enter} dez vezes, criará um buraco enorme na página. No LaTeX, não importa se você deixou uma ou vinte linhas em branco no código; o compilador entenderá apenas que um novo parágrafo começou e aplicará exatamente o mesmo espaçamento padrão da norma. O motor tipográfico ignora espaços vazios redundantes.
+
+    \textbf{2. O uso indevido do \texttt{\textbackslash\textbackslash}:} Evite usar duas barras invertidas (\texttt{\textbackslash\textbackslash}) no meio de um texto corrido. Elas forçam uma quebra de linha bruta, jogando o texto para baixo sem o recuo semântico do novo parágrafo. O comando \texttt{\textbackslash\textbackslash} não significa ``novo parágrafo'', mas sim ``corte esta linha aqui'', devendo ser reservado para tabelas ou equações matemáticas.
+
+    \vspace{0.3cm}
+    \textbf{O QUE FAZER ENTÃO?} \\
+    Se você realmente precisar manipular o espaço vertical de forma manual, utilize os comandos estruturais corretos:
+    \begin{itemize}
+        \item \textbf{Para pular de página:} Use \texttt{\textbackslash newpage} ou \texttt{\textbackslash clearpage}. (Vale lembrar que o comando \texttt{\textbackslash chapter} já inicia uma nova página automaticamente).
+        \item \textbf{Para adicionar um espaço específico:} Use \texttt{\textbackslash vspace\{2cm\}} para forçar exatamente 2 centímetros de espaço vertical entre dois elementos.
+        \item \textbf{Para empurrar texto para o rodapé:} Use \texttt{\textbackslash vfill}. Esse comando funciona como uma ``mola'', preenchendo todo o espaço vazio disponível e empurrando o conteúdo seguinte para a margem inferior da página.
+    \end{itemize}
+    \end{atencao}
+
+    \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente o número da figura ou tabela, como ``Figura 1'' ou ``conforme a Tabela 2''. Não só porque se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado, mas porque o \LaTeX \ é inteligente e atualiza todos os números automaticamente. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. Dessa forma, suas referências estarão sempre corretas, independentemente de alterações na ordem ou na quantidade de figuras e tabelas.
 \end{itemize}
 
 \section{Configuração Inicial do Documento Principal}
@@ -144,7 +165,44 @@ Se você precisar alterar o nome de um capítulo, ou adicionar um capítulo inte
     \item Atualize o bloco de comandos \texttt{\textbackslash include\{...\}} no \texttt{principal.tex} para refletir o nome exato do novo arquivo, inserindo-o na ordem lógica desejada.
 \end{enumerate}
 
-\section{Tópicos Avançados: Por que não utilizar o pacote \texttt{abntex2}?}
+\section{Ambientes de Compilação: Onde escrever e compilar seu código}
+
+Assim como o Word precisa do aplicativo instalado no computador para abrir arquivos \texttt{.docx}, o código \LaTeX \ precisa de um ``motor'' (compilador) e de uma interface (editor) para ler seus arquivos \texttt{.tex} e gerar o PDF final. Existem duas abordagens principais para montar o seu ambiente de trabalho:
+
+\subsection{A Rota da Nuvem: Overleaf}
+
+Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{www.overleaf.com}) é o caminho com menor atrito. Trata-se de uma plataforma online que processa tudo nos servidores deles. Não requer instalação, já possui todos os pacotes pré-carregados e salva seu progresso na nuvem. Basta criar uma conta, fazer o upload da pasta do seu template PPGT e começar a escrever. Ele também permite que o orientador acesse o link para revisar o documento remotamente (mas eu pessoalmente prefiro compartilhar o PDF e deixar ele comentar o PDF para depois refletir as mudanças no código-fonte).
+
+\subsection{A Rota Local: MiKTeX, Perl e IDEs (Windows)}
+
+Para pesquisadores que preferem trabalhar \textit{offline}, precisam compilar documentos imensos mais rapidamente ou desejam usar o controle de versão do GitHub de forma nativa, é necessário preparar o ambiente local no Windows. Isso exige três ferramentas trabalhando em conjunto:
+
+\begin{itemize}
+    \item \textbf{O Motor Tipográfico (MiKTeX):} O núcleo do sistema. O MiKTeX é a distribuição \LaTeX \ padrão para Windows. Ele traduz os comandos matemáticos e textuais para a tela. Sua maior vantagem é a instalação de pacotes sob demanda (\textit{on-the-fly}): se o seu código pedir um pacote novo, o MiKTeX o baixa da internet automaticamente durante a compilação.
+    \item \textbf{A Dependência Oculta (Perl):} O \LaTeX \ depende de scripts externos para gerenciar tarefas pesadas, como compilações contínuas (\texttt{latexmk}), processamento avançado de bibliografias e índices. No Windows, o motor não consegue rodar essas ferramentas nativamente. É estritamente necessário instalar um interpretador, como o \textbf{Strawberry Perl}, para evitar que a compilação trave de forma silenciosa e inexplicável.
+    \item \textbf{O Editor de Código (IDE):} Você precisa de um programa desenhado para escrever código confortavelmente. O \textbf{Visual Studio Code (VS Code)} é uma das opções mais poderosas da atualidade; instalando a extensão \textbf{LaTeX Workshop}, você transforma o VS Code em uma máquina de escrever acadêmica com autocompletar de comandos, realce de sintaxe e pré-visualização sincronizada do PDF. Outra alternativa robusta e pronta para uso é o \textbf{TeXstudio}, um software independente inteiramente dedicado ao LaTeX.
+\end{itemize}
+
+Após instalar essas três ferramentas, você estará pronto para compilar seus documentos localmente no Windows. Lembre-se de sempre testar a compilação com o arquivo \texttt{principal.tex} para garantir que todos os pacotes e scripts estão funcionando corretamente.
+
+\section{Tópicos Avançados: Controle de Versão com GitHub}
+
+Para quem está acostumado exclusivamente com o Microsoft Word, o ciclo de vida de um documento costuma terminar em uma pasta caótica cheia de arquivos nomeados como \textit{dissertacao\_final.docx}, \textit{dissertacao\_final\_revisada.docx}, e \textit{dissertacao\_final\_AGORAVAI.docx}. Além disso, o recurso de ``Controlar Alterações'' (Track Changes) do Word pode tornar o texto visualmente poluído e confuso quando há múltiplas revisões do orientador.
+
+Como o \LaTeX \ baseia-se em arquivos de texto puro (arquivos \texttt{.tex}), ele abre as portas para ferramentas profissionais de engenharia de software, sendo o \textbf{Git} (e a plataforma \textbf{GitHub}) a mais famosa delas. 
+
+Em termos simples, o GitHub atua como uma ``máquina do tempo'' e um diário de bordo superpoderoso para a sua dissertação:
+
+\begin{itemize}
+    \item \textbf{O Fim das Cópias Múltiplas:} Você trabalha em um único arquivo (ex: \texttt{principal.tex}). O Git salva o histórico das versões nos bastidores, invisível para você no dia a dia, mantendo sua pasta de trabalho completamente limpa.
+    \item \textbf{Fotografias do Progresso (Commits):} Em vez de apenas apertar ``Salvar'', no Git você faz um \textit{commit} — que é como tirar uma fotografia exata de como seu documento estava naquele segundo, acompanhada de um bilhete explicando o que mudou (ex: \textit{``Adicionada a tabela de resultados no capítulo 3''}). 
+    \item \textbf{Controle de Alterações Cirúrgico:} Se você apagou um parágrafo importante há três meses e precisa dele de volta, o GitHub permite revisitar qualquer ``fotografia'' do passado. Ele mostra exatamente qual linha foi adicionada (em verde) e qual foi apagada (em vermelho), sem poluir a leitura do seu documento atual.
+    \item \textbf{Segurança contra Desastres:} O GitHub hospeda o histórico do seu trabalho na nuvem. Se o seu computador quebrar ou for roubado, todo o seu texto, imagens e bibliografias estão seguros e podem ser baixados em outro computador em segundos.
+\end{itemize}
+
+Embora exija o aprendizado de alguns conceitos novos (como \textit{commit}, \textit{push} e \textit{pull}), usar o GitHub transforma a ansiedade de perder dados em uma tranquilidade absoluta, permitindo que você escreva e reescreva sua pesquisa com total liberdade e rastreabilidade.
+
+\section{Apêndice A: Por que não utilizar o pacote \texttt{abntex2}?}
 
 Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro é importar o pacote \texttt{abntex2} para gerenciar a formatação. Neste projeto, essa prática foi terminantemente descartada por razões arquiteturais e normativas:
 
