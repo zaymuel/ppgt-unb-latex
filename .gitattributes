@@ -1,0 +1,5 @@
+/"templates em outros formatos" export-ignore
+README.adoc export-ignore
+tests.tex export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
