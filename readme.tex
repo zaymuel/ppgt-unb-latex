@@ -4,12 +4,20 @@
 \usepackage[utf8]{inputenc}
 \usepackage[brazilian]{babel}
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{upquote}
+\usepackage{tcolorbox}
 
-\title{Manual do Template LaTeX PPGT \\ Guia de Transição e Uso}
+% Criação de um ambiente padrão para alertas e armadilhas comuns
+\newtcolorbox{atencao}[1][Ponto de Atenção]{
+  colback=red!5!white,      % Fundo levemente avermelhado
+  colframe=red!75!black,    % Borda vermelha escura
+  fonttitle=\bfseries,      % Título em negrito
+  title=#1                  % Permite mudar o título se necessário
+}
 
 \title{Manual do Template \LaTeX \ PPGT \\ Guia de Transição e Uso}
 \author{Samuel Seixas Martin}
-\date{\today}
+\date{2 de outubro de 2026}
 
 \begin{document}
 
@@ -55,14 +63,27 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
 
 \begin{itemize}
     \item \textbf{Comentários (\texttt{\%}):} Qualquer caractere inserido após o símbolo de porcentagem em uma linha é ignorado pelo compilador. É a ferramenta ideal para deixar anotações estruturais no código ou desativar trechos de texto temporariamente sem apagá-los.
+    
+    \begin{atencao}[O Terror do Símbolo de Porcentagem]
+    Embora o \texttt{\%} seja extremamente útil para deixar comentários no código, ele é a causa número um de frases ``desaparecidas'' para os iniciantes. 
+
+    Se você quiser escrever que \textit{``a taxa de acidentes cresceu 50\% neste trecho''} e esquecer de escapar o caractere (digitando apenas \texttt{50\%}), o LaTeX transformará todo o resto do seu parágrafo em um comentário invisível a partir daquele ponto. Sempre utilize a barra invertida para imprimir o símbolo textualmente: \texttt{50\textbackslash\%}.
+    \end{atencao}
+    
+    \item \textbf{Caracteres Reservados:} Similarmente ao caractere de porcentagem (\texttt{\%}), outros símbolos como o \textit{E comercial} (\texttt{\&}), cifrão (\texttt{\$}), \textit{underline} (\texttt{\_}) e \textit{hashtag} (\texttt{\#}) possuem funções matemáticas e estruturais no motor do \LaTeX. Se você digitá-los soltos no texto (ex: ``R\$ 100,00'' ou ``P\&D''), a compilação falhará. É obrigatório ``escapá-los'' com uma barra invertida antes: \texttt{\textbackslash\&}, \texttt{\textbackslash\$}, \texttt{\textbackslash\_}, \texttt{\textbackslash\#}.
+
     \item \textbf{Itálico (\texttt{\textbackslash textit\{...\}}):} Inclina a fonte. Segundo as normas do PPGT, palavras em língua estrangeira à língua principal do texto devem obrigatoriamente ser escritas em itálico.
-    \item \textbf{Negrito (\texttt{\textbackslash textbf\{...\}}):} Aplica peso à fonte. Contudo, atenção ao rigor do PPGT: o manual especifica que palavras que se desejam dar destaque devem ser escritas entre aspas duplas ou com as iniciais em maiúsculo. Portanto, reserve o negrito estritamente para títulos de seções, numeração de ilustrações e elementos estruturais.
+    \item \textbf{Negrito (\texttt{\textbackslash textbf\{...\}}):} Aplica peso à fonte. 
+    
+    \begin{atencao}[Evitar negrito]
+    Atenção ao rigor do PPGT: o manual especifica que palavras que se desejam dar destaque devem ser escritas entre aspas duplas ou com as iniciais em maiúsculo, e não com o negrito, que é reservado estritamente para títulos de seções, numeração de ilustrações e elementos estruturais.
+    \end{atencao}
+
     \item \textbf{Listas Não Ordenadas (\texttt{itemize}):} Cria listas com marcadores (bullet points). Utiliza-se o ambiente \texttt{\textbackslash begin\{itemize\}} e \texttt{\textbackslash end\{itemize\}}, declarando cada nova linha interna com o comando \texttt{\textbackslash item}.
     \item \textbf{Listas Numeradas (\texttt{enumerate}):} Cria listas sequenciais e numeradas automaticamente. O funcionamento lógico é idêntico ao ambiente de marcadores, bastando usar \texttt{\textbackslash begin\{enumerate\}} e \texttt{\textbackslash end\{enumerate\}}.
-    \item \textbf{Aspas Duplas (\texttt{``...''}):} O caractere de aspas retas do teclado (\texttt{"}) não funciona corretamente no \LaTeX. Para criar aspas duplas tipograficamente exatas, utilize duas crases juntas para abrir (\texttt{``}) e dois apóstrofos simples para fechar (\texttt{''}). O manual do PPGT determina o uso de aspas duplas para dar destaque a palavras específicas no texto, preterindo o uso do negrito para essa função.
-    \item \textbf{Aspas Simples (\texttt{`...'}):} Para criar aspas simples tipograficamente corretas, utilize uma crase (\texttt{`}) para abrir e um apóstrofo simples (\texttt{'}) para fechar. O manual do PPGT recomenda o uso de aspas simples para citações dentro de citações, mantendo a consistência tipográfica.
+    \item \textbf{Aspas Duplas (\texttt{``...''}):} O caractere de aspas retas do teclado (\verb|"|) não funciona corretamente no LaTeX. Para criar aspas duplas tipograficamente exatas, utilize duas crases juntas para abrir (\verb|``|) e dois apóstrofos simples para fechar (\verb|''|).
+    \item \textbf{Aspas Simples (\texttt{`...'}):} Para criar aspas simples tipograficamente corretas, utilize uma crase (\verb|`|) para abrir e um apóstrofo simples (\verb|'|) para fechar. O manual do PPGT recomenda o uso de aspas simples para citações dentro de citações, mantendo a consistência tipográfica.
     \item \textbf{Parágrafos e Quebras de Linha:} No Word, apertar ``Enter'' uma vez muda de linha. No \LaTeX, uma única quebra de linha no código é ignorada no pdf final. Para iniciar um novo parágrafo, é necessário pular uma linha em branco no código (apertar ``Enter'' duas vezes). Evite usar \texttt{\textbackslash\textbackslash} no meio do texto, pois isso força uma quebra de linha sem o recuo semântico adequado do parágrafo.
-    \item \textbf{Caracteres Reservados:} Símbolos como o \textit{E comercial} (\texttt{\&}), cifrão (\texttt{\$}), \textit{underline} (\texttt{\_}) e \textit{hashtag} (\texttt{\#}) possuem funções matemáticas e estruturais no motor do \LaTeX. Se você digitá-los soltos no texto (ex: "R\$ 100,00" ou "P\&D"), a compilação falhará. É obrigatório ``escapá-los'' com uma barra invertida antes: \texttt{\textbackslash\&}, \texttt{\textbackslash\$}, \texttt{\textbackslash\_}, \texttt{\textbackslash\#}.
     \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente "veja a Figura 1" ou "conforme a Tabela 2". Se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. O \LaTeX \ atualizará todos os números automaticamente. 
 \end{itemize}
 
@@ -76,9 +97,9 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
     \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:).
     \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
     \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
-    \item \textbf{Banca Examinadora:} Atualize o orientador em \texttt{\textbackslash membrodabancai\{...\}} e \texttt{\textbackslash membrodabancaifuncao\{Orientador\}}, seguindo a numeração romana (ii, iii, etc.) para os demais membros e suas funções.
+    \item \textbf{Banca Examinadora:} Atualize o orientador em \texttt{\textbackslash membrodabancai\{...\}} e \\ \texttt{\textbackslash membrodabancaifuncao\{Orientador\}}, seguindo a numeração romana (ii, iii, etc.) para os demais membros e suas funções.
     \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
-    \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
+    \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
     \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{T.DM-XXX/AAAA\}} é o registro oficial caso haja necessidade.
 \end{itemize}
 
@@ -94,7 +115,7 @@ O template conta com atalhos e pacotes configurados para otimizar o fluxo de tra
         \item Use \texttt{\textbackslash citet\{chave\}} para citações \textbf{TEXTUAIS} (citação indireta integrada). O autor faz parte da frase e apenas o ano fica entre parênteses.\\ \textit{Exemplo no código:} Segundo \texttt{\textbackslash citet\{davis2004\}}, os acidentes...\\ \textit{Resultado no PDF:} Segundo Davis (2004), os acidentes...
         \item Use \texttt{\textbackslash citep\{chave\}} para citações com \textbf{PARÊNTESES} (no fim da afirmação). O autor e o ano ficam isolados entre parênteses no final da ideia.\\ \textit{Exemplo no código:} ... na modelagem de acidentes \texttt{\textbackslash citep\{davis2004\}}.\\ \textit{Resultado no PDF:} ... na modelagem de acidentes (DAVIS, 2004).
     \end{itemize}
-    \item \textbf{Siglas e Símbolos:} Para gerar as listas de forma automatizada, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. Para maior conveniência, o template também oferece os atalhos diretos \texttt{\textbackslash simbolo\{<símbolo>\}\{<descrição>\}} e \texttt{\textbackslash sigla\{<sigla>\}\{<descrição>\}}.
+    \item \textbf{Siglas e Símbolos:} Para gerar as listas de forma automatizada, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. Para maior conveniência, o template também oferece os atalhos diretos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}, com os mesmos argumentos do comando principal.
 \end{itemize}
 
 \section{Estrutura e Inclusão de Capítulos}
@@ -114,7 +135,12 @@ No meio do arquivo \texttt{principal.tex}, você encontrará o bloco responsáve
 Se você precisar alterar o nome de um capítulo, ou adicionar um capítulo inteiramente novo à sua dissertação, siga estes dois passos:
 
 \begin{enumerate}
-    \item Crie o novo arquivo (ou renomeie o existente) diretamente dentro da pasta \texttt{capitulos/}. \textbf{Atenção:} Jamais utilize espaços, acentos ou caracteres especiais nos nomes dos arquivos (ex: prefira \texttt{capitulo6-discussao.tex} em vez de \texttt{capítulo 6 - discussão.tex}).
+    \item Crie o novo arquivo (ou renomeie o existente) diretamente dentro da pasta \texttt{capitulos/}. 
+    
+    \begin{atencao}
+    Jamais utilize espaços, acentos ou caracteres especiais nos nomes dos arquivos (ex: prefira \texttt{capitulo6-discussao.tex} em vez de \texttt{capítulo 6 - discussão.tex}).
+    \end{atencao}
+    
     \item Atualize o bloco de comandos \texttt{\textbackslash include\{...\}} no \texttt{principal.tex} para refletir o nome exato do novo arquivo, inserindo-o na ordem lógica desejada.
 \end{enumerate}
 
