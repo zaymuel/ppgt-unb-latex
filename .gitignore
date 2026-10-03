@@ -58,6 +58,7 @@ latex.out/
 
 # Nomenclature List
 *.nlo
+*.nls
 
 # Theorem List
 *.thm
