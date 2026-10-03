@@ -6,6 +6,8 @@
 \usepackage[margin=2.5cm]{geometry}
 
 \title{Manual do Template LaTeX PPGT \\ Guia de Transição e Uso}
+
+\title{Manual do Template \LaTeX \ PPGT \\ Guia de Transição e Uso}
 \author{Samuel Seixas Martin}
 \date{\today}
 
@@ -15,21 +17,41 @@
 
 \section{Introdução: A Transição do Microsoft Word}
 
-O objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O LaTeX retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
+O objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
 
-\section{Principais Dificuldades na Adaptação (Word para LaTeX)}
+\section{Principais Dificuldades na Adaptação}
 
 A migração de um processador de texto visual para um sistema de preparação de documentos algorítmico impõe desafios iniciais notórios:
 
 \begin{itemize}
-    \item \textbf{Paradigma Visual vs. Lógico:} No Word, opera-se no modelo WYSIWYG (\textit{What You See Is What You Get}), onde a formatação é aplicada diretamente na tela. No LaTeX, trabalha-se com estrutura semântica (declarando o que é um capítulo, uma citação ou uma equação), confiando ao motor tipográfico a responsabilidade pelo layout final. O autor precisa abrir mão da ilusão de ``controle manual'' em prol da consistência sistêmica.
-    \item \textbf{Curva de Aprendizado e Depuração de Erros:} A necessidade de balancear chaves \texttt{\{\}}, declarar ambientes estritos (\texttt{\textbackslash begin} e \texttt{\textbackslash end}) e compilar o código repetidamente exige uma postura metódica. Diferente do Word, onde erros tipográficos apenas sujam a página, no LaTeX um erro de sintaxe pode interromper toda a compilação.
-    \item \textbf{Gestão de Elementos Flutuantes (Floats):} Tabelas, quadros e figuras não ficam ``presos'' exatamente na linha de código onde foram declarados. O algoritmo do LaTeX calcula matematicamente o local ideal (topo, base da página ou página isolada) para não gerar espaços em branco ou quebrar o fluxo de leitura, o que muitas vezes frustra quem está acostumado a ``empurrar'' imagens no texto com a tecla Enter.
+    \item \textbf{Paradigma Visual vs. Lógico:} No Word, opera-se no modelo WYSIWYG (\textit{What You See Is What You Get}), onde a formatação é aplicada diretamente na tela. No \LaTeX, trabalha-se com estrutura semântica (declarando o que é um capítulo, uma citação ou uma equação), confiando ao motor tipográfico a responsabilidade pelo layout final. O autor precisa abrir mão da ilusão de ``controle manual'' em prol da consistência sistêmica.
+    \item \textbf{Curva de Aprendizado e Depuração de Erros:} A necessidade de que cada chave aberta  \texttt{\{} precise ter sua correspondente fechada \texttt{\}}, declarar ambientes estritos (\texttt{\textbackslash begin} e \texttt{\textbackslash end}) e compilar o código repetidamente exige uma postura metódica. Diferente do Word, onde erros tipográficos apenas sujam a página, no \LaTeX \ um erro de sintaxe pode interromper toda a compilação.
+    \item \textbf{Gestão de Elementos Flutuantes (Floats):} Tabelas, quadros e figuras não ficam ``presos'' exatamente na linha de código onde foram declarados. O algoritmo do \LaTeX \ calcula matematicamente o local ideal (topo, base da página ou página isolada) para não gerar espaços em branco ou quebrar o fluxo de leitura, o que muitas vezes frustra quem está acostumado a ``empurrar'' imagens no texto com a tecla Enter (isso é muito bom também, porque sabemos como é frustrante no Word tentar manter o layout manualmente, especialmente quando adicionamos mais texto).
 \end{itemize}
+
+\section{Estruturação Lógica: Capítulos e Seções}
+
+Uma das diferenças mais drásticas na transição do Word para o \LaTeX \ é o abandono da formatação visual em favor da estruturação semântica. No Word, o autor frequentemente seleciona o texto e aplica formatações manuais (negrito, tamanho de fonte) para simular um título. No \LaTeX, o usuário apenas declara a função lógica daquele bloco de texto, e o motor tipográfico consulta o arquivo de estilo para aplicar as normas do PPGT de forma padronizada.
+
+A hierarquia estrutural do documento é construída utilizando a seguinte cascata de comandos:
+
+\begin{itemize}
+    \item \textbf{Nível Primário (Capítulos):} Declarado via \texttt{\textbackslash chapter\{Título\}}. Este comando inicia automaticamente uma nova página e aplica a formatação primária (ex: \textbf{1 INTRODUÇÃO}).
+    \item \textbf{Nível Secundário (Seções ou Subcapítulos):} Declarado via \texttt{\textbackslash section\{Título\}}. Subdivide o capítulo recebendo o segundo nível de numeração (ex: \textbf{1.1 Objetivo}).
+    \item \textbf{Nível Terciário (Subseções):} Declarado via \texttt{\textbackslash subsection\{Título\}}. Desdobra a seção primária (ex: \textbf{1.1.2 Objetivos Específicos}).
+    \item \textbf{Nível Quaternário (Subsubseções):} Declarado via \texttt{\textbackslash subsubsection\{Título\}}. Representa a ramificação mais profunda recomendada no texto (ex: \textit{(a) Dominar o mundo}).
+\end{itemize}
+
+\textbf{Regras de Ouro da Estruturação:}
+\begin{enumerate}
+    \item Jamais digite os números manualmente (ex: \texttt{\textbackslash section\{1.1 Minha Seção\}}). O \LaTeX \ gerencia e atualiza toda a numeração dinamicamente; basta inserir o texto do título.
+    \item Nunca quebre a cadeia hierárquica. Não abra uma \texttt{\textbackslash subsection} sem antes ter declarado uma \texttt{\textbackslash section}.
+    \item Não digite os títulos inteiramente em CAIXA ALTA dentro do comando. Escreva normalmente (ex: \texttt{\textbackslash chapter\{Revisão Bibliográfica\}}). Se a norma exigir maiúsculas no documento final, o template converterá o texto automaticamente durante a compilação, mantendo o seu código limpo e preservando a capitalização correta para o sumário.
+\end{enumerate}
 
 \section{Sintaxe Básica e Formatação Textual}
 
-Para os iniciantes na linguagem LaTeX, alguns comandos fundamentais substituem os botões tradicionais da interface gráfica:
+Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substituem os botões tradicionais da interface gráfica:
 
 \begin{itemize}
     \item \textbf{Comentários (\texttt{\%}):} Qualquer caractere inserido após o símbolo de porcentagem em uma linha é ignorado pelo compilador. É a ferramenta ideal para deixar anotações estruturais no código ou desativar trechos de texto temporariamente sem apagá-los.
@@ -37,12 +59,64 @@ Para os iniciantes na linguagem LaTeX, alguns comandos fundamentais substituem o
     \item \textbf{Negrito (\texttt{\textbackslash textbf\{...\}}):} Aplica peso à fonte. Contudo, atenção ao rigor do PPGT: o manual especifica que palavras que se desejam dar destaque devem ser escritas entre aspas duplas ou com as iniciais em maiúsculo. Portanto, reserve o negrito estritamente para títulos de seções, numeração de ilustrações e elementos estruturais.
     \item \textbf{Listas Não Ordenadas (\texttt{itemize}):} Cria listas com marcadores (bullet points). Utiliza-se o ambiente \texttt{\textbackslash begin\{itemize\}} e \texttt{\textbackslash end\{itemize\}}, declarando cada nova linha interna com o comando \texttt{\textbackslash item}.
     \item \textbf{Listas Numeradas (\texttt{enumerate}):} Cria listas sequenciais e numeradas automaticamente. O funcionamento lógico é idêntico ao ambiente de marcadores, bastando usar \texttt{\textbackslash begin\{enumerate\}} e \texttt{\textbackslash end\{enumerate\}}.
-    \item \textbf{Aspas Duplas (\texttt{``...''}):} O caractere de aspas retas do teclado (\texttt{"}) não funciona corretamente no LaTeX. Para criar aspas duplas tipograficamente exatas, utilize duas crases juntas para abrir (\texttt{``}) e dois apóstrofos simples para fechar (\texttt{''}). O manual do PPGT determina o uso de aspas duplas para dar destaque a palavras específicas no texto, preterindo o uso do negrito para essa função.
+    \item \textbf{Aspas Duplas (\texttt{``...''}):} O caractere de aspas retas do teclado (\texttt{"}) não funciona corretamente no \LaTeX. Para criar aspas duplas tipograficamente exatas, utilize duas crases juntas para abrir (\texttt{``}) e dois apóstrofos simples para fechar (\texttt{''}). O manual do PPGT determina o uso de aspas duplas para dar destaque a palavras específicas no texto, preterindo o uso do negrito para essa função.
     \item \textbf{Aspas Simples (\texttt{`...'}):} Para criar aspas simples tipograficamente corretas, utilize uma crase (\texttt{`}) para abrir e um apóstrofo simples (\texttt{'}) para fechar. O manual do PPGT recomenda o uso de aspas simples para citações dentro de citações, mantendo a consistência tipográfica.
-    \item \textbf{Parágrafos e Quebras de Linha:} No Word, apertar 'Enter' uma vez muda de linha. No LaTeX, uma única quebra de linha no código é ignorada no pdf final. Para iniciar um novo parágrafo, é necessário pular uma linha em branco no código (apertar 'Enter' duas vezes). Evite usar \texttt{\textbackslash\textbackslash} no meio do texto, pois isso força uma quebra de linha sem o recuo semântico adequado do parágrafo.
-    \item \textbf{Caracteres Reservados:} Símbolos como o \textit{E comercial} (\texttt{\&}), cifrão (\texttt{\$}), \textit{underline} (\texttt{\_}) e \textit{hashtag} (\texttt{\#}) possuem funções matemáticas e estruturais no motor do LaTeX. Se você digitá-los soltos no texto (ex: "R\$ 100,00" ou "P\&D"), a compilação falhará. É obrigatório ``escapá-los'' com uma barra invertida antes: \texttt{\textbackslash\&}, \texttt{\textbackslash\$}, \texttt{\textbackslash\_}, \texttt{\textbackslash\#}.
-    \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente "veja a Figura 1" ou "conforme a Tabela 2". Se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. O LaTeX atualizará todos os números automaticamente. 
+    \item \textbf{Parágrafos e Quebras de Linha:} No Word, apertar ``Enter'' uma vez muda de linha. No \LaTeX, uma única quebra de linha no código é ignorada no pdf final. Para iniciar um novo parágrafo, é necessário pular uma linha em branco no código (apertar ``Enter'' duas vezes). Evite usar \texttt{\textbackslash\textbackslash} no meio do texto, pois isso força uma quebra de linha sem o recuo semântico adequado do parágrafo.
+    \item \textbf{Caracteres Reservados:} Símbolos como o \textit{E comercial} (\texttt{\&}), cifrão (\texttt{\$}), \textit{underline} (\texttt{\_}) e \textit{hashtag} (\texttt{\#}) possuem funções matemáticas e estruturais no motor do \LaTeX. Se você digitá-los soltos no texto (ex: "R\$ 100,00" ou "P\&D"), a compilação falhará. É obrigatório ``escapá-los'' com uma barra invertida antes: \texttt{\textbackslash\&}, \texttt{\textbackslash\$}, \texttt{\textbackslash\_}, \texttt{\textbackslash\#}.
+    \item \textbf{Referências Cruzadas automáticas:} Jamais digite textualmente "veja a Figura 1" ou "conforme a Tabela 2". Se você adicionar uma imagem antes delas no futuro, a numeração vai mudar e seu texto ficará errado. Use os comandos \texttt{\textbackslash label\{nome-do-marcador\}} logo após criar a figura/tabela, e chame-a no texto usando \texttt{\textbackslash ref\{nome-do-marcador\}}. O \LaTeX \ atualizará todos os números automaticamente. 
 \end{itemize}
+
+\section{Configuração Inicial do Documento Principal}
+
+Ao iniciar a redação da sua dissertação, o primeiro passo é preencher os metadados estruturais no preâmbulo do seu arquivo principal (geralmente \texttt{principal.tex}). O template foi arquitetado para receber essas informações essenciais uma única vez e distribuí-las automaticamente para a Capa, Folha de Rosto, Ficha Catalográfica e Folha de Aprovação.
+
+Localize e altere os seguintes comandos de declaração com os seus dados:
+
+\begin{itemize}
+    \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:).
+    \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
+    \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
+    \item \textbf{Banca Examinadora:} Atualize o orientador em \texttt{\textbackslash membrodabancai\{...\}} e \texttt{\textbackslash membrodabancaifuncao\{Orientador\}}, seguindo a numeração romana (ii, iii, etc.) para os demais membros e suas funções.
+    \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
+    \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
+    \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{T.DM-XXX/AAAA\}} é o registro oficial caso haja necessidade.
+\end{itemize}
+
+\section{Imagens, Citações e Nomenclaturas}
+
+O template conta com atalhos e pacotes configurados para otimizar o fluxo de trabalho e garantir aderência às normas sem esforço manual:
+
+\begin{itemize}
+    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{\{imagens/\}\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, ao inserir uma figura, basta usar o nome do arquivo (ex: \texttt{\textbackslash includegraphics\{foto.png\}}), sem a necessidade de digitar o caminho completo.
+    \item \textbf{Numeração Automática (O fim da neurose):} No Word, inserir uma nova figura no meio do capítulo gera a neurose de ter que caçar e renumerar manualmente todas as imagens e menções subsequentes no texto. No \LaTeX, isso não existe. O compilador numera figuras, tabelas e quadros de forma autônoma. Basta adicionar um \texttt{\textbackslash label\{marcador\}} logo após a legenda da imagem e chamá-la no texto com \texttt{\textbackslash ref\{marcador\}}. Se a ordem das imagens mudar, o motor recalcula e atualiza todos os números magicamente na próxima compilação.
+    \item \textbf{Guia Rápido de Citações:} A formatação do autor e do ano muda de acordo com a posição da citação na frase.
+    \begin{itemize}
+        \item Use \texttt{\textbackslash citet\{chave\}} para citações \textbf{TEXTUAIS} (citação indireta integrada). O autor faz parte da frase e apenas o ano fica entre parênteses.\\ \textit{Exemplo no código:} Segundo \texttt{\textbackslash citet\{davis2004\}}, os acidentes...\\ \textit{Resultado no PDF:} Segundo Davis (2004), os acidentes...
+        \item Use \texttt{\textbackslash citep\{chave\}} para citações com \textbf{PARÊNTESES} (no fim da afirmação). O autor e o ano ficam isolados entre parênteses no final da ideia.\\ \textit{Exemplo no código:} ... na modelagem de acidentes \texttt{\textbackslash citep\{davis2004\}}.\\ \textit{Resultado no PDF:} ... na modelagem de acidentes (DAVIS, 2004).
+    \end{itemize}
+    \item \textbf{Siglas e Símbolos:} Para gerar as listas de forma automatizada, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. Para maior conveniência, o template também oferece os atalhos diretos \texttt{\textbackslash simbolo\{<símbolo>\}\{<descrição>\}} e \texttt{\textbackslash sigla\{<sigla>\}\{<descrição>\}}.
+\end{itemize}
+
+\section{Estrutura e Inclusão de Capítulos}
+
+Para manter o código organizado e facilitar a manutenção, o texto da dissertação não é escrito diretamente no arquivo principal. O documento é modularizado, com cada capítulo isolado em seu próprio arquivo \texttt{.tex} dentro da pasta \texttt{capitulos/}.
+
+No meio do arquivo \texttt{principal.tex}, você encontrará o bloco responsável por unir todas essas partes:
+
+\begin{verbatim}
+  \include{capitulos/capitulo1-introducao}
+  \include{capitulos/capitulo2-revisao}
+  \include{capitulos/capitulo3-materiais-metodos}
+  \include{capitulos/capitulo4-resultados-analise}
+  \include{capitulos/capitulo5-conclusao}
+\end{verbatim}
+
+Se você precisar alterar o nome de um capítulo, ou adicionar um capítulo inteiramente novo à sua dissertação, siga estes dois passos:
+
+\begin{enumerate}
+    \item Crie o novo arquivo (ou renomeie o existente) diretamente dentro da pasta \texttt{capitulos/}. \textbf{Atenção:} Jamais utilize espaços, acentos ou caracteres especiais nos nomes dos arquivos (ex: prefira \texttt{capitulo6-discussao.tex} em vez de \texttt{capítulo 6 - discussão.tex}).
+    \item Atualize o bloco de comandos \texttt{\textbackslash include\{...\}} no \texttt{principal.tex} para refletir o nome exato do novo arquivo, inserindo-o na ordem lógica desejada.
+\end{enumerate}
 
 \section{Tópicos Avançados: Por que não utilizar o pacote \texttt{abntex2}?}
 
