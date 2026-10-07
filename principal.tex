@@ -28,7 +28,11 @@
 % DA SUA DISSERTAÇÃO DE MESTRADO OU TESE DE DOUTORADO
 % --------------------------------------------------------------------------------------------------
 
-\title{TÍTULO DA DISSERTAÇÃO/TESE}
+% =========================================================================
+% ALERTA CRÍTICO DE GEOMETRIA: O título DEVE ter no MÁXIMO 5 linhas.
+% Ultrapassar este limite quebrará o alinhamento da caixa azul na capa.
+% =========================================================================
+\title{Seu Título Aqui}
 % Caso o título tenha mais de uma linha, use \\ para quebrar:
 % \title{PRIMEIRA LINHA DO TÍTULO \\ SEGUNDA LINHA DO TÍTULO}
 
@@ -36,6 +40,9 @@
 \ultimosobrenomeautor{Último-SOBRENOME}
 \prenomesautor{Nome e Primeiro Sobrenome}
 % \author{NOME DO AUTOR} será gerado automaticamente = prenomes + último sobrenome
+
+% Substitua pelo código gerado pelo sistema da biblioteca, em https://ficha.bce.unb.br/ficha/
+\codigocutter{M379d} 
 
 % Caso haja mais de um autor ou queira quebrar linha, use \\ :
 % \author{PRIMEIRO AUTOR \\ SEGUNDO AUTOR}
@@ -50,7 +57,7 @@
 \titulacao{Mestrado} % Mestrado ou Doutorado
 \autoremail{EMAIL DO AUTOR.} % e-mail do autor da dissertação/tese
 \autorendereco{ENDEREÇO DO AUTOR.} % Endereço do autor da dissertação/tese
-\numpublicacao{T.DM-XXX/AAAA} % Número da publicação (após a defesa, tal número deve ser obtido na secretaria)
+\numpublicacao{} % Número da publicação (após a defesa, tal número deve ser obtido na secretaria)
 
 % ADICIONE AS PALAVRAS-CHAVE DA SUA DISSERTAÇÃO/TESE AQUI
 % caso necessário, remova as linhas correspondentes às palavras-chave que não forem utilizadas.
@@ -62,18 +69,26 @@
 \palavrachavevi{PALAVRA-CHAVE 6}
 
 
-\orientadorficha{NOME LIMPO DO ORIENTADOR} % Ex: Fabiana Serra de Arruda (sem Prof. Dr.)
+% =========================================================================
+% METADADOS DA FICHA CATALOGRÁFICA (Nomes Limpos e Invertidos)
+% =========================================================================
+\orientadorficha{João da Silva} % Nome do orientador
+\orientadorfichainverso{Silva, João da} % Nome do orientador com sobrenome 
+
+\coorientadorficha{Maria de Souza} % Deixe vazio {} se não houver
+\coorientadorfichainverso{Souza, Maria de} % Deixe vazio {} se não houver
+\membrodabancaiv{Prof. Dr. \coorientadorfichastr, Titulação (Instituição)}
+\membrodabancaivfuncao{Co-orientador}
+
+% =========================================================================
+% MEMBROS DA BANCA (Folha de Aprovação / Assinaturas)
+% =========================================================================
 \membrodabancai{Prof. Dr. \orientadorfichastr, Titulação (Instituição)}
 \membrodabancaifuncao{Orientador}
 \membrodabancaii{Prof. Dr. NOME DO EXAMINADOR, Titulação (Instituição)}
 \membrodabancaiifuncao{Examinador interno}
 \membrodabancaiii{Prof. Dr. NOME DO EXAMINADOR, Titulação (Instituição)}
 \membrodabancaiiifuncao{Examinador externo}
-% Membros adicionais da banca (opcionais):
-% \membrodabancaiv{Prof. Dr. EXAMINADOR, Titulação (Instituição)}
-% \membrodabancaivfuncao{Examinador externo}
-% \membrodabancav{Prof. Dr. EXAMINADOR, Titulação (Instituição)}
-% \membrodabancavfuncao{Examinador externo}
 % --------------------------------------------------------------------------------------------------
 
 % ------------------------------------------------------------------------
