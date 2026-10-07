@@ -131,6 +131,13 @@ A partir dele é feita a compilação do documento.
 Cada arquivo .tex adicional é uma parte específica do documento de exemplo (como resumo, capítulos, conclusão, apêndices, etc). 
 As referências a serem utilizadas devem estar no arquivo link:referencias.bib[referencias.bib].
 
+* *Título do Trabalho:* Utilize `\title{Seu Título Aqui}`. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos. *ALERTA CRÍTICO: O título não pode ultrapassar o limite máximo de 5 linhas. Títulos mais extensos que 5 linhas empurrarão os limites do código e quebrarão irremediavelmente a geometria da capa.*
+
+=== Ficha Catalográfica e Código Cutter
+A ficha catalográfica exige validação do sistema oficial da Biblioteca Central da UnB (BCE). Acesse https://ficha.bce.unb.br/ficha/ e preencha os metadados da sua pesquisa. O sistema gerará um PDF contendo o seu Código Cutter-Sanborn na margem superior esquerda (ex: `M379t`).
+
+No preâmbulo do arquivo `principal.tex`, localize o comando `\codigocutter{...}` e insira o código alfanumérico exato fornecido pela biblioteca. O template se encarregará de posicionar essa variável corretamente na tabela, espelhando o formato visual gerado pela BCE.
+
 == Autor
 Não sou o autor original deste projeto 😊, fiz apenas a reestruturação do mesmo para facilitar o uso e impedir 
 que comandos do template sejam misturados ao texto do documento.

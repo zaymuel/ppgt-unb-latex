@@ -76,6 +76,7 @@
 \RequirePackage[notlof,notlot,nottoc]{tocbibind}
 \RequirePackage{textcase}
 \RequirePackage{etoolbox} % Necessário para o comando \AfterEndPreamble funcionar
+\RequirePackage{tikz}
 
 % -------------------------------------------------------------------------
 % Formatação das Referências Bibliográficas (Normas PPGT 2019/2023)
@@ -245,21 +246,13 @@
 \def\membrodabancaiifuncaonome{Examinador interno}
 \def\membrodabancaiiinome{}
 \def\membrodabancaiiifuncaonome{Examinador externo}
-\def\membrodabancaivnome{}
-\def\membrodabancaivfuncaonome{}
-\def\membrodabancavnome{}
-\def\membrodabancavfuncaonome{}
 
 \newcommand{\membrodabancai}[1]{\def\membrodabancainome{#1}}
 \newcommand{\membrodabancaii}[1]{\def\membrodabancaiinome{#1}}
 \newcommand{\membrodabancaiii}[1]{\def\membrodabancaiiinome{#1}}
-\newcommand{\membrodabancaiv}[1]{\def\membrodabancaivnome{#1}}
-\newcommand{\membrodabancav}[1]{\def\membrodabancavnome{#1}}
 \newcommand{\membrodabancaifuncao}[1]{\def\membrodabancaifuncaonome{#1}}
 \newcommand{\membrodabancaiifuncao}[1]{\def\membrodabancaiifuncaonome{#1}}
 \newcommand{\membrodabancaiiifuncao}[1]{\def\membrodabancaiiifuncaonome{#1}}
-\newcommand{\membrodabancaivfuncao}[1]{\def\membrodabancaivfuncaonome{#1}}
-\newcommand{\membrodabancavfuncao}[1]{\def\membrodabancavfuncaonome{#1}}
 
 % Comandos semânticos adicionais para membros da banca
 \newcommand{\orientador}[2][Orientador]{\membrodabancai{#2}\membrodabancaifuncao{#1}}
@@ -400,27 +393,32 @@
   \AtPageUpperLeft{%
     \raisebox{-\height}{\includegraphics[width=\paperwidth]{template-FT-UnB/logotipos/logo_unb.pdf}}%
   }%
-  % Places the blue rectangle at the bottom edge
-  \AtPageLowerLeft{%
-    \color{unbblue}\rule{\paperwidth}{9cm} % Adjust 'X cm' to change the banner's height
-  }%
 }
 \begin{center}
-\vspace*{8.2cm}
+\vspace*{8cm} % Adjust this if needed to clear the top logo
+
+\vspace*{\fill} % 1. Vertically centers the top text in the white space
 
 {\Large\bfseries\MakeUppercase{\@title}\par}
 \vspace{0.8cm}
 
 {\large\bfseries\MakeUppercase{\@author}\par}
-\vspace{0.8cm}
 
-{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}\par}
+\vspace*{\fill} % 2. Ends the white space
 
-\vfill
+% 3. The dynamic boundary: draws the blue box from this exact vertical position down to the bottom of the page
+\smash{\tikz[remember picture, overlay] \fill[unbblue] (current page.west |- 0,0) rectangle (current page.south east);}
+
+\vspace*{\fill} % 4. Vertically centers the text within the newly created blue space
+
 {\color{white}
+{\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}\par}
+\vspace{\fill}
+
 {\Large\bfseries FACULDADE DE TECNOLOGIA}\\[1cm]
 {\huge\bfseries UNIVERSIDADE DE BRASÍLIA}
 }
+
 \end{center}
 \end{titlepage}
 }
@@ -453,7 +451,7 @@
 {\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}}
 \vspace{\fill}
 
-{\large\bfseries\MakeUppercase{PUBLICAÇÃO:\space\numpublicacaostr}}\\[0.2cm]
+\ifthenelse{\equal{\numpublicacaostr}{}}{}{{\large\bfseries PUBLICAÇÃO: \space\numpublicacaostr}\\[0.2cm]}
 {\large\bfseries\MakeUppercase{BRASÍLIA-DF:\space\mesnome/\anonome.}}\\
 \vspace*{0.5cm}
 \end{center}
@@ -481,7 +479,7 @@
   % Texto central do tipo de trabalho
   {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \titulacaostr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM \areastr\ DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM \areastr.}}
 
-  \vspace{0.8cm}
+  \vspace*{\fill}
 
   {\bfseries \large APROVADA POR:}
 
@@ -499,15 +497,7 @@
   \ifthenelse{\equal{\membrodabancaiiinome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaiiinome \\
-      (\membrodabancaiiifuncaonome) \\[1cm]}%
-  \ifthenelse{\equal{\membrodabancaivnome}{}}{}{%
-      \rule{8cm}{0.4pt} \\
-      \membrodabancaivnome \\
-      (\membrodabancaivfuncaonome) \\[1cm]}%
-  \ifthenelse{\equal{\membrodabancavnome}{}}{}{%
-      \rule{8cm}{0.4pt} \\
-      \membrodabancavnome \\
-      (\membrodabancavfuncaonome)}%
+      (\membrodabancaiiifuncaonome)}%
   \end{tabular}
   }
 
