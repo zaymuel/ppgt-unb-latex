@@ -250,12 +250,19 @@
 \newcommand{\membrodabancai}[1]{\def\membrodabancainome{#1}}
 \newcommand{\membrodabancaii}[1]{\def\membrodabancaiinome{#1}}
 \newcommand{\membrodabancaiii}[1]{\def\membrodabancaiiinome{#1}}
+\newcommand{\membrodabancaiv}[1]{\def\membrodabancaivnome{#1}}
 \newcommand{\membrodabancaifuncao}[1]{\def\membrodabancaifuncaonome{#1}}
 \newcommand{\membrodabancaiifuncao}[1]{\def\membrodabancaiifuncaonome{#1}}
 \newcommand{\membrodabancaiiifuncao}[1]{\def\membrodabancaiiifuncaonome{#1}}
+\newcommand{\membrodabancaivfuncao}[1]{\def\membrodabancaivfuncaonome{#1}}
+
+% Initializes empty to prevent compilation errors if unused
+\def\membrodabancaivnome{}
+\def\membrodabancaivfuncaonome{}
 
 % Comandos semânticos adicionais para membros da banca
 \newcommand{\orientador}[2][Orientador]{\membrodabancai{#2}\membrodabancaifuncao{#1}}
+\newcommand{\coorientador}[2][Co-orientador]{\membrodabancaiv{#2}\membrodabancaivfuncao{#1}}
 \newcommand{\examinadorinterno}[2][Examinador interno]{\membrodabancaii{#2}\membrodabancaiifuncao{#1}}
 \newcommand{\examinadorexterno}[2][Examinador externo]{\membrodabancaiii{#2}\membrodabancaiiifuncao{#1}}
 
@@ -436,7 +443,8 @@
 {\large\bfseries FACULDADE DE TECNOLOGIA}\\[0.2cm]
 {\large\bfseries DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[0.2cm]
 
-\vspace*{3.0cm}
+\vspace*{1.0cm}
+\vspace*{\fill}
 
 {\Large\bfseries\MakeUppercase{\@title}\par}
 
@@ -444,16 +452,26 @@
 
 {\large\bfseries\MakeUppercase{\@author}\par}
 
-\vspace{1.5cm}
+\vspace{1cm}
+\vspace*{\fill}
 
-{\large\bfseries ORIENTADOR:\space\MakeUppercase{\membrodabancainome}}\\[0.8cm]
+{\large\bfseries 
+
+ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
+
+\ifthenelse{\equal{\coorientadorfichastr}{}}{}{
+  \vspace{0.4cm}
+  {\bfseries COORIENTADOR: \MakeUppercase{\membrodabancaivnome}\par}
+  }
+}
+  
+\vspace*{\fill}
 
 {\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}}
-\vspace{\fill}
+\vspace*{\fill}
 
 \ifthenelse{\equal{\numpublicacaostr}{}}{}{{\large\bfseries PUBLICAÇÃO: \space\numpublicacaostr}\\[0.2cm]}
-{\large\bfseries\MakeUppercase{BRASÍLIA-DF:\space\mesnome/\anonome.}}\\
-\vspace*{0.5cm}
+{\large\bfseries\MakeUppercase{BRASÍLIA-DF:\space\mesnome/\anonome.}}
 \end{center}
 \clearpage
 }
@@ -469,9 +487,13 @@
   \begin{center}
     {\large\bfseries UNIVERSIDADE DE BRASÍLIA}\\
     {\large\bfseries FACULDADE DE TECNOLOGIA}\\
-    {\large\bfseries DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}\\[1.5cm]
+    {\large\bfseries DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL}
 
-    {\large\bfseries\MakeUppercase{\@title}\par}\vspace{0.8cm}
+    \vspace*{\fill}
+    
+    {\large\bfseries\MakeUppercase{\@title}\par}
+
+    \vspace*{\fill}
 
     {\large\bfseries\MakeUppercase{\@author}\par}
   \end{center}
@@ -490,6 +512,10 @@
       \rule{8cm}{0.4pt} \\
       \membrodabancainome \\
       (\membrodabancaifuncaonome) \\[1cm]}%
+  \ifthenelse{\equal{\membrodabancaivnome}{}}{}{
+        \rule{10cm}{0.5pt} \\
+        \membrodabancaivnome \\
+        \membrodabancaivfuncaonome \\[1cm]}%
   \ifthenelse{\equal{\membrodabancaiinome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaiinome \\
@@ -504,6 +530,15 @@
   {\bfseries\MakeUppercase{BRASÍLIA/DF, \dianum\ DE\ \mesnome\ DE\ \anonome.}}
 \clearpage
 }
+
+\newcommand{\codigocutter}[1]{\def\codigocutterstr{#1}}
+\newcommand{\orientadorficha}[1]{\def\orientadorfichastr{#1}}
+\newcommand{\coorientadorficha}[1]{\def\coorientadorfichastr{#1}}
+\coorientadorficha{} % Initializes empty to prevent compilation errors if unused
+\newcommand{\orientadorfichainverso}[1]{\def\orientadorfichainversostr{#1}}
+\newcommand{\coorientadorfichainverso}[1]{\def\coorientadorfichainversostr{#1}}
+\coorientadorfichainverso{} % Initializes empty
+
 
 % -------------------------------------------------------------------------
 % Ficha catalográfica (página iii, número visível)
@@ -524,25 +559,35 @@
 \renewcommand{\baselinestretch}{1.15}\selectfont
 {\large\bfseries FICHA CATALOGRÁFICA}
 
-  	\begin{tabular}{|p{15cm}|}
-  	  \hline
-  		\autorreferenciacatalografica \\
-  		\@title. Brasília, \anonome. \\[0.3cm]
-  		% Ano de defesa, páginas e dimensões
-  		\paginaspretextuais, \totalpgsstr\ p., 210x297 mm, 
-  		(ENC/FT/UnB, \graunome, \areastr, \anonome).\\
-  		\tipodemonografianome\ de \titulacaostr\ -- Universidade de Brasília.\\
-  		Faculdade de Tecnologia. Departamento de Engenharia Civil e Ambiental\\[1cm]
-		\fichakeys{\palavrachaveistr}{\palavrachaveiistr}{\palavrachaveiiistr}{\palavrachaveivstr}{\palavrachavevstr}{\palavrachavevistr}\\[0.5cm]
+  \noindent
+  \begin{tabular}{|p{2cm} p{13cm}|}
+    \hline
+    & \vspace{-0.2cm} \autorreferenciacatalografica \\
+    \codigocutterstr & \quad {\begingroup\def\\{ }\@title\endgroup} / \nomecompletoautor; orientador \orientadorfichastr. Brasília, \anonome. \\[0.2cm]
+    & \quad \totalpgsstr\ p. \\[0.6cm]
+    & \quad \tipodemonografianome \ (\titulacaostr\ em \areastr) Universidade de Brasília, \anonome.\\[0.6cm]
+    & \quad 1. \palavrachaveistr. %
+      \ifthenelse{\equal{\palavrachaveiistr}{}}{}{2. \palavrachaveiistr. }%
+      \ifthenelse{\equal{\palavrachaveiiistr}{}}{}{3. \palavrachaveiiistr. }%
+      \ifthenelse{\equal{\palavrachaveivstr}{}}{}{4. \palavrachaveivstr. }%
+      \ifthenelse{\equal{\palavrachavevstr}{}}{}{5. \palavrachavevstr. }%
+      \ifthenelse{\equal{\palavrachavevistr}{}}{}{6. \palavrachavevistr. }%
+      I. \orientadorfichainversostr, orient. %
+      \ifthenelse{\equal{\coorientadorfichastr}{}}{}{II. \coorientadorfichainversostr, co-orient. }%
+      \ifthenelse{\equal{\coorientadorfichastr}{}}{II. Título.}{III. Título.}\\
   		\hline
-  	\end{tabular}\\[0.8cm]
+  	\end{tabular}
+
+    \vspace*{\fill}
 
   	\begin{tabular}{p{15cm}}
-	  	{\large\bfseries REFERÊNCIA BIBLIOGRÁFICA}\\[0.3cm]
-	  	\autorreferenciabibliografica (\anonome)\ {\begingroup\def\\{ }\@title\endgroup}. Publicação \numpublicacaostr. Departamento de Engenharia Civil e Ambiental, Universidade de Brasília, Brasília, DF, \totalpgsstr\ p.\\
-  	\end{tabular}
+      {\large\bfseries REFERÊNCIA BIBLIOGRÁFICA}\\[0.3cm]
+      \autorreferenciabibliografica (\anonome)\ {\begingroup\def\\{ }\@title\endgroup}. %
+      \ifthenelse{\equal{\numpublicacaostr}{}}{}{Publicação \numpublicacaostr. }%
+      Departamento de Engenharia Civil e Ambiental, Universidade de Brasília, Brasília, DF, \totalpgsstr\ p.\\
+    \end{tabular}
   	
-  	\vspace{1cm}
+  	\vspace*{\fill}
   	
   	\begin{tabular}{p{15cm}}
     {\large\bfseries CESSÃO DE DIREITOS}\\[0.3cm]
@@ -551,13 +596,13 @@
     GRAU: \graunome \quad\quad ANO: \anonome
   	\end{tabular}    
   	
-  	\vspace{1cm}
+  	\vspace*{\fill}
   	
   	\begin{tabular}{p{15cm}}    
     É concedida à Universidade de Brasília permissão para reproduzir cópias desta \MakeLowercase\tipodemonografianome\ de \titulacaostr\ e para emprestar ou vender tais cópias somente para propósitos acadêmicos e científicos. O autor se reserva a outros direitos de publicação e nenhuma parte desta \MakeLowercase\tipodemonografianome\ de \titulacaostr\ pode ser reproduzida sem a autorização por escrito do autor.
   	\end{tabular}        
   	
-  	\vspace{1cm}
+  	\vspace*{\fill}
   	
 
   	\begin{tabular}{p{14cm}}
