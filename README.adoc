@@ -31,7 +31,7 @@ Este template foi adaptado do modelo da FT-UnB para atender às especificações
 - Lista de Quadros (além de Tabelas e Figuras)
 - Folha de aprovação no formato PPGT
 - Ficha catalográfica ajustada
-- Bibliografia no formato ABNT alfabético
+- Bibliografia e citações segundo as normas específicas do PPGT (estilo Autor-Data próprio com natbib, não seguindo a ABNT tradicional)
 
 IMPORTANT: Este template deve ser usado para todos os trabalhos acadêmicos do PPGT.
 
@@ -117,6 +117,14 @@ há os comandos abaixo disponíveis:
 Se o nome do arquivo principal do seu trabalho for diferente de *principal.tex*,
 para compilar utilizando o comando *make*, é preciso editar o arquivo link:Makefile[Makefile] 
 e informar o nome do documento tex principal na primeira linha do *Makefile*.
+
+=== Conversão de PDF para Word (.docx) preservando a formatação
+
+Caso seu orientador ou colaborador solicite o trabalho em formato Word (.docx) para fazer anotações:
+
+1. Abra o Microsoft Word na tela inicial vazia (com *nenhum documento aberto*).
+2. Arraste o arquivo `principal.pdf` compilado diretamente para o centro da janela principal do Word.
+3. O Word executará a conversão automática, gerando um documento `.docx` editável com altíssima fidelidade de layout, tabelas e títulos.
 
 == Estrutura do projeto
 Depois de baixados os arquivos do projeto você terá a seguinte estrutura de pastas:

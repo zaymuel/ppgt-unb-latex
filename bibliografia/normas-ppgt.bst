@@ -215,7 +215,7 @@ FUNCTION {format.names}
         { namesleft #1 >
             { ", " * t * }
             { t "others" =
-                { " et~al." * }
+                { " \textit{et~al.}" * }
                 { " \& " * t * }
               if$
             }
@@ -241,7 +241,7 @@ FUNCTION {format.author.names}
         { namesleft #1 >
             { ", " * t * }
             { t "others" =
-                { " et~al." * }
+                { " \textit{et~al.}" * }
                 { " \& " * t * }
               if$
             }
@@ -865,12 +865,12 @@ FUNCTION {format.lab.names}
   s #1 "{vv~}{ll}" format.name$
   s num.names$ duplicate$
   #2 >
-    { pop$ " et~al." * }
+    { pop$ " \NoCaseChange{\textit{et~al.}}" * }
     { #2 <
 	'skip$
 	{ s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
-	    { " et~al." * }
-	    { " and " * s #2 "{vv~}{ll}" format.name$ * }
+	    { " \NoCaseChange{\textit{et~al.}}" * }
+	    { " \& " * s #2 "{vv~}{ll}" format.name$ * }
 	  if$
 	}
       if$

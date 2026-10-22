@@ -28,6 +28,21 @@
 
 O objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
 
+\subsection{Quando o Orientador Exigir Arquivo Word (.docx): A Conversão Direta}
+
+Um receio frequente entre novos pesquisadores é: \textit{``E se meu orientador ou coautor não usar \LaTeX\ e exigir o texto em formato Microsoft Word (.docx) para fazer anotações?''}.
+
+Existe um método nativo, simples e de altíssima fidelidade que preserva integralmente a diagramação do documento sem necessitar de conversores externos ou softwares pagos:
+
+\begin{enumerate}
+    \item Abra o aplicativo Microsoft Word no seu computador com a tela inicial vazia (isto é, com \textbf{nenhum documento aberto}).
+    \item Localize o arquivo \texttt{principal.pdf} compilado no seu gerenciador de arquivos.
+    \item \textbf{Arraste o arquivo PDF diretamente para o centro da janela principal do Word} e solte.
+    \item O Microsoft Word fará uma conversão automática e direta, reconstruindo parágrafos, tabelas, equações e títulos em um documento \texttt{.docx} editável com máxima fidelidade visual.
+\end{enumerate}
+
+Dessa forma, você pode manter seu fluxo de trabalho profissional e rigoroso no \LaTeX, gerando uma cópia em \texttt{.docx} apenas quando estritamente requisitado por terceiros.
+
 \section{Principais Dificuldades na Adaptação}
 
 A migração de um processador de texto visual para um sistema de preparação de documentos algorítmico impõe desafios iniciais notórios:

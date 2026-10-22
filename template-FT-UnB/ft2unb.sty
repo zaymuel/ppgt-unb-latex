@@ -96,6 +96,17 @@
   \addcontentsline{toc}{chapter}{\bibname}%
 }
 
+% Formatação dos nomes dos autores nas citações segundo as normas do PPGT:
+% Textual (\citet): Iniciais em maiúsculo (ex: Cunha & Setti, 2006)
+% Entre parênteses (\citep): Todo em MAIÚSCULAS (ex: CUNHA & SETTI, 1979; PEREIRA et al., 1988)
+\renewcommand{\NAT@nmfmt}[1]{%
+  \ifNAT@par
+    \MakeTextUppercase{#1}%
+  \else
+    #1%
+  \fi
+}
+
 % Define estilo de fonte menor para URLs
 \def\url@leostyle{%
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
@@ -752,6 +763,24 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 \newcommand{\setfonttimes}{}
 
 % -------------------------------------------------------------------------
+% Apêndices e Anexos (Normas PPGT: APÊNDICE A — TÍTULO / ANEXO A — TÍTULO)
+% -------------------------------------------------------------------------
+\newif\if@inappendix
+\@inappendixfalse
+\newif\if@inanexos
+\@inanexosfalse
+
+\let\ft@orig@appendix\appendix
+\renewcommand{\appendix}{%
+  \ft@orig@appendix
+  \@inappendixtrue
+  \@inanexosfalse
+  \renewcommand{\appendixname}{APÊNDICE}%
+}
+
+
+
+% -------------------------------------------------------------------------
 % Anexos
 % -------------------------------------------------------------------------
 \newcommand{\anexos}{
@@ -912,14 +941,53 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 % -------------------------------------------------------------------------
 \def\@makechapterhead#1{%
   \vspace*{0pt}%
-  {\parindent \z@ \centering \normalfont
+  {\parindent \z@ \centering \normalfont\fontsize{14}{16}\selectfont\bfseries
     \ifnum \c@secnumdepth >\m@ne
-      \fontsize{14}{16}\selectfont\bfseries \thechapter\quad
+      \if@inappendix
+        \appendixname\ \thechapter\ \textemdash\ %
+      \else
+        \if@inanexos
+          \appendixname\ \thechapter\ \textemdash\ %
+        \else
+          \thechapter\quad
+        \fi
+      \fi
     \fi
     \interlinepenalty\@M
-    \fontsize{14}{16}\selectfont\bfseries #1\par\nobreak
+    #1\par\nobreak
     \vskip 40\p@
   }}
+
+\def\@chapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \if@inappendix
+        \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+      \else
+        \if@inanexos
+          \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+        \else
+          \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+        \fi
+      \fi
+    \else
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi
+}
 \def\@makeschapterhead#1{%
   \vspace*{0pt}%
   {\parindent \z@ \centering
@@ -928,6 +996,37 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
     \fontsize{14}{16}\selectfont\bfseries  #1\par\nobreak
     \vskip 40\p@
   }}
+
+\def\@chapter[#1]#2{%
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \if@inappendix
+        \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+      \else
+        \if@inanexos
+          \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+        \else
+          \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+        \fi
+      \fi
+    \else
+      \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi
+}
 
 % Seções e subseções (12pt para seções)
 \renewcommand\section{\@startsection {section}{1}{\z@}%
