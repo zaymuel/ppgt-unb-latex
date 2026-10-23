@@ -276,6 +276,16 @@ Ao utilizar o \textbf{Visual Studio Code} com a extensão \textbf{LaTeX Workshop
 Se o foco da janela estiver fora do editor de texto, por exemplo, com o cursor dentro do terminal integrado do VS Code, na árvore de pastas do explorador, no painel de saída (\textit{Output}) ou em um arquivo não-\LaTeX \ (como uma aba de PDF ou arquivo de configurações), a extensão não consegue identificar em qual projeto você está trabalhando e \textbf{o documento simplesmente não compila} (ou acusa que não encontrou o arquivo raiz). Se você clicar para compilar e o processo não iniciar, a solução é simples: \textbf{clique com o mouse dentro de qualquer linha de texto do seu arquivo \texttt{principal.tex} e tente novamente}.
 \end{atencao}
 
+\begin{atencao}[Bloqueio de Arquivo no Windows (Adobe Acrobat Reader)]
+Caso vá compilar localmente via terminal ou VS Code e o compilador acusar o erro:
+\begin{verbatim}
+! I can't write on file 'principal.pdf'.
+\end{verbatim}
+certifique-se de \textbf{fechar a aba do PDF no Adobe Acrobat Reader}. No Windows, o Acrobat bloqueia o arquivo exclusivamente para leitura/gravação enquanto ele estiver aberto na tela.
+
+No visualizador integrado do VS Code (\textit{LaTeX Workshop}) ou em navegadores web (Edge, Chrome, Firefox), esse bloqueio não ocorre e o PDF é atualizado dinamicamente a cada nova compilação.
+\end{atencao}
+
 \begin{atencao}[E se o Perl não funcionar ou o \texttt{latexmk} der erro?]
 O utilitário \texttt{latexmk} é, por natureza, um script escrito na linguagem Perl. Se o seu computador não tiver o interpretador Perl instalado (ou se o Windows acusar que \textit{``'perl' não é reconhecido como um comando interno''}), o \texttt{latexmk} não conseguirá rodar. Para resolver isso sem estresse, existem duas rotas:
 
