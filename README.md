@@ -1,6 +1,6 @@
 # Modelo LaTeX para Dissertações e Teses do PPGT/UnB
 
-Modelo $\LaTeX$ oficial e atualizado para elaboração de dissertações de mestrado e teses de doutorado do [Programa de Pós-Graduação em Transportes (PPGT)](http://www.ppgt.unb.br) do Departamento de Engenharia Civil e Ambiental da [Faculdade de Tecnologia (FT)](http://ftd.unb.br) da [Universidade de Brasília (UnB)](http://unb.br).
+Modelo $\LaTeX$ oficial e atualizado para elaboração de dissertações de mestrado e teses de doutorado do [Programa de Pós-Graduação em Transportes (PPGT)](http://www.ppgt.unb.br) do Departamento de Engenharia Civil e Ambiental da [Faculdade de Tecnologia (FT)](http://ft.unb.br) da [Universidade de Brasília (UnB)](http://unb.br).
 
 ---
 
