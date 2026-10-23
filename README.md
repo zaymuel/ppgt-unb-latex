@@ -20,29 +20,7 @@ Este modelo foi adaptado e customizado a partir do template da FT/UnB para atend
 
 ---
 
-## 2. Pré-requisitos e Instalação
-
-Para compilar o documento em seu computador, é necessário ter uma distribuição $\LaTeX$ instalada:
-
-### Windows
-
-- Baixe e instale o [MiKTeX](http://miktex.org).
-- Recomenda-se a instalação do [Strawberry Perl](https://strawberryperl.com/) para viabilizar a compilação automática contínua via `latexmk`.
-
-### Linux
-
-- Instale a distribuição completa via terminal:
-  - **Debian / Ubuntu / Mint**: `sudo apt-get install texlive-full`
-  - **Fedora / RHEL**: `sudo dnf install texlive-scheme-full`
-  - **Arch Linux**: `sudo pacman -S texlive-meta`
-
-### macOS
-
-- Baixe e instale o [MacTeX](https://tug.org/mactex/).
-
----
-
-## 3. Editores Recomendados
+## 2. Editores Recomendados
 
 Você pode utilizar qualquer editor compatível com codificação UTF-8:
 
@@ -61,29 +39,51 @@ Você pode utilizar qualquer editor compatível com codificação UTF-8:
 
 ---
 
-## 4. Como Compilar Localmente
+## 3. Instalação Local
 
-[!NOTE]
+> [!NOTE]
 > Caso você esteja usando o Overleaf, ignore esta seção. O Overleaf compila automaticamente o projeto com base no arquivo `principal.tex`.
 
-### Opção A: Pelo Editor (VS Code / TeXstudio)
+### Distribuição LaTeX
+
+Para compilar o documento em seu computador, é necessário ter uma distribuição $\LaTeX$ instalada:
+
+#### Windows
+
+- Baixe e instale o [MiKTeX](http://miktex.org).
+- Recomenda-se a instalação do [Strawberry Perl](https://strawberryperl.com/) para viabilizar a compilação automática contínua via `latexmk`.
+
+#### Linux
+
+- Instale a distribuição completa via terminal:
+  - **Debian / Ubuntu / Mint**: `sudo apt-get install texlive-full`
+  - **Fedora / RHEL**: `sudo dnf install texlive-scheme-full`
+  - **Arch Linux**: `sudo pacman -S texlive-meta`
+
+#### macOS
+
+- Baixe e instale o [MacTeX](https://tug.org/mactex/).
+
+### Compiladores e Ferramentas Adicionais
+
+#### Opção A: Pelo Editor (VS Code / TeXstudio)
 
 Basta abrir o arquivo `principal.tex` e utilizar o comando padrão de compilação do seu editor. O arquivo `.latexmkrc` presente na raiz cuidará da compilação de índices e siglas automaticamente.
 
-### Opção B: Pelo Terminal / Linha de Comando (com `latexmk`)
+#### Opção B: Pelo Terminal / Linha de Comando (com `latexmk`)
 
 ```bash
 latexmk -pdf principal.tex
 ```
 
-### Opção C: Via `Makefile` (Linux / macOS)
+#### Opção C: Via `Makefile` (Linux / macOS)
 
 ```bash
 make        # Compila principal.tex e gera principal.pdf
 make clean  # Limpa arquivos temporários e auxiliares
 ```
 
-### Opção D: Compilação Manual Sequencial (100% sem Perl no Windows)
+#### Opção D: Compilação Manual Sequencial (100% sem Perl no Windows)
 
 Caso o seu computador não possua o Perl instalado para rodar o `latexmk`, execute os comandos nativos sequenciais no PowerShell ou Prompt de Comando:
 
