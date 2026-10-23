@@ -1,13 +1,95 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[12pt, a4paper]{article}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[brazilian]{babel}
 \usepackage[margin=2.5cm]{geometry}
-\usepackage{upquote}
-\usepackage{hyperref}
-\usepackage{tcolorbox}
 
+% Pacotes básicos 
+% encoding
+%--------------------------------------
+\usepackage[T1]{fontenc}		% Seleção de códigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
+%--------------------------------------
+% ----------------------------------------------------------
+% \usepackage{lmodern}			% Usa a fonte Latin Modern	
+\usepackage{fontspec}
+\usepackage{Acorn}
+\usepackage{lettrine}
+
+% \setmainfont{QTCloisteredMonk}
+% \setmainfont{QTLondonScroll}
+% \setmainfont{QTHeidelbergType}
+% \usepackage{Typocaps}
+% \usepackage{ebgaramond}
+% \usepackage{libertine}
+
+\usepackage[dvipsnames]{xcolor}
+% \renewcommand{\LettrineFontHook}{\color{BrickRed}\Typocapsfamily{}}
+\renewcommand{\LettrineFontHook}{\color{BrickRed}\Acornfamily{}}
+\setcounter{DefaultLines}{4}
+\setmainfont{EB Garamond}[Numbers={Proportional},RawFeature={+ss06}]
+
+% \newcommand*\initfamily{\usefont{U}{Acorn}{xl}{n}}
+
+% Hyphenation rules
+%--------------------------------------
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+%--------------------------------------
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}		    	% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\graphicspath{ {./images/} }      % define diretório raiz para imagens, então é só colocar o nome do arquivo em \includegraphics{nomedoarquivo}
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{ifthen}		    	% para montar condicionais
+\usepackage[brazil]{babel}		% para utilizar termos em português
+\usepackage[autostyle]{csquotes}    % fazer as aspas aparecerem corretamente
+% \MakeOuterQuote{"}
+% \usepackage[final]{pdfpages}    % para incluir páginas de arquivos PDF
+% \usepackage{lipsum}				% para geração de lorem ipsum
+\usepackage{float} 		        % Para a figura ficar na posição correta
+\usepackage{caption}            % configura legenda 
+    \captionsetup{font=small}	% tamanho da fonte 10pt
+\usepackage{footmisc}           % precisa ir antes de hyperref, senao referencias a rodapes quebram
+\usepackage{hyperref}
+% \usepackage[colorlinks=true]{hyperref}
+
+
+% \usepackage{enotez}      % <-- instead of \usepackage{endnotes}
+% \let\footnote=\endnote
+
+% \makeatletter
+% \def\enoteheading{\section*{\notesname
+%   \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+%   \mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}\par\vskip\baselineskip}
+% \makeatother
+
+% \usepackage[
+% backend=biber,
+% style=numeric,
+% sorting=none                    % sort pela ordem de ocorrência
+% ]{biblatex}                     % usa o biblatex, ferramenta + moderna para a bibliografia
+%     \addbibresource{references.bib}     % puxa as entries de bibliografia desse arquivo
+
+
+% https://tex.stackexchange.com/questions/13756/quote-environment-with-reference-at-the-end-right
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil(#1)%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quote}}
+  {\signed{\usebox\mybox}\end{quote}}
+  
+% https://tex.stackexchange.com/a/74609
+\usepackage{fourier-orns}
+\newcommand{\ornamento}{
+\noindent
+    \parbox{\textwidth}{%
+        {\color{BrickRed}\raisebox{-2.1pt}[10pt][10pt]{\leafright} \hrulefill \raisebox{-2.1pt}[10pt][10pt]{~~~\decofourleft \decotwo\decofourright~~~} \hrulefill \raisebox{-2.1pt}[10pt][10pt]{ \leafleft}}
+    }%
+}
+
+\usepackage{tcolorbox}
 % Criação de um ambiente padrão para alertas e armadilhas comuns
 \newtcolorbox{atencao}[1][Ponto de Atenção]{
   colback=red!5!white,      % Fundo levemente avermelhado
@@ -18,15 +100,19 @@
 
 \title{Manual do Template \LaTeX \ PPGT \\ Guia de Transição e Uso}
 \author{Samuel Seixas Martin}
-\date{2 de outubro de 2026}
+\date{23 de outubro de 2026}
+
+% first section starts at 0
+\renewcommand{\theenumi}{\Roman{enumi}}
 
 \begin{document}
-
 \maketitle
+% \tableofcontents
+\ornamento
 
 \section{Introdução: A Transição do Microsoft Word}
 
-O objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
+\lettrine{O}{} objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
 
 \subsection{Quando o Orientador Exigir Arquivo Word (.docx): A Conversão Direta}
 
@@ -71,7 +157,7 @@ A hierarquia estrutural do documento é construída utilizando a seguinte cascat
     \item Jamais digite os números manualmente (ex: \texttt{\textbackslash section\{1.1 Minha Seção\}}). O \LaTeX \ gerencia e atualiza toda a numeração dinamicamente; basta inserir o texto do título.
     \item Nunca quebre a cadeia hierárquica. Não abra uma \texttt{\textbackslash subsection} sem antes ter declarado uma \texttt{\textbackslash section}.
     \item Não digite os títulos inteiramente em CAIXA ALTA dentro do comando. Escreva normalmente (ex: \texttt{\textbackslash chapter\{Revisão Bibliográfica\}}). Se a norma exigir maiúsculas no documento final, o template converterá o texto automaticamente durante a compilação, mantendo o seu código limpo e preservando a capitalização correta para o sumário.
-    \item \textbf{Apêndices e Anexos:} Os arquivos já vêm prontos no template (\texttt{zz-apendices.tex} e \texttt{zz-anexos.tex}). Se quiser colocar mais de um apêndice ou anexo, não precisa criar novos arquivos: basta adicionar mais um comando \texttt{\textbackslash chapter\{Título\}} e um rótulo \texttt{\textbackslash label} dentro deles. O \LaTeX \ gera as letras sequenciais (APÊNDICE B, ANEXO B, etc.) e atualiza o Sumário automaticamente.
+    \item \textbf{Apêndices e Anexos:} Os arquivos já vêm prontos no template (\texttt{zz-apendices.tex} e \\ \texttt{zz-anexos.tex}). Se quiser colocar mais de um apêndice ou anexo, não precisa criar novos arquivos: basta adicionar mais um comando \texttt{\textbackslash chapter\{Título\}} e um rótulo \texttt{\textbackslash label} dentro deles. O \LaTeX \ gera as letras sequenciais (APÊNDICE B, ANEXO B, etc.) e atualiza o Sumário automaticamente.
 \end{enumerate}
 
 \section{Sintaxe Básica e Formatação Textual}
@@ -124,11 +210,11 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \item \textbf{Fórmulas Matemáticas:} Para inserir equações na mesma linha do texto, envolva a expressão com cifrões (ex: \texttt{\$E=mc\textasciicircum 2\$}). Para equações destacadas, centralizadas e numeradas automaticamente, utilize o ambiente \texttt{\textbackslash begin\{equation\}} e \texttt{\textbackslash end\{equation\}}.
     \item \textbf{O Desafio das Tabelas:} A formatação nativa de tabelas no \LaTeX \ pode ser frustrante inicialmente. A recomendação de ouro é utilizar ferramentas visuais online, como o \href{https://www.tablesgenerator.com/}{TablesGenerator.com}. Você constrói sua tabela graficamente (ou cola do Excel) e o site gera o código \LaTeX \ pronto para ser copiado para o seu documento.
 
-    \item \textbf{Referências Cruzadas Inteligentes (\texttt{\textbackslash autoref}):} Jamais digite textualmente nomes e números como ``Figura 1'' ou ``Tabela 2''. O \LaTeX \ atualiza a numeração dinamicamente de acordo com a posição dos elementos. Adicione um \texttt{\textbackslash label\{nome-do-marcador\}} imediatamente após criar a legenda da sua figura ou tabela, e cite-a no texto exclusivamente com \texttt{\textbackslash autoref\{nome-do-marcador\}}. O comando \texttt{\textbackslash autoref} identifica automaticamente a natureza do elemento e imprime o prefixo correto com a inicial maiúscula (ex: Figura 1, Tabela 2, Seção 3.1), transformando tudo em um link clicável e evitando inconsistências no texto.
+    \item \textbf{Referências Cruzadas Inteligentes (\texttt{\textbackslash autoref}):} Jamais digite textualmente nomes e números como ``Figura 1'' ou ``Tabela 2''. O \LaTeX \ atualiza a numeração dinamicamente de acordo com a posição dos elementos. Adicione um \texttt{\textbackslash label\{nome-do-marcador\}} imediatamente após criar a legenda da sua figura ou tabela, e cite-a no texto exclusivamente com \\ \texttt{\textbackslash autoref\{nome-do-marcador\}}. O comando \texttt{\textbackslash autoref} identifica automaticamente a natureza do elemento e imprime o prefixo correto com a inicial maiúscula (ex: Figura 1, Tabela 2, Seção 3.1), transformando tudo em um link clicável e evitando inconsistências no texto.
     \item \textbf{Hifenização e Quebra de Palavras:} O motor moderno do \LaTeX \ (com os pacotes \texttt{babel} em português e codificação \texttt{T1}) separa silabicamente de forma automática quase 100\% das palavras da língua portuguesa com acentuação correta. Caso surja alguma palavra estrangeira em inglês, nome de software ou termo composto que quebre incorretamente na margem direita (ou cause aviso de \textit{Overfull \textbackslash hbox}), você dispõe de duas soluções:
     \begin{itemize}
         \item \textbf{Hífen discricionário no texto (\texttt{\textbackslash-}):} Insira \texttt{\textbackslash-} exatamente onde a palavra pode ser dividida (ex.: \texttt{feed\textbackslash-back} ou \texttt{bench\textbackslash-mark}). O \LaTeX \ só exibirá o hífen se a palavra realmente precisar ser quebrada no fim da linha.
-        \item \textbf{Arquivo global de hifenização (\texttt{formatacao/hifenizacao.tex}):} Para termos técnicos repetidos ao longo do trabalho, declare a regra uma única vez no arquivo \texttt{formatacao/hifenizacao.tex} com o comando \texttt{\textbackslash hyphenation\{feed-back\}}. O compilador aplicará essa separação em todo o documento.
+        \item \textbf{Arquivo global de hifenização (\texttt{formatacao/hifenizacao.tex}):} Para termos técnicos repetidos ao longo do trabalho, declare a regra uma única vez no arquivo \\ \texttt{formatacao/hifenizacao.tex} com o comando \texttt{\textbackslash hyphenation\{feed-back\}}. O compilador aplicará essa separação em todo o documento.
     \end{itemize}
 \end{itemize}
 
@@ -141,7 +227,7 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
 \begin{itemize}
     \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:).
     \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
-    \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
+    \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \\ \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
     \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto para a folha de rosto, invertido para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
     \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
     \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
@@ -155,7 +241,7 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
 O template conta com atalhos e pacotes configurados para otimizar o fluxo de trabalho e garantir aderência às normas sem esforço manual:
 
 \begin{itemize}
-    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{imagens/\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, basta usar o nome do arquivo (ex: \texttt{\textbackslash includegraphics\{foto.png\}}). 
+    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{imagens/\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, basta usar o nome do arquivo (ex: \\ \texttt{\textbackslash includegraphics\{foto.png\}}). 
     
     \begin{atencao}[Nomes de Arquivos de Imagem]
     A mesma regra dos arquivos \texttt{.tex} se aplica rigorosamente aqui: jamais utilize espaços, acentos ou cedilha nos nomes das suas imagens. Um arquivo chamado \texttt{grafico fluxo.png} fará a compilação falhar silenciosamente. Renomeie sempre para formatos como \texttt{grafico-fluxo.png}.
@@ -223,9 +309,11 @@ Se você precisar alterar o nome de um capítulo, ou adicionar um capítulo inte
 
 É possível na redação acadêmica incluir uma breve síntese introdutória (ou epígrafe) logo após o título do capítulo, antes do primeiro parágrafo. Para isso, o template disponibiliza o comando:
 
+{\small
 \begin{verbatim}
 \resumodocapitulo{Breve síntese ou contexto dos tópicos abordados neste capítulo.}
 \end{verbatim}
+}
 
 Esse comando posiciona o texto alinhado à direita em formato itálico com largura proporcional de 50\% da página, com espaçamento vertical ajustado. Vale ressaltar que o manual normativo do PPGT não prevê resumo no início de capítulos (trata-se de um recurso opcional mantido por compatibilidade com a FT/UnB). Por essa razão, o comando vem comentado por padrão no arquivo \texttt{capitulos/capitulo1-introducao.tex}, podendo ser ativado caso o seu orientador aprove essa formatação.
 
@@ -329,7 +417,7 @@ No template do PPGT, esse processo é inteiramente abstraído. O comportamento d
 \begin{itemize}
     \item \textbf{Declaração Contextual:} Você não precisa manter uma lista separada. Quando utilizar uma sigla pela primeira vez no meio de qualquer capítulo, declare-a imediatamente usando o comando \texttt{\textbackslash sigla\{IBGE\}\{Instituto Brasileiro de Geografia e Estatística\}}. 
     \item \textbf{Ordenação Alfabética Autônoma:} Não se preocupe com a ordem em que as siglas ou símbolos aparecem no seu texto. Durante o processo de compilação, o motor do \LaTeX \ varre todos os capítulos, coleta cada comando \texttt{\textbackslash sigla} ou \texttt{\textbackslash simbolo} declarado, remove duplicatas automaticamente e processa a lista pré-textual em rigorosa ordem alfabética.
-    \item \textbf{Diferenciação Semântica:} Mantenha a organização lógica do seu código utilizando \texttt{\textbackslash sigla\{...\}\{...\}} para instituições e acrônimos, e \texttt{\textbackslash simbolo\{...\}\{...\}} para variáveis matemáticas e grandezas físicas (ex: \texttt{\textbackslash simbolo\{\$v\_m\$\}\{Velocidade média\}}). O sistema separará e construirá a Lista de Abreviaturas e Siglas e a Lista de Símbolos nas páginas corretas.
+    \item \textbf{Diferenciação Semântica:} Mantenha a organização lógica do seu código utilizando \\ \texttt{\textbackslash sigla\{...\}\{...\}} para instituições e acrônimos, e \texttt{\textbackslash simbolo\{...\}\{...\}} para variáveis matemáticas e grandezas físicas (ex: \texttt{\textbackslash simbolo\{\$v\_m\$\}\{Velocidade média\}}). O sistema separará e construirá a Lista de Abreviaturas e Siglas e a Lista de Símbolos nas páginas corretas.
 \end{itemize}
 
 \begin{atencao}[A Compilação das Listas]
@@ -342,7 +430,7 @@ Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro
 
 \begin{itemize}
     \item \textbf{Divergência Normativa Explícita:} O manual de referências do programa é taxativo ao afirmar que estas normas não seguem o padrão definido pela Associação Brasileira de Normas Técnicas (ABNT). A simples inclusão do \texttt{abntex2} envenenaria o documento com padrões estruturais proibidos pela secretaria do programa, que exige formatações singulares como a ausência de ponto final após o ano e recuo de 1,25 cm nas referências.
-    \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nossa própria camada de estilo (\texttt{formatacao/ppgt-unb-format.sty} com BibLaTeX e Biber) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
+    \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nossa própria camada de estilo \\ (\texttt{formatacao/ppgt-unb-format.sty} com BibLaTeX e Biber) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
 \end{itemize}
 
 \end{document}
