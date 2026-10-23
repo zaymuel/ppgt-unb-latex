@@ -6,5 +6,5 @@ sub makenlo2nls {
     my ($base_name) = @_;
     return system("makeindex \"$base_name.nlo\" -s nomencl.ist -o \"$base_name.nls\"");
 }
-push @generated_exts, 'nlo', 'nls';
+push @generated_exts, 'nlo', 'nls', 'loq', 'thm';
 

@@ -15,6 +15,29 @@
 % como 'davis2004', 'brackstone1999' ou 'abdulsalam2015effect', lembre-se 
 % de substituir ou remover essas citações no texto dos seus capítulos para 
 % não gerar avisos de chave não encontrada).
+%
+% -------------------------------------------------------------------------
+% GUIA DE DECLARAÇÃO DE AUTORES NO .BIB (MOTOR BIBER):
+% O Biber aceita nomes de autores tanto na ordem direta quanto invertida:
+%   author = {Mark Brackstone and Mike McDonald}
+%   author = {Brackstone, Mark and McDonald, Mike}
+%
+% QUANDO É RECOMENDADO USAR VÍRGULA ("Sobrenome, Prenomes")?
+% O uso da vírgula é altamente recomendado para evitar ambiguidades em:
+% 
+% 1. Graus de parentesco (Júnior, Filho, Neto, Sobrinho):
+%    - CORRETO:   author = {Silva Júnior, José Augusto da}
+%    - EVITE:     author = {José Augusto da Silva Júnior} (o Biber pode entender que o sobrenome é só "Júnior")
+% 
+% 2. Sobrenomes compostos ou hispânicos:
+%    - CORRETO:   author = {García Márquez, Gabriel} ou {Espírito Santo, Maria}
+%    - EVITE:     author = {Gabriel García Márquez} (o Biber pode tratar "García" como prenome intermediário)
+% 
+% 3. Partículas nobres ou estrangeiras complexas:
+%    - CORRETO:   author = {van der Gassen, Win} ou {von Helmholtz, Hermann}
+%
+% DICA: Sempre utilize a palavra " and " (em inglês e minúsculas) para 
+% separar múltiplos autores dentro do campo author = {...}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 @article{aarts2006driving,

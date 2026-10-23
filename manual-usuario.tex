@@ -234,7 +234,28 @@ Assim como o Word precisa do aplicativo instalado no computador para abrir arqui
 
 \subsection{A Rota da Nuvem: Overleaf}
 
-Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{www.overleaf.com}) é o caminho com menor atrito. Trata-se de uma plataforma online que processa tudo nos servidores deles. Não requer instalação, já possui todos os pacotes pré-carregados e salva seu progresso na nuvem. Basta criar uma conta, fazer o upload da pasta do seu template PPGT e começar a escrever. Ele também permite que o orientador acesse o link para revisar o documento remotamente (mas eu pessoalmente prefiro compartilhar o PDF e deixar ele comentar o PDF para depois refletir as mudanças no código-fonte).
+Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{www.overleaf.com}) é o caminho com menor atrito. Trata-se de uma plataforma online que processa tudo nos servidores deles. Não requer instalação local, já possui todos os pacotes pré-carregados e salva seu progresso na nuvem.
+
+\subsubsection{Passo a Passo para Carregar o Projeto (.zip) no Overleaf}
+
+\begin{enumerate}
+    \item \textbf{Obter o arquivo .zip:} Baixe o pacote compactado \texttt{.zip} contendo todos os arquivos e pastas do template do PPGT.
+    \item \textbf{Acessar o Overleaf:} Acesse \url{https://www.overleaf.com/} e faça login em sua conta (ou registre-se gratuitamente).
+    \item \textbf{Carregar o Projeto:} No painel inicial (\textit{Dashboard}), clique no botão \textbf{New Project} (Novo Projeto) $\rightarrow$ \textbf{Upload Project} (Carregar Projeto).
+    \item \textbf{Arrastar o arquivo:} Arraste e solte o arquivo \texttt{.zip} na janela do navegador (o Overleaf descompactará toda a árvore de diretórios automaticamente).
+    \item \textbf{Verificar Configurações do Menu:} Clique no botão \textbf{Menu} no canto superior esquerdo e confirme:
+    \begin{itemize}
+        \item \textbf{Compiler:} \texttt{pdfLaTeX};
+        \item \textbf{TeX Live version:} \texttt{2024} (ou a mais recente);
+        \item \textbf{Main document:} \texttt{principal.tex}.
+    \end{itemize}
+    \item \textbf{Compilar:} Abra o arquivo \texttt{principal.tex} e pressione o atalho \texttt{Ctrl + Enter} (ou clique no botão verde \textbf{Recompile}). O PDF da sua dissertação será renderizado no painel à direita.
+    \item \textbf{Edição Modular:} Edite seus dados em \texttt{principal.tex} e redija os capítulos dentro da pasta \texttt{capitulos/}. Todas as imagens devem ser inseridas na pasta \texttt{imagens/}.
+\end{enumerate}
+
+\begin{atencao}[Atenção aos arquivos auxiliares no Overleaf]
+Se desejar limpar a árvore de arquivos no Overleaf, você pode apagar o arquivo \texttt{Makefile} (que é utilizado apenas em terminais locais de Linux/macOS). \textbf{Contudo, jamais apague o arquivo \texttt{.latexmkrc}}, pois o Overleaf o utiliza internamente para processar e gerar a Lista de Símbolos, Nomenclatura e Siglas (\texttt{nomencl}) de forma automática.
+\end{atencao}
 
 \subsection{A Rota Local: MiKTeX, Perl e IDEs (Windows)}
 
