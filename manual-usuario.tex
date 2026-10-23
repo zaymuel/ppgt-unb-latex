@@ -104,6 +104,14 @@
   title=#1                  % Permite mudar o título se necessário
 }
 
+% Criação de um ambiente padrão para notas e avisos informativos
+\newtcolorbox{nota}[1][Nota Informativa]{
+  colback=NavyBlue!5!white, % Fundo azul suave
+  colframe=NavyBlue!75!black, % Borda azul escuro
+  fonttitle=\bfseries,      % Título em negrito
+  title=#1                  % Permite mudar o título se necessário
+}
+
 \title{Manual do Template \LaTeX \ PPGT \\ Guia de Transição e Uso}
 \author{Samuel Seixas Martin}
 \date{23 de outubro de 2026}
@@ -113,9 +121,9 @@
 
 \begin{document}
 \maketitle
+\ornamento
 \tableofcontents
 \vspace{0.5cm}
-\ornamento
 
 \section{Introdução: A Transição do Microsoft Word}
 
@@ -236,14 +244,14 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
     \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
     \item \textbf{Código Cutter da BCE:} Acesse \url{https://ficha.bce.unb.br/ficha/}, gere sua ficha catalográfica na Biblioteca Central (BCE/UnB) e preencha o código fornecido no comando \\ \texttt{\textbackslash codigocutter\{XXXXX\}}.
     \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \\ \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
-    \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto em \texttt{\textbackslash orientadorficha\{...\}} para a folha de rosto, invertido em \texttt{\textbackslash orientadorfichainverso\{Sobrenome, Nome\}} para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
+    \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto em \texttt{\textbackslash orientadorficha\{...\}} para a folha de rosto, invertido em \\ \texttt{\textbackslash orientadorfichainverso\{Sobrenome, Nome\}} para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
     \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-23} para o dia 23 de outubro de 2026), e o sistema separará dia, mês por extenso e ano de forma automática nas páginas iniciais.
     \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
     \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{...\}} é opcional (fornecido pela secretaria após a defesa; deixe vazio se ainda não o tiver).
     \item \textbf{Regras de Hifenização:} O comando \texttt{\textbackslash input\{formatacao/hifenizacao\}} inclui o arquivo \texttt{formatacao/hifenizacao.tex}, onde você pode adicionar regras de separação silábica para estrangeirismos e termos técnicos incomuns à língua portuguesa.
     \item \textbf{Seleção de Idioma (Português vs. Inglês) e Resumo Estendido:} Por padrão, o documento é redigido em português (\texttt{\textbackslash selectlanguage\{brazilian\}}). Caso você vá redigir sua dissertação em inglês:
     \begin{enumerate}
-        \item Comente a linha \texttt{\textbackslash selectlanguage\{brazilian\}} e descomente \texttt{\textbackslash selectlanguage\{english\}} no preâmbulo do \texttt{principal.tex} (o template traduzirá títulos de capítulos, tabelas, figuras, apêndices e sumário automaticamente);
+        \item Comente a linha \texttt{\textbackslash selectlanguage\{brazilian\}} e descomente \\ \texttt{\textbackslash selectlanguage\{english\}} no preâmbulo do \texttt{principal.tex} (o template traduzirá títulos de capítulos, tabelas, figuras, apêndices e sumário automaticamente);
         \item Descomente a linha \texttt{\textbackslash include\{capitulos-pretextuais/00-resumoestendido\}} na seção pré-textual (linha 172), que inclui o \textbf{Resumo Estendido em Língua Portuguesa} (2 a 5 páginas), obrigatório segundo a Resolução do CEPE/UnB para trabalhos em língua estrangeira.
     \end{enumerate}
 \end{itemize}
@@ -508,8 +516,11 @@ Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro
 \begin{itemize}
     \item \textbf{Autor original da base FT-UnB:} \href{https://lara.unb.br/~gaborges/}{Prof. D.Sc. Geovany Araújo Borges (UnB)}.
     \item \textbf{Colaboradores históricos:} Nathalie Pinheiro, André Calmon, Renan Utida, \href{https://github.com/manoelcampos}{Manoel Campos da Silva Filho} e Gabriel Amaro Baxto.
-    \item \textbf{Adequação às Normas PPGT, Motor Biber e Modelo Dual (2026):} \href{https://github.com/zaymuel}{Samuel Seixas Martin}.
-    \item \textbf{Licença:} \href{https://creativecommons.org/licenses/by-nc/4.0/}{Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)}.
+    \item \textbf{Adequação às Normas PPGT, Migração para Biber e Documentação (2026):} \href{https://github.com/zaymuel}{Samuel Seixas Martin}.
 \end{itemize}
+
+\subsection*{Licença}
+Este trabalho está licenciado sob a licença \textbf{Creative Commons Atribuição-NãoComercial 4.0 Internacional (CC BY-NC 4.0)}. É permitido copiar, redistribuir, remixar, transformar e criar a partir deste material em qualquer suporte ou formato, exclusivamente para \textbf{fins não comerciais}, desde que seja atribuído o devido crédito ao(s) autor(es) original(is) e indicado se foram feitas alterações. Consulte os termos completos em: \url{https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br}.
+
 
 \end{document}

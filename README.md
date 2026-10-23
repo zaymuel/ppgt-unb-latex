@@ -2,6 +2,9 @@
 
 Modelo $\LaTeX$ oficial e atualizado para elaboração de dissertações de mestrado e teses de doutorado do [Programa de Pós-Graduação em Transportes (PPGT)](http://www.ppgt.unb.br) do Departamento de Engenharia Civil e Ambiental da [Faculdade de Tecnologia (FT)](http://ft.unb.br) da [Universidade de Brasília (UnB)](http://unb.br).
 
+> [!NOTE]
+> **Nota Informativa**: Este `README.md` é uma versão simplificada do [Manual do Usuário (`manual-usuario.tex`)](manual-usuario.tex), reunindo de forma direta e prática as principais orientações de configuração e uso do modelo. Para explicações aprofundadas, justificativas de arquitetura e um guia passo a passo completo, consulte o manual ou o documento compilado `manual-usuario.pdf`.
+
 ---
 
 ## 1. Introdução
@@ -185,9 +188,25 @@ Para mais informações, consulte o guia completo no arquivo `manual-usuario.tex
 
 ---
 
-## 8. Autoria e Licença
+## 8. Autoria
 
 - **Autor original da base FT-UnB**: [Prof. D.Sc. Geovany Araújo Borges (UnB)](https://lara.unb.br/~gaborges/).
 - **Colaboradores históricos**: Nathalie Pinheiro, André Calmon, Renan Utida, [Manoel Campos da Silva Filho](https://github.com/manoelcampos), Gabriel Amaro Baxto.
-- **Adequação às Normas PPGT, Motor Biber e Modelo Dual (2026)**: [Samuel Seixas Martin](https://github.com/zaymuel).
-- **Licença**: [Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
+- **Adequação às Normas PPGT, Migração para Biber e Documentação (2026)**: [Samuel Seixas Martin](https://github.com/zaymuel).
+
+## 9. Licença e Direitos de Uso
+
+Este projeto está licenciado sob a **[Creative Commons Atribuição-NãoComercial 4.0 Internacional (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br)**.
+
+### Você tem o direito de
+
+- **Compartilhar:** copiar e redistribuir o material em qualquer suporte ou formato.
+
+- **Adaptar:** remixar, transformar e criar a partir do material.
+
+### De acordo com os seguintes termos
+
+- **Atribuição (`BY`):** Você deve dar o crédito apropriado ao(s) autor(es), prover um link para a licença e indicar se foram feitas alterações.
+
+- **NãoComercial (`NC`):** Você **não pode** usar o material para fins comerciais.
+- **Sem restrições adicionais:** Você não pode aplicar termos jurídicos ou medidas tecnológicas que restrinjam outros de fazerem algo que a licença permita.
