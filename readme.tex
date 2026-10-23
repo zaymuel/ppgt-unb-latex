@@ -125,6 +125,11 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \item \textbf{O Desafio das Tabelas:} A formatação nativa de tabelas no \LaTeX \ pode ser frustrante inicialmente. A recomendação de ouro é utilizar ferramentas visuais online, como o \href{https://www.tablesgenerator.com/}{TablesGenerator.com}. Você constrói sua tabela graficamente (ou cola do Excel) e o site gera o código \LaTeX \ pronto para ser copiado para o seu documento.
 
     \item \textbf{Referências Cruzadas Inteligentes (\texttt{\textbackslash autoref}):} Jamais digite textualmente nomes e números como ``Figura 1'' ou ``Tabela 2''. O \LaTeX \ atualiza a numeração dinamicamente de acordo com a posição dos elementos. Adicione um \texttt{\textbackslash label\{nome-do-marcador\}} imediatamente após criar a legenda da sua figura ou tabela, e cite-a no texto exclusivamente com \texttt{\textbackslash autoref\{nome-do-marcador\}}. O comando \texttt{\textbackslash autoref} identifica automaticamente a natureza do elemento e imprime o prefixo correto com a inicial maiúscula (ex: Figura 1, Tabela 2, Seção 3.1), transformando tudo em um link clicável e evitando inconsistências no texto.
+    \item \textbf{Hifenização e Quebra de Palavras:} O motor moderno do \LaTeX \ (com os pacotes \texttt{babel} em português e codificação \texttt{T1}) separa silabicamente de forma automática quase 100\% das palavras da língua portuguesa com acentuação correta. Caso surja alguma palavra estrangeira em inglês, nome de software ou termo composto que quebre incorretamente na margem direita (ou cause aviso de \textit{Overfull \textbackslash hbox}), você dispõe de duas soluções:
+    \begin{itemize}
+        \item \textbf{Hífen discricionário no texto (\texttt{\textbackslash-}):} Insira \texttt{\textbackslash-} exatamente onde a palavra pode ser dividida (ex.: \texttt{feed\textbackslash-back} ou \texttt{bench\textbackslash-mark}). O \LaTeX \ só exibirá o hífen se a palavra realmente precisar ser quebrada no fim da linha.
+        \item \textbf{Arquivo global de hifenização (\texttt{hifenizacao.tex}):} Para termos técnicos repetidos ao longo do trabalho, declare a regra uma única vez no arquivo \texttt{hifenizacao.tex} com o comando \texttt{\textbackslash hyphenation\{feed-back\}}. O compilador aplicará essa separação em todo o documento.
+    \end{itemize}
 \end{itemize}
 
 \section{Configuração Inicial do Documento Principal}
@@ -141,6 +146,7 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
     \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
     \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
     \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{...\}} é opcional, caso haja necessidade.
+    \item \textbf{Regras de Hifenização:} O comando \texttt{\textbackslash input\{hifenizacao\}} inclui o arquivo \texttt{hifenizacao.tex}, onde você pode adicionar regras de separação silábica para estrangeirismos e termos técnicos incomuns à língua portuguesa.
 \end{itemize}
 
 \section{Imagens, Citações e Nomenclaturas}
@@ -178,6 +184,9 @@ O template conta com atalhos e pacotes configurados para otimizar o fluxo de tra
 \end{verbatim}
         \item Você pode inclusive dividir suas referências em arquivos temáticos (por exemplo, \texttt{artigos.bib} e \texttt{livros.bib}) adicionando múltiplas linhas \texttt{\textbackslash addbibresource\{...\}}. O Biber unificará todas as bases e construirá a lista final em estrita ordem alfabética automaticamente.
     \end{itemize}
+
+    \textbf{Começando sua bibliografia do zero (base limpa):}\\
+    As referências que acompanham o arquivo padrão \texttt{bibliografia/referencias.bib} são apenas exemplos didáticos incluídos para demonstrar a formatação da norma do PPGT. Quando for escrever a sua dissertação real, \textbf{você pode apagar todo o conteúdo daquele arquivo} e colar diretamente as referências exportadas do seu gerenciador (Zotero, Mendeley, etc.). Apenas lembre-se de remover ou substituir as citações de teste usadas no texto dos capítulos para não gerar avisos de chaves não encontradas.
     \end{atencao}
     
     \item \textbf{Siglas e Símbolos:} Para gerar as listas pré-textuais, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. O template oferece os atalhos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}. Fique tranquilo: o motor do \LaTeX \ cuidará de organizar todas as entradas em estrita ordem alfabética de forma autônoma durante a compilação.

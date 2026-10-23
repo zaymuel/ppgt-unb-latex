@@ -1,62 +1,37 @@
-% ---------------- DEFINE FORMA CORRETA DE HIFENIZAÇÃO PARA ALGUMAS PALAVRAS ----------------
-\hyphenation{cons-tru-a}
-\hyphenation{e-xem-plo}
-\hyphenation{e-xem-plar}
-\hyphenation{e-le-men-to}
-\hyphenation{e-le-men-tar}
-\hyphenation{ma-nu-al}
-\hyphenation{res-pos-ta}
-\hyphenation{ca-rac-te-ris-ti-ca}
-\hyphenation{ca-rac-te-ris-ti-cas}
-\hyphenation{ca-rac-te-ris-ti-co}
-\hyphenation{ca-rac-te-ris-ti-cos}
-\hyphenation{cor-res-pon-den-ci-as}
-\hyphenation{cons-tru-am}
-\hyphenation{re-a-li-za-da}
-\hyphenation{re-a-li-za-do}
-\hyphenation{re-a-li-za-das}
-\hyphenation{re-a-li-za-dos}
-\hyphenation{i-ne-xis-ten-cia}
-\hyphenation{i-ne-xis-te}
-\hyphenation{e-xis-te}
-\hyphenation{di-fe-ren-te}
-\hyphenation{di-fe-ren-tes}
-\hyphenation{dei-xan-do}
-\hyphenation{ins-ta-la-do}
-\hyphenation{ins-ta-la-dos}
-\hyphenation{ins-ta-la-da}
-\hyphenation{ins-ta-la-das}
-\hyphenation{re-gis-tra-do}
-\hyphenation{re-gis-tra-dos}
-\hyphenation{re-gis-tra-da}
-\hyphenation{re-gis-tra-das}
-\hyphenation{des-cre-ve}
-\hyphenation{res-pei-to}
-\hyphenation{re-a-li-za}
-\hyphenation{re-a-li-zar}
-\hyphenation{a-tu-a-li-zar}
-\hyphenation{a-tu-a-li-zan-do}
-\hyphenation{a-tu-a-li-za-do}
-\hyphenation{a-tu-a-li-za-da}
-\hyphenation{fun-ci-o-na-li-da-de}
-\hyphenation{pos-si-bi-li-da-de}
-\hyphenation{dis-po-si-ti-vo}
-\hyphenation{dis-po-si-ti-vos}
-\hyphenation{e-xis-tir}
-\hyphenation{des-co-ber-ta}
-\hyphenation{des-co-ber-to}
-\hyphenation{de-sig-nar}
-\hyphenation{de-sig-na-do}
-\hyphenation{o-pe-ra-ci-o-nais}
-\hyphenation{o-pe-ra-ci-o-nal}
-\hyphenation{con-si-de-ra-do}
-\hyphenation{con-si-de-ra-dos}
-\hyphenation{ou-tro}
-\hyphenation{ou-tra}
-\hyphenation{ou-tros}
-\hyphenation{ou-tras}
-\hyphenation{e-xis-ten-te}
-\hyphenation{e-xis-ten-tes}
-\hyphenation{LuaOnTV}
-\hyphenation{De-fi-ni-tion}
-% ------------------------------------------------------------------------------------------
+% =========================================================================
+% GUIA E REGRAS DE HIFENIZAÇÃO MANUAL (EXCEÇÕES E TERMOS ESTRANGEIROS)
+% =========================================================================
+% O LaTeX moderno (com os pacotes babel [brazilian] e fontenc [T1]) separa
+% silabicamente e de forma automática praticamente 100% das palavras da língua 
+% portuguesa com acentuação correta.
+%
+% Portanto, você NÃO precisa adicionar palavras comuns em português aqui.
+%
+% Este arquivo deve ser utilizado EXCLUSIVAMENTE para casos de exceção:
+% 1. Termos técnicos em língua estrangeira (inglês) usados no texto;
+% 2. Nomes próprios de softwares, modelos matemáticos ou marcas;
+% 3. Alguma palavra muito específica da sua pesquisa que porventura caia
+%    exatamente na margem direita e gere um aviso de "Overfull \hbox".
+%
+% COMO DECLARAR:
+% Utilize \hyphenation{si-la-ba-1-si-la-ba-2-...} com todas as letras em 
+% minúsculas e hifens comuns (-) indicando onde a quebra é permitida.
+%
+% DICA ALTERNATIVA:
+% Para hifenizar uma palavra uma única vez diretamente no corpo do texto,
+% basta inserir um hífen discricionário: ex.: pa\-la\-vra.
+% =========================================================================
+
+% Exemplos de termos técnicos e estrangeirismos comuns em pesquisas:
+\hyphenation{bench-mark}
+\hyphenation{bench-mark-ing}
+\hyphenation{feed-back}
+\hyphenation{hard-ware}
+\hyphenation{soft-ware}
+\hyphenation{trade-off}
+\hyphenation{deep-learn-ing}
+
+% Exemplos de softwares e ferramentas de modelagem/simulação de transportes:
+\hyphenation{Postgre-SQL}
+\hyphenation{Trans-CAD}
+\hyphenation{Open-Street-Map}

@@ -103,6 +103,12 @@ Assim, verifique a documentação do seu editor para mais detalhes.
 Quando encontrar o local onde o compilador pode ser configurado,
 abra o arquivo link:Makefile[Makefile] e copie o comando `latexmk` como mostrado lá.
 
+[IMPORTANT]
+.Atenção ao compilar no Visual Studio Code (extensão LaTeX Workshop)
+====
+Se você utiliza o **VS Code**, certifique-se de que o **cursor está clicado dentro do documento `.tex`** (como `principal.tex`) antes de acionar a compilação (seja pelo atalho `Ctrl+Alt+B` ou pelos botões da extensão). Se o foco estiver no terminal, no explorador de arquivos ou em outra aba não-TeX, a extensão não reconhece o arquivo raiz ativo e **o documento não compila**. Se nada acontecer ao tentar compilar, basta clicar com o mouse no texto do documento e tentar novamente.
+====
+
 ==== Compilando pelo terminal no Linux/macOS
 
 Para os programadores que são familiarizados com o terminal,
@@ -134,6 +140,7 @@ Depois de baixados os arquivos do projeto você terá a seguinte estrutura de pa
 - **capitulos-pretextuais**: elementos pré-textuais obrigatórios e opcionais (declaração de IAG, resumos, dedicatória).
 - **capitulos-comparativo**: capítulos de benchmark com estudo de caso para comparação direta com o modelo Word.
 - **bibliografia**: base de dados bibliográfica em formato BibLaTeX/Biber (`bibliografia/referencias.bib`).
+- **hifenizacao.tex**: regras personalizadas de separação silábica para estrangeirismos e nomes próprios técnicos.
 - **imagens**: pasta onde as imagens da sua monografia/dissertação/tese devem ser salvas para facilitar a organização.
 
 O arquivo principal da sua dissertação é o link:principal.tex[principal.tex], configurado para importar os arquivos da pasta `capitulos/` sem citações artificiais.

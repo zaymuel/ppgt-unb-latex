@@ -1,5 +1,7 @@
+.PHONY: all clean
+
 FILE=principal
-LATEX_INCLUDE_DIRS=capitulos capitulos-comparativo capitulos-pretextuais
+LATEX_INCLUDE_DIRS=capitulos capitulos-pretextuais
 TEMP_FILE_EXTENSIONS=log aux lof loc lol lot bit idx glo bbl brf nlo nls ilg toc ind out blg synctex.gz snm nav soc thm fdb_latexmk fls bcf run.xml
 all:
 	rm -f "$(FILE).pdf"
