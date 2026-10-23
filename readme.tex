@@ -155,11 +155,29 @@ O template conta com atalhos e pacotes configurados para otimizar o fluxo de tra
     
     \item \textbf{Numeração Automática (O fim da neurose):} No Word, inserir uma nova figura no meio do capítulo gera a neurose de ter que caçar e renumerar manualmente todas as imagens e menções subsequentes. No \LaTeX, isso não existe. O compilador numera figuras, tabelas e quadros de forma autônoma. Basta adicionar um \texttt{\textbackslash label\{marcador\}} logo após a legenda e chamá-la no texto com \texttt{\textbackslash autoref\{marcador\}}.
     
-    \item \textbf{Gestão Bibliográfica e Citações:} As suas referências não são redigidas manualmente no texto. Elas ficam armazenadas estruturalmente em um arquivo externo chamado \texttt{referencias.bib}. Recomenda-se o uso de gerenciadores como Mendeley, Zotero ou a exportação do Google Acadêmico para popular esse arquivo. No texto, a formatação muda de acordo com a chamada:
+    \item \textbf{Gestão Bibliográfica e Citações:} As suas referências não são redigidas manualmente no texto. Elas ficam armazenadas estruturalmente em um arquivo com extensão \texttt{.bib} codificado em UTF-8. Recomenda-se o uso de gerenciadores como Mendeley, Zotero ou a exportação do Google Acadêmico para popular esse arquivo. No texto, a formatação muda de acordo com a chamada:
     \begin{itemize}
         \item Use \texttt{\textbackslash citet\{chave\}} para citações \textbf{TEXTUAIS} (citação indireta integrada). O autor faz parte da frase e apenas o ano fica entre parênteses.\\ \textit{Exemplo no código:} Segundo \texttt{\textbackslash citet\{davis2004\}}, os acidentes...\\ \textit{Resultado no PDF:} Segundo Davis (2004), os acidentes...
         \item Use \texttt{\textbackslash citep\{chave\}} para citações com \textbf{PARÊNTESES} (no fim da afirmação). O autor e o ano ficam isolados entre parênteses no final da ideia.\\ \textit{Exemplo no código:} ... na modelagem de acidentes \texttt{\textbackslash citep\{davis2004\}}.\\ \textit{Resultado no PDF:} ... na modelagem de acidentes (DAVIS, 2004).
     \end{itemize}
+    
+    \begin{atencao}[Localização Automática do Arquivo .bib e Como Alterar]
+    O arquivo de estilo \texttt{formatacao/ppgt-unb-format.sty} detecta e inclui automaticamente o seu arquivo de referências na seguinte ordem de busca prioritária:
+    \begin{enumerate}
+        \item \texttt{bibliografia/referencias.bib} (local padrão recomendado para manter a raiz limpa);
+        \item \texttt{referencias.bib} (na raiz do projeto, mantido por compatibilidade).
+    \end{enumerate}
+
+    \textbf{Como alterar o nome ou usar múltiplos arquivos \texttt{.bib}:}\\
+    Graças ao motor moderno \textbf{BibLaTeX + Biber}, você tem total flexibilidade:
+    \begin{itemize}
+        \item Se o seu arquivo tiver outro nome (ex.: \texttt{minhas\_referencias.bib}), basta adicionar no preâmbulo do seu \texttt{principal.tex} a instrução:
+\begin{verbatim}
+\addbibresource{bibliografia/minhas_referencias.bib}
+\end{verbatim}
+        \item Você pode inclusive dividir suas referências em arquivos temáticos (por exemplo, \texttt{artigos.bib} e \texttt{livros.bib}) adicionando múltiplas linhas \texttt{\textbackslash addbibresource\{...\}}. O Biber unificará todas as bases e construirá a lista final em estrita ordem alfabética automaticamente.
+    \end{itemize}
+    \end{atencao}
     
     \item \textbf{Siglas e Símbolos:} Para gerar as listas pré-textuais, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. O template oferece os atalhos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}. Fique tranquilo: o motor do \LaTeX \ cuidará de organizar todas as entradas em estrita ordem alfabética de forma autônoma durante a compilação.
 \end{itemize}
@@ -190,6 +208,16 @@ Se você precisar alterar o nome de um capítulo, ou adicionar um capítulo inte
     \item Atualize o bloco de comandos \texttt{\textbackslash include\{...\}} no \texttt{principal.tex} para refletir o nome exato do novo arquivo, inserindo-o na ordem lógica desejada.
 \end{enumerate}
 
+\subsection{Resumo ou Epígrafe do Capítulo (\texttt{\textbackslash resumodocapitulo})}
+
+É possível na redação acadêmica incluir uma breve síntese introdutória (ou epígrafe) logo após o título do capítulo, antes do primeiro parágrafo. Para isso, o template disponibiliza o comando:
+
+\begin{verbatim}
+\resumodocapitulo{Breve síntese ou contexto dos tópicos abordados neste capítulo.}
+\end{verbatim}
+
+Esse comando posiciona o texto alinhado à direita em formato itálico com largura proporcional de 50\% da página, com espaçamento vertical ajustado. Vale ressaltar que o manual normativo do PPGT não prevê resumo no início de capítulos (trata-se de um recurso opcional mantido por compatibilidade com a FT/UnB). Por essa razão, o comando vem comentado por padrão no arquivo \texttt{capitulos/capitulo1-introducao.tex}, podendo ser ativado caso o seu orientador aprove essa formatação.
+
 \section{Ambientes de Compilação: Onde escrever e compilar seu código}
 
 Assim como o Word precisa do aplicativo instalado no computador para abrir arquivos \texttt{.docx}, o código \LaTeX \ precisa de um ``motor'' (compilador) e de uma interface (editor) para ler seus arquivos \texttt{.tex} e gerar o PDF final. Existem duas abordagens principais para montar o seu ambiente de trabalho:
@@ -209,6 +237,23 @@ Para pesquisadores que preferem trabalhar \textit{offline}, precisam compilar do
 \end{itemize}
 
 Após instalar essas três ferramentas, você estará pronto para compilar seus documentos localmente no Windows. Lembre-se de sempre testar a compilação com o arquivo \texttt{principal.tex} para garantir que todos os pacotes e scripts estão funcionando corretamente.
+
+\begin{atencao}[E se o Perl não funcionar ou o \texttt{latexmk} der erro?]
+O utilitário \texttt{latexmk} é, por natureza, um script escrito na linguagem Perl. Se o seu computador não tiver o interpretador Perl instalado (ou se o Windows acusar que \textit{``'perl' não é reconhecido como um comando interno''}), o \texttt{latexmk} não conseguirá rodar. Para resolver isso sem estresse, existem duas rotas:
+
+\begin{enumerate}
+    \item \textbf{Rota 1: Instalar o Strawberry Perl (Recomendado):} Acesse \url{https://strawberryperl.com/}, baixe o instalador padrão para Windows e reinicie seu terminal ou VS Code. O comando \texttt{latexmk} passará a funcionar de forma totalmente transparente e automática.
+    \item \textbf{Rota 2: Compilação Manual Direta (100\% Independente de Perl):} Os programas principais de diagramação do MiKTeX (\texttt{pdflatex.exe}, \texttt{biber.exe} e \texttt{makeindex.exe}) são binários nativos de Windows e \textbf{não necessitam de Perl}. Você pode executar a compilação completa rodando os seguintes comandos no terminal:
+\begin{verbatim}
+pdflatex -interaction=nonstopmode principal.tex
+biber principal
+makeindex principal.nlo -s nomencl.ist -o principal.nls
+pdflatex -interaction=nonstopmode principal.tex
+pdflatex -interaction=nonstopmode principal.tex
+\end{verbatim}
+    Dica prática: você pode colar essas cinco linhas em um arquivo de texto chamado \texttt{compilar.bat} na raiz da sua dissertação; assim, basta dar um duplo clique nele para recompilar todo o trabalho sem precisar de Perl.
+\end{enumerate}
+\end{atencao}
 
 \section{Tópicos Avançados: Controle de Versão com GitHub}
 
@@ -249,7 +294,7 @@ Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro
 
 \begin{itemize}
     \item \textbf{Divergência Normativa Explícita:} O manual de referências do programa é taxativo ao afirmar que estas normas não seguem o padrão definido pela Associação Brasileira de Normas Técnicas (ABNT). A simples inclusão do \texttt{abntex2} envenenaria o documento com padrões estruturais proibidos pela secretaria do programa, que exige formatações singulares como a ausência de ponto final após o ano e recuo de 1,25 cm nas referências.
-    \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nosso próprio estilo bibliográfico (\texttt{normas-ppgt.bst}) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
+    \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nossa própria camada de estilo (\texttt{formatacao/ppgt-unb-format.sty} com BibLaTeX e Biber) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
 \end{itemize}
 
 \end{document}

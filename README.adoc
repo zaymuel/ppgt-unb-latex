@@ -31,7 +31,7 @@ Este template foi adaptado do modelo da FT-UnB para atender às especificações
 - Lista de Quadros (além de Tabelas e Figuras)
 - Folha de aprovação no formato PPGT
 - Ficha catalográfica ajustada
-- Bibliografia e citações segundo as normas específicas do PPGT (estilo Autor-Data próprio com natbib, não seguindo a ABNT tradicional)
+- Bibliografia e citações segundo as normas específicas do PPGT (estilo Autor-Data próprio com BibLaTeX e Biber, não seguindo a ABNT tradicional)
 
 IMPORTANT: Este template deve ser usado para todos os trabalhos acadêmicos do PPGT.
 
@@ -129,15 +129,44 @@ Caso seu orientador ou colaborador solicite o trabalho em formato Word (.docx) p
 == Estrutura do projeto
 Depois de baixados os arquivos do projeto você terá a seguinte estrutura de pastas:
 
-- **template-FT-UnB**: arquivos do template. A não ser que deseje fazer melhorias ou correções no template, 
-  os arquivos desta pasta não devem ser modificados.
-- **imagens**: pasta onde as imagens da sua monografia/dissertação/tese devem ser salvas para facilitar a organização
+- **formatacao**: arquivos de estilo (`formatacao/ppgt-unb-format.sty`) e logotipos institucionais.
+- **capitulos**: capítulos em branco para redigir sua dissertação/tese (`capitulo1-introducao.tex`, etc.).
+- **capitulos-pretextuais**: elementos pré-textuais obrigatórios e opcionais (declaração de IAG, resumos, dedicatória).
+- **capitulos-comparativo**: capítulos de benchmark com estudo de caso para comparação direta com o modelo Word.
+- **bibliografia**: base de dados bibliográfica em formato BibLaTeX/Biber (`bibliografia/referencias.bib`).
+- **imagens**: pasta onde as imagens da sua monografia/dissertação/tese devem ser salvas para facilitar a organização.
 
-Os arquivos na raiz da pasta são arquivos de exemplo de uma dissertação de mestrado. 
-O arquivo principal foi apropriadamente nomeado de link:principal.tex[principal.tex]. 
-A partir dele é feita a compilação do documento. 
-Cada arquivo .tex adicional é uma parte específica do documento de exemplo (como resumo, capítulos, conclusão, apêndices, etc). 
-As referências a serem utilizadas devem estar no arquivo link:referencias.bib[referencias.bib].
+O arquivo principal da sua dissertação é o link:principal.tex[principal.tex], configurado para importar os arquivos da pasta `capitulos/` sem citações artificiais.
+Para visualizar o documento de teste completo com os dados da dissertação de referência (modelo PPGT em Word de agosto de 2026), utilize o arquivo link:comparativo.tex[comparativo.tex], que inclui os arquivos da pasta `capitulos-comparativo/`.
+
+=== Base de Referências Bibliográficas (.bib)
+
+O arquivo de estilo `formatacao/ppgt-unb-format.sty` utiliza o motor moderno **BibLaTeX + Biber** e localiza a sua base de referências automaticamente segundo a seguinte ordem de busca prioritária:
+
+1. `bibliografia/referencias.bib` (local padrão recomendado para manter a pasta raiz limpa);
+2. `referencias.bib` (na raiz do projeto, mantido por compatibilidade com fluxos legados).
+
+==== Como alterar o nome do arquivo ou utilizar múltiplos arquivos .bib
+
+Caso você prefira utilizar outro nome para a base de referências ou dividi-la em múltiplos arquivos temáticos (por exemplo, `artigos.bib` e `livros.bib`), basta declarar o comando `\addbibresource` no preâmbulo do seu arquivo principal (`principal.tex`):
+
+[source,latex]
+----
+% Exemplo com arquivo renomeado:
+\addbibresource{bibliografia/minhas_referencias.bib}
+
+% Exemplo com múltiplos arquivos temáticos unificados automaticamente pelo Biber:
+\addbibresource{bibliografia/artigos.bib}
+\addbibresource{bibliografia/livros.bib}
+----
+
+O Biber unificará todas as entradas e construirá a lista final de referências em rigorosa ordem alfabética automaticamente.
+
+=== Resumo ou Epígrafe do Capítulo (`\resumodocapitulo`)
+
+Caso você queira incluir uma breve síntese introdutória ou epígrafe logo após o título de cada capítulo, o template disponibiliza o comando `\resumodocapitulo{...}`. O texto é posicionado automaticamente alinhado à direita, ocupando 50% da largura da página em formato itálico. Nota: o manual oficial do PPGT não prevê resumo no início de capítulos (trata-se de recurso herdado da FT-UnB); por isso, ele fica comentado por padrão no início de `capitulos/capitulo1-introducao.tex`.
+
+=== Configuração Inicial do Documento
 
 * *Título do Trabalho:* Utilize `\title{Seu Título Aqui}`. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos. *ALERTA CRÍTICO: O título não pode ultrapassar o limite máximo de 5 linhas. Títulos mais extensos que 5 linhas empurrarão os limites do código e quebrarão irremediavelmente a geometria da capa.*
 
@@ -145,6 +174,20 @@ As referências a serem utilizadas devem estar no arquivo link:referencias.bib[r
 A ficha catalográfica exige validação do sistema oficial da Biblioteca Central da UnB (BCE). Acesse https://ficha.bce.unb.br/ficha/ e preencha os metadados da sua pesquisa. O sistema gerará um PDF contendo o seu Código Cutter-Sanborn na margem superior esquerda (ex: `M379t`).
 
 No preâmbulo do arquivo `principal.tex`, localize o comando `\codigocutter{...}` e insira o código alfanumérico exato fornecido pela biblioteca. O template se encarregará de posicionar essa variável corretamente na tabela, espelhando o formato visual gerado pela BCE.
+
+=== Compilação Local e a Dependência do Perl (latexmk)
+O script de automação `latexmk` depende do interpretador Perl. Caso o seu Windows não possua o Perl instalado (acusando que `'perl' não é reconhecido`), você tem duas alternativas:
+
+1. **Instalar o Strawberry Perl (Recomendado):** Baixe e instale o https://strawberryperl.com/[Strawberry Perl]. O comando `latexmk -pdf principal.tex` funcionará automaticamente.
+2. **Compilação Manual Sequencial (Sem Perl):** Os motores `pdflatex`, `biber` e `makeindex` do MiKTeX não dependem de Perl. Basta executar no terminal:
+[source,powershell]
+----
+pdflatex -interaction=nonstopmode principal.tex
+biber principal
+makeindex principal.nlo -s nomencl.ist -o principal.nls
+pdflatex -interaction=nonstopmode principal.tex
+pdflatex -interaction=nonstopmode principal.tex
+----
 
 == Autor
 Não sou o autor original deste projeto 😊, fiz apenas a reestruturação do mesmo para facilitar o uso e impedir 
@@ -161,7 +204,7 @@ https://lara.unb.br/~gaborges/[Prof. D.Sc. Geovany Araujo Borges (UnB)].
 
 == Licença
 
-O template é disponibilizado sob a licença link:template-FT-UnB/LICENSE[Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)].
+O template é disponibilizado sob a licença link:formatacao/LICENSE[Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)].
 O LICENSE na raiz é apenas uma cópia de tal arquivo. Se você for criar um documento a partir deste template,
 fique à vontade para excluir tal cópia e incluir no lugar uma licença específica para o seu documento.
 O arquivo original da licença não deve ser excluído.

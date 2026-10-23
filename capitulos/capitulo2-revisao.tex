@@ -1,0 +1,43 @@
+\chapter{REVISÃO BIBLIOGRÁFICA}
+\label{capitulo2}
+
+Apresente neste capítulo o estado da arte e a fundamentação teórica que subsidiam a pesquisa. A revisão de literatura deve sintetizar criticamente os principais autores, modelos, teorias e evidências empíricas já estabelecidos na literatura nacional e internacional.
+
+\section{FUNDAMENTAÇÃO TEÓRICA E DIRETRIZES DE CITAÇÃO}
+\label{sec:fundamentacao}
+
+O modelo do PPGT adota o sistema de chamada \textbf{Autor-Data}, totalmente gerenciado pelo pacote \texttt{biblatex} integrado ao motor \texttt{biber}. As citações no texto devem seguir estritamente duas modalidades de chamada:
+
+\begin{enumerate}
+  \item \textbf{Citação Textual (Narrativa / Indireta integrada ao texto):} Deve ser realizada com o comando \texttt{\textbackslash citet\{chave\}}. Neste formato, o nome do autor é integrado sintaticamente à oração com iniciais em maiúsculo e apenas o ano é posicionado entre parênteses.
+  \begin{itemize}
+    \item Exemplo com um autor: Segundo \citet{davis2004}, os acidentes de trânsito exigem abordagens desagregadas de análise.
+    \item Exemplo com dois autores (unidos automaticamente por \&): Conforme demonstrado por \citet{brackstone1999}, os modelos de perseguição veicular representam aspectos dinâmicos de tráfego.
+    \item Exemplo com três ou mais autores (com \textit{et al.} automático em itálico): De acordo com \citet{abdulsalam2015effect}, a automação de processos fiscalizatórios impacta diretamente os indicadores observados.
+  \end{itemize}
+
+  \item \textbf{Citação Entre Parênteses (Parentética ao final do parágrafo ou oração):} Deve ser realizada com o comando \texttt{\textbackslash citep\{chave\}}. O sobrenome do autor é automaticamente convertido para \textbf{LETRAS MAIÚSCULAS} dentro dos parênteses.
+  \begin{itemize}
+    \item Exemplo com um autor: A modelagem matemática de eventos viários requer cuidados metodológicos especiais \citep{davis2004}.
+    \item Exemplo com dois autores: O comportamento do motorista no seguimento veicular depende de múltiplos parâmetros perceptuais \citep{brackstone1999}.
+    \item Exemplo com três ou mais autores: Estudos empíricos evidenciam o papel de intervenções viárias estruturadas \citep{abdulsalam2015effect}.
+  \end{itemize}
+\end{enumerate}
+
+\section{USO DE SIGLAS E SÍMBOLOS MATEMÁTICOS}
+\label{sec:siglas_simbolos}
+
+Para incluir automaticamente termos na \textbf{Lista de Símbolos, Nomenclatura e Abreviações}, utilize os comandos semânticos disponíveis no template:
+\begin{itemize}
+  \item Para siglas: \texttt{\textbackslash sigla\{PPGT\}\{Programa de Pós-Graduação em Transportes\}}
+  \sigla{PPGT}{Programa de Pós-Graduação em Transportes}
+  \sigla{UnB}{Universidade de Brasília}
+  \item Para símbolos matemáticos: \texttt{\textbackslash simbolo\{\$\textbackslash epsilon\$\}\{Deformação específica\}}
+  \simbolo{$\epsilon$}{Deformação específica}
+  \simbolo{$\mu$}{Média amostral ou coeficiente de atrito}
+\end{itemize}
+
+\section{TÓPICOS CONCLUSIVOS DA REVISÃO}
+\label{sec:conclusivos_revisao}
+
+Sintetize os principais consensos, contradições e lacunas identificados na literatura, demonstrando claramente como a metodologia a ser detalhada no Capítulo~\ref{capitulo3} preenche essas oportunidades de investigação.

@@ -1,0 +1,63 @@
+\chapter{MATERIAIS E MÉTODOS}
+\label{capitulo3}
+
+Descreva neste capítulo os materiais, ferramentas, bases de dados e procedimentos metodológicos utilizados para conduzir a pesquisa, garantindo rigor científico e reprodutibilidade dos experimentos ou coletas de dados.
+
+\section{MATERIAIS E BASES DE DADOS}
+\label{sec:materiais}
+
+Descreva os equipamentos, softwares, bases de dados secundárias e insumos empregados. Indique detalhadamente fontes, períodos temporais de coleta e características técnicas das ferramentas.
+
+\section{MÉTODOS E PROCEDIMENTOS}
+\label{sec:metodos}
+
+Apresente as etapas do método de pesquisa, as técnicas de amostragem, modelagem matemática ou simulação adotadas.
+
+\subsection{Padronização de Tabelas no PPGT}
+\label{subsec:tabelas}
+
+Diferente dos \textit{Quadros} (que possuem bordas laterais fechadas e abrigam dados predominantemente textuais), as \textbf{Tabelas} são destinadas a dados numéricos e seguem a norma de apresentação tabular do IBGE e do PPGT:
+\begin{itemize}
+  \item Bordas laterais abertas (sem linhas verticais nas extremidades esquerda e direita);
+  \item Linhas horizontais no topo, abaixo dos cabeçalhos das colunas e na base inferior da tabela;
+  \item Cabeçalhos de colunas em negrito;
+  \item Indicação obrigatória da fonte na base inferior com o comando \texttt{\textbackslash fonte\{...\}}.
+\end{itemize}
+
+A Tabela~\ref{tab:exemplo_tabela} ilustra a formatação correta de uma tabela segundo o padrão exigido:
+
+\begin{table}[htbp]
+  \centering
+  \caption{Exemplo de tabela numérica formatada segundo as normas do PPGT}
+  \label{tab:exemplo_tabela}
+  \small
+  \begin{tabular}{lrr}
+    \hline
+    \textbf{Categoria de Análise} & \textbf{Frequência Absoluta} & \textbf{Percentual (\%)} \\
+    \hline
+    Classe A & 142 & 45,8 \\
+    Classe B & 98 & 31,6 \\
+    Classe C & 70 & 22,6 \\
+    \hline
+    \textbf{Total} & \textbf{310} & \textbf{100,0} \\
+    \hline
+  \end{tabular}
+  \fonte{Dados compilados pelo autor (2026).}
+\end{table}
+
+\subsection{Regra Específica do PPGT para o 3º Nível de Subitens}
+\label{subsec:terceiro_nivel}
+
+Uma diretriz exclusiva das normas do PPGT é o tratamento do 3º nível de subseção (\texttt{\textbackslash subsubsection}):
+\begin{itemize}
+  \item No texto, o título do 3º nível aparece em formato itálico com identificador alfabético: \textbf{(a)}, \textbf{(b)}, \textbf{(c)}... em vez da numeração decimal clássica (ex.: 3.2.1);
+  \item No Sumário (Índice), os títulos de 3º nível não são exibidos (a profundidade é limitada a 2 níveis, conforme exigido institucionalmente).
+\end{itemize}
+
+\subsubsection{Primeira Etapa do Procedimento Analítico}
+
+Exemplo de texto pertencente ao primeiro subitem do 3º nível, identificado automaticamente pelo prefixo (a).
+
+\subsubsection{Segunda Etapa do Procedimento Analítico}
+
+Exemplo de texto pertencente ao segundo subitem do 3º nível, identificado automaticamente pelo prefixo (b).

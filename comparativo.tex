@@ -11,7 +11,7 @@
 \usepackage[utf8]{inputenc}
 
 % Adição do pacote do template da UnB
-\usepackage{template-FT-UnB/ft2unb}
+\usepackage{formatacao/ppgt-unb-format}
 
 % Define a fonte Times New Roman para o documento
 \usepackage{mathptmx}
@@ -200,9 +200,9 @@
 
   % Inclui todas as referências no arquivo .bib, mesmo que não sejam citadas no texto
   \nocite{*}
-  % Configuração da Bibliografia (Usa natbib configurado no ft2unb.sty)
-  \bibliographystyle{bibliografia/normas-ppgt}
-  % Não pode ter espaço entre os nomes dos arquivos bib
+  % Impressão da Bibliografia gerenciada pelo biblatex / biber no ft2unb.sty
+  \printbibliography[heading=ppgt]
+
 
   \include{capitulos-comparativo/zz-apendices}
   \include{capitulos-comparativo/zz-anexos}

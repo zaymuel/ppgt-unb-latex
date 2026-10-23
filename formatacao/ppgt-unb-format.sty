@@ -1,56 +1,114 @@
 %%
-%% This is file `ft2unb.sty'.
+%% This is file `formatacao/ppgt-unb-format.sty'.
 %% 
-%% This file has been created by Prof. Geovany Araujo Borges.
-%% Updates: 
-%% - 2026/09/05: Atualização para compatibilidade com o novo modelo de dissertação do PPGT by Samuel Seixas Martin.
-%% - 2025/11/09: Atualização para o programa de transporte do dpto.Engenharia Civil by Gabriel Amaro Baxto.
-%% - 2011/05/27: Atualização para o modelo atual da UnB.
-%%               Inclusão de comando para geração de lista de termos e siglas e listas de códigos fonte 
-%%               Incluída contra-capa, folha de assinaturas e ficha catalográfica. 
-%%               Adicionados novos comandos \dia (dia da defesa), \numpublicacao, \siglapublicacao (por exemplo: PPGENE.DM),
-%%               \area (por Exemplo, Engenharia Elétrica), \titulacao (Mestrado, Doutorado) 
-%%               \siglaarea (por exemplo, ENE)
-%%               \autorendereco (endereço do autor). (por Manoel Campos da Silva Filho. http://manoelcampos.com)
-%% - 2007/04/09: Package incorporates a page for bibliographic information. Contributions from Nathalie Pinheiro, André Calmon and Renan Utida)
-%% - 2007/01/08: Package updated in order to support three co-authors. Proposed by Nathalie Pinheiro, André Calmon and Renan Utida)
-%% - 2006/03/19: Version 1.0 released.
+%% Arquivo de estilo oficial do Programa de Pós-Graduação em Transportes (PPGT)
+%% da Faculdade de Tecnologia (FT) da Universidade de Brasília (UnB).
+%%
+%% Histórico de Desenvolvimento e Autoria:
+%% - 2026/10/22: Migração completa para o motor Biber (BibLaTeX com UTF-8 nativo),
+%%               reestruturação didática em módulos, padronização de anexos/apêndices
+%%               com travessão em dash (—), isolamento em modelo dual (boilerplate
+%%               e comparativo) e documentação pedagógica integral por Samuel Seixas Martin.
+%% - 2026/09/05: Atualização para conformidade com o Modelo Oficial de Dissertação/Tese
+%%               do PPGT (versão agosto/2026) por Samuel Seixas Martin.
+%% - 2025/11/09: Atualização para o Departamento de Engenharia Civil e Ambiental
+%%               por Gabriel Amaro Baxto.
+%% - 2011/05/27: Atualização para o modelo UnB com lista de símbolos e siglas,
+%%               contra-capa, ficha catalográfica e folha de assinaturas por Manoel Campos da Silva Filho. http://manoelcampos.com.
+%% - 2007/04/09: Suporte a informações bibliográficas, por Nathalie Pinheiro,
+%%               André Calmon e Renan Utida.
+%% - 2006/03/19: Versão 1.0 criada pelo Prof. Geovany Araújo Borges.
+%%
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{template-FT-UnB/ft2unb}[2011/05/27 v1.5]
+\ProvidesPackage{formatacao/ppgt-unb-format}[2026/10/22 v2.0 PPGT/FT/UnB Dissertation Style]
 
+% =========================================================================
+% GUIA PEDAGÓGICO DE ARQUITETURA DO CÓDIGO TEX / LATEX
+% =========================================================================
+% O código interno do LaTeX difere consideravelmente de linguagens estruturadas
+% ou orientadas a objetos convencionais (como Python, TypeScript ou C++).
+% A seguir são esclarecidos os conceitos essenciais para sua leitura e manutenção:
+%
+% 1. O CARACTERE '@' E O NAMESPACE PRIVADO:
+%    No texto normal do usuário (.tex), o caractere '@' é tratado como pontuação
+%    (catcode 12). Dentro de pacotes (.sty) e classes (.cls), ele é temporariamente
+%    convertido em letra (catcode 11). Isso cria um "namespace privado": macros
+%    internas como \@makechapterhead ou \@author não podem ser invocadas nem
+%    sobrescritas acidentalmente no texto do autor comum.
+%
+% 2. CONSTANTES HISTÓRICAS E REGISTRADORES DO MOTOR TEX:
+%    Por motivos de otimização de memória na década de 1970, o TeX utiliza tokens
+%    globais compartilhados em vez de números literais:
+%    - \z@       : Representa a dimensão zero (0pt ou valor inteiro 0).
+%    - \p@       : Representa a dimensão de um ponto (1pt).
+%    - \m@ne     : Representa a constante inteira negativa -1.
+%    - \@M       : Representa a penalidade máxima infinita (10000), impedindo quebras.
+%    - \c@<nome> : O registrador numérico interno de um contador (ex: \c@chapter).
+%
+% 3. MECANISMO DE DUAS PASSADAS (TWO-PASS ENGINE COM .AUX):
+%    O LaTeX é um compilador de passagem sequencial de cima para baixo. Para saber
+%    o número total de páginas ou referências futuras na Ficha Catalográfica
+%    (página iii), o sistema escreve esses números no arquivo auxiliar (.aux)
+%    durante a Passada 1 com \immediate\write\@auxout, e lê os valores finais
+%    de volta na Passada 2.
+%
+% 4. MACROS DE EXPANSÃO TEXTUAL:
+%    - \def       : Define uma macro no escopo local corrente.
+%    - \gdef      : Define uma macro no escopo global (acessível em todo o documento).
+%    - \edef      : Executa expansão completa de todos os argumentos imediatamente.
+%    - \let       : Cria uma cópia estática de uma macro ou token existente.
+%
+% 5. PARSER DE TOKENS E SENTINELAS (PATTERN MATCHING):
+%    Como o TeX clássico não possui funções nativas de manipulação de strings
+%    (split, substring), laços de repetição sobre palavras utilizam macros com
+%    argumentos delimitados por espaço seguidos de um token sentinela de parada
+%    (ex: ENDINITIALS \@empty) para processar prenomes recursivamente.
+% =========================================================================
+
+% =========================================================================
+% SEÇÃO 1: PACOTES FUNDAMENTAIS E GEOMETRIA DA PÁGINA
+% =========================================================================
 \RequirePackage{graphicx}
+\RequirePackage{eso-pic} % Utilizado na capa (\capaprincipal) para posicionamento do logo UnB
 \RequirePackage[table]{xcolor}
+
+% Cor institucional padrão da Universidade de Brasília:
 \definecolor{unbblue}{HTML}{003a7a}
 
-% Define as margens do documento (PPGT 2023: todas as margens com 25 mm)
+% Geometria da página conforme as Normas do PPGT (2023):
+% Todas as margens com exatamente 25 mm (2,5 cm) e rodapé com 1,2 cm.
 \RequirePackage[a4paper, margin=2.5cm, footskip=1.2cm]{geometry} 
 
-% Acesso aos dados do documento (\@title, \@author, \@date)
+% Macros auxiliares para acesso seguro a metadados do documento:
 \def\MyTitle{\begingroup\def\\{ }\@title\endgroup}
 \def\MyAuthor{\begingroup\def\\{, }\@author\endgroup}
 \def\MyDate{\@date}
 
 \RequirePackage{listings,lipsum}
-% \RequirePackage{listingsutf8} 
 
+% Configuração das legendas de figuras, quadros e tabelas (Normas PPGT):
+% Fonte tamanho 10pt (small), identificador em negrito e texto centralizado.
 \RequirePackage{caption}
 \captionsetup{font=small, labelfont=bf, justification=centering}
 
-% Comando para padronização da indicação de fonte em elementos ilustrativos
-% Normas PPGT: Fonte tamanho 10pt (footnotesize), centralizada, abaixo do elemento.
+% Comando obrigatório para indicação de fonte em elementos ilustrativos:
+% Fonte tamanho 10pt (footnotesize), centralizada, espaçada 6pt abaixo do elemento.
 \newcommand{\fonte}[1]{%
   \par\vspace{6pt}%
   {\centering\footnotesize Fonte: #1\par}%
 }
 
+% Ambiente flutuante personalizado para "Quadros" (PPGT):
+\RequirePackage{newfloat}
 
-\RequirePackage{newfloat} % Para criar ambiente de quadros (PPGT)
-\RequirePackage{nomencl} % Gerar lista de abreviações e símbolos
+% Pacote para geração da Lista de Símbolos, Nomenclatura e Abreviações:
+\RequirePackage{nomencl}
 \makenomenclature   % Inicializa a geração do arquivo .nlo
 
 \RequirePackage{hyperref, datetime}
 \RequirePackage{url}
 
+% Pacotes matemáticos e tipográficos fundamentais:
 \RequirePackage{array}
 \RequirePackage{subfigure}
 \RequirePackage{amsfonts}
@@ -73,59 +131,218 @@
 \RequirePackage{epigraph}
 \RequirePackage{latexsym}
 \RequirePackage{setspace}
-\RequirePackage[notlof,notlot,nottoc]{tocbibind}
+
+% 'notbib' desativa qualquer redefinição de bibliografia pelo tocbibind,
+% deixando o controle integral com o BibLaTeX/Biber:
+\RequirePackage[notlof,notlot,nottoc,notbib]{tocbibind}
 \RequirePackage{textcase}
-\RequirePackage{etoolbox} % Necessário para o comando \AfterEndPreamble funcionar
+\RequirePackage{etoolbox} % Necessário para ganchos (\pretocmd, \AfterEndPreamble) e toggles
 \RequirePackage{tikz}
 
-% -------------------------------------------------------------------------
-% Formatação das Referências Bibliográficas (Normas PPGT 2019/2023)
-% -------------------------------------------------------------------------
-% Utiliza o pacote natbib para gerenciar o padrão Autor-Data integrado a arquivos .bib externos
-\RequirePackage[round, authoryear]{natbib}
+% =========================================================================
+% SEÇÃO 2: SISTEMA DE REFERÊNCIAS BIBLIOGRÁFICAS (BIBLATEX COM BIBER)
+% =========================================================================
+% MOTIVAÇÃO DA MIGRAÇÃO PARA O MOTOR BIBER:
+% O BibTeX clássico dependia de arquivos de estilo compilados em C (.bst),
+% que não suportavam caracteres UTF-8 de forma nativa e quebravam com nomes
+% acentuados e pontuações brasileiras. O Biber lê diretamente o arquivo .bib
+% codificado em UTF-8, processa chaves, capitalização e ordenação com precisão
+% algorítmica e transfere os dados para o LaTeX via BibLaTeX.
+%
+% PARÂMETROS DO BIBLATEX CONFORME AS NORMAS DO PPGT (2019/2023):
+% - backend=biber   : Utiliza o executável moderno Biber para ordenação.
+% - style=authoryear: Adota o sistema institucional de chamada Autor-Data.
+% - natbib=true     : Permite o uso direto de \citet, \citep, \cite e aliases clássicos.
+% - giveninits=true : Converte prenomes de autores em iniciais maiúsculas (ex: Silva, J. A.).
+% - uniquename=init : Desambigua autores com mesmo sobrenome usando a inicial do prenome.
+% - maxcitenames=2  : No texto: cita até 2 autores por extenso (Autor1 & Autor2).
+% - mincitenames=1  : A partir de 3 autores: primeiro autor seguido de et al.
+% - maxbibnames=99  : Na lista bibliográfica: lista todos os autores sem truncar.
+% - minbibnames=1   : Garante exibição exaustiva na bibliografia final.
+% - dashed=false    : Não substitui autores idênticos consecutivos por travessão (proibido no PPGT).
+\RequirePackage[
+  backend=biber,
+  style=authoryear,
+  natbib=true,
+  giveninits=true,
+  uniquename=init,
+  maxcitenames=2,
+  mincitenames=1,
+  maxbibnames=99,
+  minbibnames=1,
+  dashed=false
+]{biblatex}
 
-% Configurações físicas exigidas pelas normas do PPGT:
-\setlength{\bibhang}{1.25cm} % Recuo especial (hanging indent) de 1,25 cm
-\setlength{\bibsep}{12pt}    % Espaçamento exato de 12pt entre as referências
-\renewcommand{\bibfont}{\singlespacing} % Espaçamento simples dentro da referência
-
-% Garante que o título do capítulo de referências siga o padrão não numerado no sumário
-\renewcommand{\bibsection}{%
-  \chapter*{\bibname}%
-  \phantomsection % <--- Cria a âncora invisível para o link do sumário
-  \addcontentsline{toc}{chapter}{\bibname}%
+% Localização e inclusão automática da base bibliográfica (.bib):
+\IfFileExists{bibliografia/referencias.bib}{%
+  \addbibresource{bibliografia/referencias.bib}%
+}{%
+  \IfFileExists{referencias.bib}{%
+    \addbibresource{referencias.bib}%
+  }{}%
 }
 
-% Formatação dos nomes dos autores nas citações segundo as normas do PPGT:
-% Textual (\citet): Iniciais em maiúsculo (ex: Cunha & Setti, 2006)
-% Entre parênteses (\citep): Todo em MAIÚSCULAS (ex: CUNHA & SETTI, 1979; PEREIRA et al., 1988)
-\renewcommand{\NAT@nmfmt}[1]{%
-  \ifNAT@par
-    \MakeTextUppercase{#1}%
-  \else
-    #1%
-  \fi
+% -------------------------------------------------------------------------
+% 2.1 Dimensões Físicas e Espaçamento da Bibliografia (Normas PPGT)
+% -------------------------------------------------------------------------
+\setlength{\bibhang}{1.25cm}             % Recuo especial da 2ª linha (hanging indent) de 1,25 cm
+\setlength{\bibitemsep}{12pt}            % Espaçamento exato de 12 pt entre referências sucessivas
+\renewcommand*{\bibfont}{\singlespacing} % Espaçamento interlinear simples dentro de cada referência
+
+% -------------------------------------------------------------------------
+% 2.2 Ordenação e Delimitadores de Nomes de Autores
+% -------------------------------------------------------------------------
+% Formatação na bibliografia final: SOBRENOME, Iniciais para TODOS os autores:
+\DeclareNameAlias{sortname}{family-given}
+\DeclareNameAlias{default}{family-given}
+
+% Delimitadores entre autores: vírgula entre os primeiros e ampersand (&) antes do último:
+\DeclareDelimFormat{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat{finalnamedelim}{\addspace\&\space}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{\addspace\&\space}
+
+% Padrão textual do "et al." em itálico e prefixo de páginas sempre "p." (sem "pp.") para o PPGT:
+\DefineBibliographyStrings{brazilian}{%
+  andothers = {\textit{et\addabbrvspace al\adddot}},%
+  page      = {p\adddot},%
+  pages     = {p\adddot},%
+}
+\DefineBibliographyStrings{english}{%
+  page      = {p\adddot},%
+  pages     = {p\adddot},%
 }
 
-% Define estilo de fonte menor para URLs
+% Pontuação entre ano e título na bibliografia (PPGT: sem ponto final após o ano):
+\DeclareDelimFormat[bib,biblist]{nametitledelim}{\addspace}
+\renewcommand*{\labelnamepunct}{\addspace}
+
+% Títulos de artigos e trabalhos em anais sem aspas (padrão PPGT):
+\DeclareFieldFormat[article,inproceedings,incollection,inbook]{title}{#1}
+
+% Paginação sempre com prefixo "p." único (ex: p. 215-224), nunca "pp.":
+\DeclareFieldFormat{pages}{p\adddot\addnbspace #1}
+
+% Formatação de volume e número/fascículo para periódicos (Normas PPGT: v. X (Y)):
+\DeclareFieldFormat[article,periodical]{volume}{v\adddot\addnbspace #1}
+\DeclareFieldFormat[article,periodical]{number}{\mkbibparens{#1}}
+
+% Delimitador entre nome do periódico e volume (adiciona vírgula antes de "v. X (Y)"):
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addcomma\space}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit*{\addcomma\space}}%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
+
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit*{\addspace}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+
+% Remove o prefixo "In:" para artigos publicados em revistas/periódicos:
+\renewbibmacro*{in:}{%
+  \ifentrytype{article}{}{%
+    \bibstring{in}%
+    \printunit{\intitlepunct}%
+  }%
+}
+
+% -------------------------------------------------------------------------
+% 2.3 Controle de Capitalização dos Sobrenomes dos Autores (Regra Estrita PPGT)
+% -------------------------------------------------------------------------
+% O PPGT exige estritamente:
+% - Na Bibliografia: Sobrenome sempre em MAIÚSCULAS (ex: CUNHA, A. B. L. N. & SETTI, J. R.)
+% - Citações Parentéticas (\citep, \parencite, \cite): Sobrenome em MAIÚSCULAS (ex: CUNHA & SETTI, 2006)
+% - Citações Textuais Narrativas (\citet, \textcite): Iniciais em maiúsculo (ex: Cunha & Setti, 2006)
+\newtoggle{ft@uppercase@family}
+\togglefalse{ft@uppercase@family}
+
+\renewcommand*{\mkbibnamefamily}[1]{%
+  \iftoggle{ft@uppercase@family}{\MakeUppercase{#1}}{#1}%
+}
+
+\AtBeginBibliography{%
+  \toggletrue{ft@uppercase@family}%
+  \setlength{\bibhang}{1.25cm}%
+  \setlength{\bibitemsep}{12pt}%
+  \singlespacing%
+}
+
+\renewbibmacro*{cite}{%
+  \toggletrue{ft@uppercase@family}%
+  \iffieldundef{shorthand}
+    {\ifboolexpr{test {\ifnameundef{labelname}}
+                 or test {\iffieldundef{labelyear}}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \usebibmacro{cite:labeldate+extradate}}
+    {\usebibmacro{cite:shorthand}}}
+
+\renewbibmacro*{textcite}{%
+  \togglefalse{ft@uppercase@family}%
+  \ifnameundef{labelname}
+    {\iffieldundef{shorthand}
+       {\usebibmacro{cite:label}%
+        \setunit{%
+          \global\booltrue{cbx:parens}%
+          \printdelim{nonameyeardelim}\bibopenparen}%
+        \ifnumequal{\value{citecount}}{1}
+          {\usebibmacro{prenote}}
+          {}%
+        \usebibmacro{cite:labeldate+extradate}}
+       {\usebibmacro{cite:shorthand}}}
+    {\printnames{labelname}%
+     \setunit{%
+       \global\booltrue{cbx:parens}%
+       \printdelim{nameyeardelim}\bibopenparen}%
+     \ifnumequal{\value{citecount}}{1}
+       {\usebibmacro{prenote}}
+       {}%
+     \usebibmacro{citeyear}}}
+
+% -------------------------------------------------------------------------
+% 2.4 Cabeçalho da Bibliografia no Sumário (TOC)
+% -------------------------------------------------------------------------
+\defbibheading{ppgt}[\bibname]{%
+  \chapter*{#1}%
+  \phantomsection
+  \addcontentsline{toc}{chapter}{#1}%
+}
+
+% Estilo menor para URLs em referências bibliográficas:
 \def\url@leostyle{%
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
 \urlstyle{leostyle}
 
-% -------------------------------------------------------------------------
-% Dados do trabalho
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 3: METADADOS SEMÂNTICOS DO TRABALHO
+% =========================================================================
 \newcommand{\numpublicacao}[1]{\def\numpublicacaostr{#1}}
 \newcommand{\siglapublicacao}[1]{\def\siglapublicacaostr{#1}}
 \newcommand{\autoremail}[1]{\def\autoremailstr{#1}}
 \newcommand{\autorendereco}[1]{\def\autorenderecostr{#1}}
 
-% -------------------------------------------------------------------------
-% Cálculo das páginas pré-textuais da Ficha Catalográfica
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 4: MOTOR DE DUAS PASSADAS (.AUX) PARA FICHA CATALOGRÁFICA
+% =========================================================================
+% Este bloco resolve automaticamente a quantidade de páginas pré-textuais
+% (em algarismos romanos, ex: "xiii") e a quantidade de páginas totais
+% (em algarismos arábicos, ex: "142 p.") exibidas na Ficha Catalográfica.
 \newif\ifft@manual@pretextual
 \ft@manual@pretextualfalse
-\def\ft@pretextual@pages{xiii} % Valor padrão inicial antes da leitura do .aux
+\def\ft@pretextual@pages{xiii} % Valor inicial padrão antes da primeira leitura do .aux
 
 \def\ft@save@pretextual@pages#1{%
   \ifft@manual@pretextual\else
@@ -145,19 +362,19 @@
 }
 \newcommand{\setpaginaspretextuais}[1]{\ft@set@pretextual{#1}}
 
-% Gravação do número de páginas pré-textuais no arquivo .aux
+% Gravação do total de páginas pré-textuais no .aux na transição para o corpo principal:
 \def\ft@record@pretextual{%
   \ifx\ft@pretextual@recorded\@undefined
     \global\let\ft@pretextual@recorded\@empty
     \if@openright\cleardoublepage\else\clearpage\fi
-    \edef\ft@last@roman{\romannumeral\numexpr\c@page-1\relax}% <-- Correção: -1 adicionado aqui
+    \edef\ft@last@roman{\romannumeral\numexpr\c@page-1\relax}%
     \if@filesw
       \immediate\write\@auxout{\string\ft@save@pretextual@pages{\ft@last@roman}}%
     \fi
   \fi
 }
 
-% Hook em \mainmatter
+% Gancho em \mainmatter para capturar a virada das páginas preliminares:
 \@ifundefined{mainmatter}{}{%
   \let\ft@orig@mainmatter\mainmatter
   \renewcommand{\mainmatter}{%
@@ -166,7 +383,7 @@
   }%
 }
 
-% Hook em \pagenumbering para quando \pagenumbering{arabic} for chamado diretamente
+% Gancho para chamadas manuais de \pagenumbering{arabic}:
 \let\ft@orig@pagenumbering\pagenumbering
 \renewcommand{\pagenumbering}[1]{%
   \def\ft@temp@arabic{arabic}%
@@ -177,9 +394,7 @@
   \ft@orig@pagenumbering{#1}%
 }
 
-% -------------------------------------------------------------------------
-% Cálculo das páginas totais (arábicas) da Ficha Catalográfica
-% -------------------------------------------------------------------------
+% Cálculo das páginas totais (arábicas):
 \def\ft@total@pages{1} % Valor padrão inicial
 
 \def\ft@save@total@pages#1{%
@@ -189,13 +404,14 @@
 \newcommand{\totalpgsstr}{\ft@total@pages}
 
 \AtEndDocument{%
-  \clearpage % Ensures all pending content and floats are printed
+  \clearpage % Descarrega todas as figuras e tabelas flutuantes pendentes
   \if@filesw
     \edef\ft@last@page{\the\numexpr\c@page-1\relax}%
     \immediate\write\@auxout{\string\ft@save@total@pages{\ft@last@page}}%
   \fi
 }
 
+% Palavras-chave:
 \def\palavrachaveistr{}
 \def\palavrachaveiistr{}
 \def\palavrachaveiiistr{}
@@ -219,8 +435,7 @@
   \ifx\palavrachavevistr\@empty\else, \palavrachavevistr\fi%
 }
 
-% Data da defesa: \date{YYYY-MM-DD} extrai automaticamente dia, mês e ano por extenso.
-% Valores padrão caso \date não seja chamado
+% Extração automática de dia, mês e ano a partir do formato ISO (AAAA-MM-DD):
 \def\dianum{\the\day}
 \def\mesnum{\the\month}
 \def\anonome{\the\year}
@@ -238,25 +453,26 @@
 
 \renewcommand{\date}[1]{%
   \gdef\@date{#1}%
-  % Verifica se está no formato ISO (YYYY-MM-DD)
   \in@{-}{#1}%
   \ifin@
     \ft@parse@iso@date#1\@nil
   \fi
 }
 
-% Comandos legados para sobrescrever dia, mês ou ano caso desejado
+% Comandos legados para sobrescrita manual:
 \newcommand{\dia}[1]{\def\dianum{#1}}
 \newcommand{\mes}[1]{\def\mesnome{#1}}
 \newcommand{\ano}[1]{\def\anonome{#1}}
 
-% Membros da banca (com valores padrão vazios)
+% Membros da banca examinadora:
 \def\membrodabancainome{}
 \def\membrodabancaifuncaonome{Orientador}
 \def\membrodabancaiinome{}
 \def\membrodabancaiifuncaonome{Examinador interno}
 \def\membrodabancaiiinome{}
 \def\membrodabancaiiifuncaonome{Examinador externo}
+\def\membrodabancaivnome{}
+\def\membrodabancaivfuncaonome{}
 
 \newcommand{\membrodabancai}[1]{\def\membrodabancainome{#1}}
 \newcommand{\membrodabancaii}[1]{\def\membrodabancaiinome{#1}}
@@ -267,11 +483,6 @@
 \newcommand{\membrodabancaiiifuncao}[1]{\def\membrodabancaiiifuncaonome{#1}}
 \newcommand{\membrodabancaivfuncao}[1]{\def\membrodabancaivfuncaonome{#1}}
 
-% Initializes empty to prevent compilation errors if unused
-\def\membrodabancaivnome{}
-\def\membrodabancaivfuncaonome{}
-
-% Comandos semânticos adicionais para membros da banca
 \newcommand{\orientador}[2][Orientador]{\membrodabancai{#2}\membrodabancaifuncao{#1}}
 \newcommand{\coorientador}[2][Co-orientador]{\membrodabancaiv{#2}\membrodabancaivfuncao{#1}}
 \newcommand{\examinadorinterno}[2][Examinador interno]{\membrodabancaii{#2}\membrodabancaiifuncao{#1}}
@@ -283,9 +494,9 @@
 \newcommand{\siglaarea}[1]{\def\siglaareastr{#1}}
 \newcommand{\titulacao}[1]{\def\titulacaostr{#1}}
 
-% -------------------------------------------------------------------------
-% Autoria: comandos para separar último sobrenome e prenomes
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 5: MOTOR DE TRATAMENTO DE NOMES E EXTRAÇÃO DE INICIAIS
+% =========================================================================
 \def\ultimosobrenomeautorstr{}
 \def\prenomesautorstr{}
 
@@ -322,12 +533,12 @@
   \fi
 }
 
-% Extração de iniciais dos prenomes (separados por espaço)
+% Extração recursiva de iniciais de prenomes (separados por espaço):
 \def\ft@process@initials#1 {%
   \def\ft@temp{#1}%
   \def\ft@stop{ENDINITIALS}%
   \ifx\ft@temp\ft@stop
-    % Encontrou o sentinela, encerra a recursão em segurança.
+    % Sentinela encontrado, encerra a recursão com segurança
   \else
     \ft@check@particle{#1}%
     \expandafter\ft@process@initials
@@ -341,7 +552,7 @@
   \expandafter\ft@invoke@initials\expandafter{#1}%
 }
 
-% Filtro de partículas (inclui as notórias estrangeiras)
+% Filtro de partículas nobiliárquicas e estrangeiras (não geram iniciais):
 \def\ft@check@particle#1{%
   \def\ft@temp{#1}%
   \ifx\ft@temp\@empty\else % Proteção extra contra espaços duplicados
@@ -354,7 +565,7 @@
       \equal{#1}{del}\OR\equal{#1}{du}\OR\equal{#1}{des}\OR\equal{#1}{der}\OR%
       \equal{#1}{ten}\OR\equal{#1}{zu}\OR\equal{#1}{le}\OR\equal{#1}{y}%
     }{%
-      % Ignora a partícula conectiva e não imprime a inicial
+      % Partícula conectiva ignorada
     }{%
       \MakeTextUppercase{\expandafter\@car#1\@nil}.\space
     }%
@@ -370,7 +581,7 @@
   \fi
 }
 
-% Nome do autor para a Referência Bibliográfica: SOBRENOME, I. N.
+% Nome formatado para referência bibliográfica na ficha: SOBRENOME, I. N.
 \newcommand{\autorreferenciabibliografica}{%
   \ifx\ultimosobrenomeautorstr\@empty
     \begingroup
@@ -382,7 +593,7 @@
   \fi
 }
 
-% Compatibilidade com comandos legados (\titulolinhai... e \autori...)
+% Comandos legados de compatibilidade:
 \newcommand{\titulolinhai}[1]{\title{#1}}
 \newcommand{\titulolinhaii}[1]{\def\temp@t{#1}\ifx\temp@t\@empty\else\g@addto@macro\@title{\\#1}\fi}
 \newcommand{\titulolinhaiii}[1]{\def\temp@t{#1}\ifx\temp@t\@empty\else\g@addto@macro\@title{\\#1}\fi}
@@ -401,33 +612,36 @@
   \def\\{ }%
 }
 
+% =========================================================================
+% SEÇÃO 6: ELEMENTOS PRÉ-TEXTUAIS AUTOMÁTICOS
+% =========================================================================
 % -------------------------------------------------------------------------
-% Capa
+% 6.1 Capa Principal com Caixa Azul Dinâmica (TikZ)
 % -------------------------------------------------------------------------
 \newcommand{\capaprincipal}{
 \begin{titlepage}
+\hypersetup{pageanchor=false}
 \AddToShipoutPictureBG*{%
-  % Places logo_unb.pdf at the top edge
   \AtPageUpperLeft{%
-    \raisebox{-\height}{\includegraphics[width=\paperwidth]{template-FT-UnB/logotipos/logo_unb.pdf}}%
+    \raisebox{-\height}{\includegraphics[width=\paperwidth]{formatacao/logotipos/logo_unb.pdf}}%
   }%
 }
 \begin{center}
-\vspace*{8cm} % Adjust this if needed to clear the top logo
+\vspace*{8cm}
 
-\vspace*{\fill} % 1. Vertically centers the top text in the white space
+\vspace*{\fill}
 
 {\Large\bfseries\MakeUppercase{\@title}\par}
 \vspace{0.8cm}
 
 {\large\bfseries\MakeUppercase{\@author}\par}
 
-\vspace*{\fill} % 2. Ends the white space
+\vspace*{\fill}
 
-% 3. The dynamic boundary: draws the blue box from this exact vertical position down to the bottom of the page
+% Cálculo de coordenadas absolutas via TikZ para cobrir a metade inferior da página com a cor azul UnB:
 \smash{\tikz[remember picture, overlay] \fill[unbblue] (current page.west |- 0,0) rectangle (current page.south east);}
 
-\vspace*{\fill} % 4. Vertically centers the text within the newly created blue space
+\vspace*{\fill}
 
 {\color{white}
 {\large\bfseries\MakeUppercase{\tipodemonografianome\ de\ \titulacaostr\ em\ \areastr}\par}
@@ -438,11 +652,12 @@
 }
 
 \end{center}
+\hypersetup{pageanchor=true}
 \end{titlepage}
 }
 
 % -------------------------------------------------------------------------
-% Contracapa (Folha de Rosto: página i dos preliminares, número não exibido)
+% 6.2 Contracapa (Folha de Rosto: página i, número não exibido)
 % -------------------------------------------------------------------------
 \newcommand{\contracapa}{
 \clearpage
@@ -467,7 +682,6 @@
 \vspace*{\fill}
 
 {\large\bfseries 
-
 ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 
 \ifthenelse{\equal{\coorientadorfichastr}{}}{}{
@@ -488,7 +702,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 }
 
 % -------------------------------------------------------------------------
-% Folha de assinaturas (Folha de Aprovação: página ii, número visível)
+% 6.3 Folha de Assinaturas (Folha de Aprovação: página ii, número visível)
 % -------------------------------------------------------------------------
 \newcommand{\capaassinaturas}{
 \clearpage
@@ -509,7 +723,6 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
     {\large\bfseries\MakeUppercase{\@author}\par}
   \end{center}
 
-  % Texto central do tipo de trabalho
   {\bfseries \MakeUppercase{\tipodemonografianome\ DE\ \titulacaostr\ SUBMETIDA AO PROGRAMA DE PÓS-GRADUAÇÃO EM \areastr\ DO DEPARTAMENTO DE ENGENHARIA CIVIL E AMBIENTAL DA FACULDADE DE TECNOLOGIA DA UNIVERSIDADE DE BRASÍLIA COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE \graunome\ EM \areastr.}}
 
   \vspace*{\fill}
@@ -552,7 +765,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 
 
 % -------------------------------------------------------------------------
-% Ficha catalográfica (página iii, número visível)
+% 6.4 Ficha Catalográfica e Cessão de Direitos (página iii, número visível)
 % -------------------------------------------------------------------------
 \newcommand{\fichakeys}[6]{%
   \begin{tabular}{@{} p{\dimexpr 0.5\linewidth - \tabcolsep \relax} p{\dimexpr 0.5\linewidth - \tabcolsep \relax} @{}}
@@ -614,7 +827,6 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
   	\end{tabular}        
   	
   	\vspace*{\fill}
-  	
 
   	\begin{tabular}{p{14cm}}
   	  \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
@@ -626,7 +838,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 }
 
 % -------------------------------------------------------------------------
-% Dedicatória
+% 6.5 Dedicatória e Agradecimentos
 % -------------------------------------------------------------------------
 \newcommand{\dedicatoriaautori}[1]{\def\dedicatoriaautorinome{#1}}
 \newcommand{\dedicatoriaautorii}[1]{\def\dedicatoriaautoriinome{#1}}
@@ -663,7 +875,6 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 		\raggedleft\textit{\autorinome}
 		\end{tabular}
 	}{
-	
 		\begin{tabular}{p{0.45\textwidth}p{0.01\textwidth}p{0.45\textwidth}}
 		 	& \\
 			& & \textit{\dedicatoriaautorinome} 
@@ -688,18 +899,15 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 			& \\
 			& & \raggedleft\textit{\autoriiinome}
 		\end{tabular}
-		
 	}
 	}
 \end{center}
 \vspace*{2cm}
 \end{center}
+\hypersetup{pageanchor=true}
 \end{titlepage}
 }
 
-% -------------------------------------------------------------------------
-% Agradecimentos
-% -------------------------------------------------------------------------
 \newcommand{\agradecimentosautori}[1]{\def\agradecimentosautorinome{#1}}
 \newcommand{\agradecimentosautorii}[1]{\def\agradecimentosautoriinome{#1}}
 \newcommand{\agradecimentosautoriii}[1]{\def\agradecimentosautoriiinome{#1}}
@@ -733,23 +941,25 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 		\end{tabular}
 	}
 \end{center}
+\hypersetup{pageanchor=true}
 \end{titlepage}
 }
 
 % -------------------------------------------------------------------------
-% Resumos opcionais no início dos capítulos
+% Resumo do Capítulo (Epígrafe / Síntese Opcional):
+% Posiciona um pequeno parágrafo introdutório alinhado à direita com 50%
+% da largura do texto (\textwidth), em itálico, logo abaixo de \chapter.
 % -------------------------------------------------------------------------
-\newcommand{\resumodocapitulo}[1]{
-\vspace*{-0.8cm}
-\begin{flushright}
-	\begin{tabular}{p{0.5\textwidth}}
-		\itshape{#1}\\
-	\end{tabular}
-	\vspace*{-0.5cm}
-\end{flushright}
+\newcommand{\resumodocapitulo}[1]{%
+\vspace*{-0.8cm}%
+\begin{flushright}%
+	\begin{tabular}{p{0.5\textwidth}}%
+		\itshape #1\\%
+	\end{tabular}%
+	\vspace*{-0.5cm}%
+\end{flushright}%
 }
 
-% Cabeçalhos dos resumos
 \newcommand{\resumo}[2]{
 \begin{flushright}
 \hrule
@@ -758,13 +968,17 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 {\normalsize\noindent#2}
 }
 
-% Comandos legados de fontes
 \newcommand{\setfontarial}{}
 \newcommand{\setfonttimes}{}
 
-% -------------------------------------------------------------------------
-% Apêndices e Anexos (Normas PPGT: APÊNDICE A — TÍTULO / ANEXO A — TÍTULO)
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 7: APÊNDICES E ANEXOS (NORMAS PPGT: EM DASH '—' AUTOMÁTICO)
+% =========================================================================
+% DIFERENÇA CONCEITUAL:
+% - Apêndice: Documento elaborado pelo PRÓPRIO autor (questionários, códigos).
+% - Anexo    : Documento NÃO elaborado pelo autor (certidões, autorizações).
+% Ambos compartilham a formatação exigida pelo PPGT com travessão em dash:
+% "APÊNDICE A — TÍTULO" ou "ANEXO A — TÍTULO" tanto no cabeçalho quanto no Sumário.
 \newif\if@inappendix
 \@inappendixfalse
 \newif\if@inanexos
@@ -778,36 +992,22 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
   \renewcommand{\appendixname}{APÊNDICE}%
 }
 
-
-
-% -------------------------------------------------------------------------
-% Anexos
-% -------------------------------------------------------------------------
-\newcommand{\anexos}{
-	\chapter*{ANEXOS}
-  \phantomsection % <--- Cria a âncora invisível para o link do sumário
-	\addcontentsline{toc}{chapter}{{Anexos}}
-	\renewcommand{\appendixname}{ANEXO}
-	\appendix
-	\newcounter{noAnexo}
-	\renewcommand{\thechapter}{\Roman{noAnexo}}
-	\setcounter{noAnexo}{1}
+\newcommand{\anexos}{%
+  \clearpage
+  \@inanexostrue
+  \@inappendixfalse
+  \renewcommand{\appendixname}{ANEXO}%
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\@chapapp{ANEXO}%
+  \gdef\thechapter{\Alph{chapter}}%
+  \renewcommand{\theHchapter}{anexo.\Alph{chapter}}%
 }
 
-% Imagem de fundo da capa
-\RequirePackage{eso-pic,graphicx}
-\newcommand\BackgroundPicture[2]{%
-  \setlength{\unitlength}{1pt}%
-  \put(0,\strip@pt\paperheight){%
-  \parbox[t][\paperheight]{\paperwidth}{%
-    \vfill
-    \centering\includegraphics[width=#2]{#1}
-    \vfill
-}}} 
 
-% -------------------------------------------------------------------------
-% Formatação do Sumário (TOC)
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 8: SUMÁRIO (TOC) E LISTAS ESPECIALIZADAS
+% =========================================================================
 \renewcommand*\l@chapter[2]{%
   \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
@@ -832,9 +1032,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\mdseries\scshape\tableofcontents}
 }
 
-% -------------------------------------------------------------------------
-% Listas pré-textuais
-% -------------------------------------------------------------------------
+% Lista de Figuras:
 \newcommand{\listadefiguras}{
 	\renewcommand{\listfigurename}{LISTA DE FIGURAS}
 	\begingroup
@@ -847,7 +1045,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	\endgroup
 }
 
-%%% Lista de Códigos fonte (por Manoel Campos):
+% Lista de Códigos fonte (por Manoel Campos):
 \newcommand{\listadecodigosfonte}{
 	\renewcommand{\lstlistlistingname}{LISTA DE CÓDIGOS FONTE}
 	\begingroup
@@ -860,8 +1058,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	\endgroup
 }
 
-
-%%% Lista de tabelas:
+% Lista de Tabelas:
 \newcommand{\listadetabelas}{
 	\renewcommand{\listtablename}{LISTA DE TABELAS}
 	\begingroup
@@ -874,7 +1071,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	\endgroup
 }
 
-% Lista de quadros (PPGT)
+% Lista de Quadros (PPGT):
 \DeclareFloatingEnvironment[
 	fileext=loq,
 	listname={LISTA DE QUADROS},
@@ -893,7 +1090,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	\endgroup
 }
 
-% Lista de símbolos, nomenclatura e abreviações (PPGT)
+% Lista de símbolos, nomenclatura e abreviações (PPGT):
 \renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}
 \newcommand{\listadesimbolos}[1][2.5cm]{%
 	\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}%
@@ -903,18 +1100,18 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 \newcommand{\listadenomenclaturas}[1][2.5cm]{\listadesimbolos[#1]}
 \newcommand{\listadesiglas}[1][2.5cm]{\listadesimbolos[#1]}
 
-% Atalhos semânticos para inserção de itens na lista
+% Atalhos semânticos para inclusão de itens na lista de símbolos:
 \newcommand{\simbolo}[2]{\nomenclature{#1}{#2}}
 \newcommand{\sigla}[2]{\nomenclature{#1}{#2}}
 
-% -------------------------------------------------------------------------
-% Espaçamentos e comprimentos (PPGT: margens 2,5 cm, entrelinhas 1,5)
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 9: ESPAÇAMENTOS, PARÁGRAFOS E TIPOGRAFIA
+% =========================================================================
 \renewcommand{\baselinestretch}{1.5}  % Espaçamento 1,5 linhas (PPGT)
 
 \newcommand{\PreserveBacklash}[1]{\let\temp=\\#1\let\\=\temp}
 
-% Espaço entre parágrafos (PPGT: sem recuo, espaçamento 18pt)
+% Parágrafos sem recuo na 1ª linha e com 18pt de espaçamento entre si (PPGT 2023):
 \setlength{\parindent}{0pt}
 \parskip=18pt
 
@@ -936,9 +1133,10 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 \renewcommand{\nomname}{LISTA DE TERMOS E SIGLAS}
 \renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}
 
-% -------------------------------------------------------------------------
-% Formatação de Capítulos (PPGT: número + título, centralizado)
-% -------------------------------------------------------------------------
+% =========================================================================
+% SEÇÃO 10: FORMATAÇÃO DE CAPÍTULOS E SEÇÕES (NORMAS PPGT)
+% =========================================================================
+% Cabeçalho de capítulo numerado (14pt, negrito, centralizado):
 \def\@makechapterhead#1{%
   \vspace*{0pt}%
   {\parindent \z@ \centering \normalfont\fontsize{14}{16}\selectfont\bfseries
@@ -958,36 +1156,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
     \vskip 40\p@
   }}
 
-\def\@chapter[#1]#2{%
-  \ifnum \c@secnumdepth >\m@ne
-    \if@mainmatter
-      \refstepcounter{chapter}%
-      \typeout{\@chapapp\space\thechapter.}%
-      \if@inappendix
-        \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
-      \else
-        \if@inanexos
-          \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
-        \else
-          \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
-        \fi
-      \fi
-    \else
-      \addcontentsline{toc}{chapter}{#1}%
-    \fi
-  \else
-    \addcontentsline{toc}{chapter}{#1}%
-  \fi
-  \chaptermark{#1}%
-  \addtocontents{lof}{\protect\addvspace{10\p@}}%
-  \addtocontents{lot}{\protect\addvspace{10\p@}}%
-  \if@twocolumn
-    \@topnewpage[\@makechapterhead{#2}]%
-  \else
-    \@makechapterhead{#2}%
-    \@afterheading
-  \fi
-}
+% Cabeçalho de capítulo não numerado (ex: Resumo, Referências):
 \def\@makeschapterhead#1{%
   \vspace*{0pt}%
   {\parindent \z@ \centering
@@ -997,6 +1166,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
     \vskip 40\p@
   }}
 
+% Definição unificada do comando \@chapter:
 \def\@chapter[#1]#2{%
   \ifnum \c@secnumdepth >\m@ne
     \if@mainmatter
@@ -1028,7 +1198,9 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
   \fi
 }
 
-% Seções e subseções (12pt para seções)
+% -------------------------------------------------------------------------
+% 10.1 Seções e Subseções
+% -------------------------------------------------------------------------
 \renewcommand\section{\@startsection {section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
@@ -1038,8 +1210,10 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
                                      {1.5ex \@plus .2ex}%
                                      {\normalfont\normalsize\bfseries}}
 
-% Formatação do 3º nível de subitem conforme PPGT:
-% Formato (a), (b), (c)... em vez de 1.1.1, sem negrito e não numerado no sumário
+% -------------------------------------------------------------------------
+% 10.2 Regra Específica do 3º Nível em Letras (PPGT)
+% -------------------------------------------------------------------------
+% Formato (a), (b), (c)... (em vez de 1.1.1) em itálico, sem negrito e não numerado no Sumário:
 \renewcommand{\thesubsubsection}{(\alph{subsubsection})}
 \renewcommand{\p@subsubsection}{}
 
@@ -1059,8 +1233,10 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 \def\paragraph@cntsep{\quad}
 \def\subparagraph@cntsep{\quad}
 
-% Configuração do estilo de cabeçalho e rodapé conforme normas PPGT:
-% Numeração no rodapé à direita, sem linha no cabeçalho
+% =========================================================================
+% SEÇÃO 11: CABEÇALHOS, RODAPÉS E INICIALIZAÇÃO NO DOCUMENTO
+% =========================================================================
+% Paginação no rodapé à direita, sem linha horizontal no cabeçalho (PPGT 2023):
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
@@ -1072,7 +1248,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 }
 
 \AfterEndPreamble{%
-	\sloppy % Formata o texto de forma justificada
+	\sloppy % Formata o texto de forma justificada sem transbordar margens
 }
 
 \AtBeginDocument{%
@@ -1083,8 +1259,8 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 	\else
 	  \ft@define@author
 	\fi
-	\setcounter{secnumdepth}{3} % Numeração de seções até nível 3
-	\setcounter{tocdepth}{2} % Numeração de seções no sumário até nível 2
+	\setcounter{secnumdepth}{3} % Numeração de seções no texto até nível 3
+	\setcounter{tocdepth}{2}    % Profundidade do Sumário até nível 2 (PPGT)
 	\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}
 	\@ifpackageloaded{babel}{%
 		\addto\captionsbrazil{\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}}%
