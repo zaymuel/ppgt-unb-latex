@@ -7,7 +7,7 @@
 %% Histórico de Desenvolvimento e Autoria:
 %% - 2026/10/22: Migração completa para o motor Biber (BibLaTeX com UTF-8 nativo),
 %%               reestruturação didática em módulos, padronização de anexos/apêndices
-%%               com travessão em dash (—), isolamento em modelo dual (boilerplate
+%%               com meia-risca en dash (–), isolamento em modelo dual (boilerplate
 %%               e comparativo) e documentação pedagógica integral por Samuel Seixas Martin.
 %% - 2026/09/05: Atualização para conformidade com o Modelo Oficial de Dissertação/Tese
 %%               do PPGT (versão agosto/2026) por Samuel Seixas Martin.
@@ -991,13 +991,13 @@
 \newcommand{\setfonttimes}{}
 
 % =========================================================================
-% SEÇÃO 7: APÊNDICES E ANEXOS (NORMAS PPGT: EM DASH '—' AUTOMÁTICO)
+% SEÇÃO 7: APÊNDICES E ANEXOS (NORMAS PPGT: EN DASH '–' AUTOMÁTICO)
 % =========================================================================
 % DIFERENÇA CONCEITUAL:
 % - Apêndice: Documento elaborado pelo PRÓPRIO autor (questionários, códigos).
 % - Anexo    : Documento NÃO elaborado pelo autor (certidões, autorizações).
-% Ambos compartilham a formatação exigida pelo PPGT com travessão em dash:
-% "APÊNDICE A — TÍTULO" ou "ANEXO A — TÍTULO" tanto no cabeçalho quanto no Sumário.
+% Ambos compartilham a formatação exigida pelo PPGT com meia-risca en dash:
+% "APÊNDICE A – TÍTULO" ou "ANEXO A – TÍTULO" tanto no cabeçalho quanto no Sumário.
 \newif\if@inappendix
 \@inappendixfalse
 \newif\if@inanexos
@@ -1161,10 +1161,10 @@
   {\parindent \z@ \centering \normalfont\fontsize{14}{16}\selectfont\bfseries
     \ifnum \c@secnumdepth >\m@ne
       \if@inappendix
-        \appendixname\ \thechapter\ \textemdash\ %
+        \appendixname\ \thechapter\ \textendash\ %
       \else
         \if@inanexos
-          \appendixname\ \thechapter\ \textemdash\ %
+          \appendixname\ \thechapter\ \textendash\ %
         \else
           \thechapter\quad
         \fi
@@ -1192,10 +1192,10 @@
       \refstepcounter{chapter}%
       \typeout{\@chapapp\space\thechapter.}%
       \if@inappendix
-        \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+        \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textendash\ #1}%
       \else
         \if@inanexos
-          \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textemdash\ #1}%
+          \addcontentsline{toc}{chapter}{\appendixname\ \thechapter\ \textendash\ #1}%
         \else
           \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
         \fi
