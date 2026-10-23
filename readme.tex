@@ -71,6 +71,7 @@ A hierarquia estrutural do documento é construída utilizando a seguinte cascat
     \item Jamais digite os números manualmente (ex: \texttt{\textbackslash section\{1.1 Minha Seção\}}). O \LaTeX \ gerencia e atualiza toda a numeração dinamicamente; basta inserir o texto do título.
     \item Nunca quebre a cadeia hierárquica. Não abra uma \texttt{\textbackslash subsection} sem antes ter declarado uma \texttt{\textbackslash section}.
     \item Não digite os títulos inteiramente em CAIXA ALTA dentro do comando. Escreva normalmente (ex: \texttt{\textbackslash chapter\{Revisão Bibliográfica\}}). Se a norma exigir maiúsculas no documento final, o template converterá o texto automaticamente durante a compilação, mantendo o seu código limpo e preservando a capitalização correta para o sumário.
+    \item \textbf{Apêndices e Anexos:} Os arquivos já vêm prontos no template (\texttt{zz-apendices.tex} e \texttt{zz-anexos.tex}). Se quiser colocar mais de um apêndice ou anexo, não precisa criar novos arquivos: basta adicionar mais um comando \texttt{\textbackslash chapter\{Título\}} e um rótulo \texttt{\textbackslash label} dentro deles. O \LaTeX \ gera as letras sequenciais (APÊNDICE B, ANEXO B, etc.) e atualiza o Sumário automaticamente.
 \end{enumerate}
 
 \section{Sintaxe Básica e Formatação Textual}
@@ -136,7 +137,7 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
     \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:).
     \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
     \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
-    \item \textbf{Banca Examinadora:} Atualize o orientador em \texttt{\textbackslash membrodabancai\{...\}} e \\ \texttt{\textbackslash membrodabancaifuncao\{Orientador\}}, seguindo a numeração romana (ii, iii, etc.) para os demais membros e suas funções.
+    \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto para a folha de rosto, invertido para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
     \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
     \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
     \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{...\}} é opcional, caso haja necessidade.
@@ -237,6 +238,12 @@ Para pesquisadores que preferem trabalhar \textit{offline}, precisam compilar do
 \end{itemize}
 
 Após instalar essas três ferramentas, você estará pronto para compilar seus documentos localmente no Windows. Lembre-se de sempre testar a compilação com o arquivo \texttt{principal.tex} para garantir que todos os pacotes e scripts estão funcionando corretamente.
+
+\begin{atencao}[Regra de Ouro no VS Code: Clicar no Documento antes de Compilar]
+Ao utilizar o \textbf{Visual Studio Code} com a extensão \textbf{LaTeX Workshop}, há um detalhe operacional fundamental que confunde muitos iniciantes: \textbf{o cursor do teclado/mouse precisa estar ativo dentro do documento \texttt{.tex}} antes de acionar a compilação (seja pelo atalho \texttt{Ctrl+Alt+B}, pelo botão de \textit{Build LaTeX project} na aba lateral do LaTeX ou no menu da barra de status).
+
+Se o foco da janela estiver fora do editor de texto, por exemplo, com o cursor dentro do terminal integrado do VS Code, na árvore de pastas do explorador, no painel de saída (\textit{Output}) ou em um arquivo não-\LaTeX \ (como uma aba de PDF ou arquivo de configurações), a extensão não consegue identificar em qual projeto você está trabalhando e \textbf{o documento simplesmente não compila} (ou acusa que não encontrou o arquivo raiz). Se você clicar para compilar e o processo não iniciar, a solução é simples: \textbf{clique com o mouse dentro de qualquer linha de texto do seu arquivo \texttt{principal.tex} e tente novamente}.
+\end{atencao}
 
 \begin{atencao}[E se o Perl não funcionar ou o \texttt{latexmk} der erro?]
 O utilitário \texttt{latexmk} é, por natureza, um script escrito na linguagem Perl. Se o seu computador não tiver o interpretador Perl instalado (ou se o Windows acusar que \textit{``'perl' não é reconhecido como um comando interno''}), o \texttt{latexmk} não conseguirá rodar. Para resolver isso sem estresse, existem duas rotas:

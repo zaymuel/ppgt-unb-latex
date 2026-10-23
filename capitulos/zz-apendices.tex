@@ -1,6 +1,27 @@
 \appendix
 
+% =========================================================================
+% INSTRUÇÕES SOBRE APÊNDICES:
+% Apêndices são materiais suplementares ELABORADOS PELO PRÓPRIO AUTOR.
+%
+% COMO ADICIONAR MÚLTIPLOS APÊNDICES:
+% Se o seu trabalho possuir mais de um apêndice (ex: Apêndice B, C, etc.),
+% você NÃO precisa criar novos arquivos. Basta declarar um novo \chapter{...}
+% seguido de um \label{apendice:...} abaixo, e o LaTeX nomeará automaticamente
+% as letras maiúsculas sequenciais (APÊNDICE B, APÊNDICE C...) no texto e no Sumário.
+% =========================================================================
+
 \chapter{ROTEIRO DE ENTREVISTA OU INSTRUMENTO DE COLETA DE DADOS}
 \label{apendice:instrumento_coleta}
 
-Este é um exemplo de apêndice. Segundo as normas do PPGT e a ABNT, os \textbf{apêndices} são textos, roteiros, questionários ou documentos suplementares \textbf{elaborados pelo próprio autor} para complementar sua argumentação sem sobrecarregar o corpo principal do texto (por exemplo: formulários desenvolvidos para a pesquisa, códigos de programação, tabelas extensas com dados primários gerados pelo autor).
+Este é um exemplo de apêndice. Segundo as normas do PPGT e da ABNT, os \textbf{apêndices} são textos, roteiros, questionários ou documentos suplementares \textbf{elaborados pelo próprio autor} para complementar sua argumentação sem sobrecarregar o corpo principal do texto (por exemplo: formulários desenvolvidos para a pesquisa, códigos de programação, tabelas extensas com dados primários gerados pelo autor).
+
+\paragraph{Como adicionar múltiplos apêndices:} Caso deseje incluir mais de um apêndice, basta adicionar um novo comando \texttt{\textbackslash chapter\{Título\}} seguido do respectivo rótulo \texttt{\textbackslash label\{apendice:nome\}} neste mesmo arquivo (ou em arquivos adicionais incluídos via \texttt{\textbackslash include}). O compilador atribuirá autonomamente as letras sequenciais (APÊNDICE B, APÊNDICE C, etc.) tanto no corpo do documento quanto no Sumário.
+
+% -------------------------------------------------------------------------
+% EXEMPLO DE SEGUNDO APÊNDICE (descomente e adapte se necessário):
+% -------------------------------------------------------------------------
+% \chapter{CÓDIGO-FONTE OU SCRIPTS DESENVOLVIDOS PARA A PESQUISA}
+% \label{apendice:codigos_fonte}
+%
+% Insira aqui o conteúdo do Apêndice B...

@@ -30,8 +30,8 @@
 % \title{PRIMEIRA LINHA DO TÍTULO \\ SEGUNDA LINHA DO TÍTULO}
 
 % Informe o último sobrenome e os prenomes separadamente:
-\ultimosobrenomeautor{Sobrenome}
-\prenomesautor{Nome do Autor}
+\ultimosobrenomeautor{Último Sobrenome}
+\prenomesautor{Todos os outros nomes e sobrenomes do Autor}
 % O comando \author{...} é configurado automaticamente: prenomes + último sobrenome.
 
 % Código de catalogação na fonte gerado pela BCE/UnB (https://ficha.bce.unb.br/ficha/)
@@ -58,30 +58,31 @@
 \palavrachavevi{}
 
 % =========================================================================
-% METADADOS DA FICHA CATALOGRÁFICA (NOMES DE ORIENTADORES)
+% ORIENTADOR (FOLHA DE ROSTO, FICHA CATALOGRÁFICA E BANCA EXAMINADORA)
 % =========================================================================
 \orientadorficha{Nome do Orientador}
 \orientadorfichainverso{Orientador, Nome do}
-
-% Caso não possua coorientador, deixe os campos abaixo vazios {}:
-\coorientadorficha{}
-\coorientadorfichainverso{}
-
-% =========================================================================
-% MEMBROS DA BANCA EXAMINADORA (FOLHA DE APROVAÇÃO)
-% =========================================================================
 \membrodabancai{Prof. Dr. \orientadorfichastr, Titulação (Instituição)}
 \membrodabancaifuncao{Orientador}
 
+% =========================================================================
+% COORIENTADOR (OPCIONAL — DESCOMENTE APENAS SE HOUVER COORIENTADOR)
+% =========================================================================
+% Se NÃO houver coorientador, mantenha as 4 linhas abaixo comentadas (padrão).
+% Se HOUVER coorientador, basta descomentar e preencher os dados:
+\coorientadorficha{Nome do Coorientador}
+\coorientadorfichainverso{Coorientador, Nome do}
+\membrodabancaiv{Prof. Dr. \coorientadorfichastr, Titulação (Instituição)}
+\membrodabancaivfuncao{Co-orientador}
+
+% =========================================================================
+% DEMAIS MEMBROS DA BANCA EXAMINADORA (FOLHA DE APROVAÇÃO)
+% =========================================================================
 \membrodabancaii{Prof. Dr. Nome do Examinador Interno, Titulação (UnB)}
 \membrodabancaiifuncao{Examinador interno}
 
 \membrodabancaiii{Prof. Dr. Nome do Examinador Externo, Titulação (Instituição Externa)}
 \membrodabancaiiifuncao{Examinador externo}
-
-% Caso haja coorientador na banca, configure o quarto membro:
-\membrodabancaiv{Prof. Dr. \coorientadorfichastr, Titulação (Instituição)}
-\membrodabancaivfuncao{Co-orientador}
 
 % =========================================================================
 % GUIA RÁPIDO DE CITAÇÕES BIBLIOGRÁFICAS (BIBER / BIBLATEX)

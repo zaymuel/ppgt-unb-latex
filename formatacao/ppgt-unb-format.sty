@@ -472,7 +472,7 @@
 \def\membrodabancaiiinome{}
 \def\membrodabancaiiifuncaonome{Examinador externo}
 \def\membrodabancaivnome{}
-\def\membrodabancaivfuncaonome{}
+\def\membrodabancaivfuncaonome{Co-orientador}
 
 \newcommand{\membrodabancai}[1]{\def\membrodabancainome{#1}}
 \newcommand{\membrodabancaii}[1]{\def\membrodabancaiinome{#1}}
@@ -682,12 +682,21 @@
 \vspace*{\fill}
 
 {\large\bfseries 
-ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
+\ifthenelse{\equal{\orientadorfichastr}{}}{%
+  ORIENTADOR:\space\MakeUppercase{\membrodabancainome}%
+}{%
+  ORIENTADOR:\space\MakeUppercase{\orientadorfichastr}%
+}
 
-\ifthenelse{\equal{\coorientadorfichastr}{}}{}{
-  \vspace{0.4cm}
-  {\bfseries COORIENTADOR: \MakeUppercase{\membrodabancaivnome}\par}
-  }
+\ifthenelse{\equal{\coorientadorfichastr}{}}{%
+  \ifthenelse{\equal{\membrodabancaivnome}{}}{}{%
+    \vspace{0.4cm}%
+    {\bfseries COORIENTADOR:\space\MakeUppercase{\membrodabancaivnome}\par}%
+  }%
+}{%
+  \vspace{0.4cm}%
+  {\bfseries COORIENTADOR:\space\MakeUppercase{\coorientadorfichastr}\par}%
+}
 }
   
 \vspace*{\fill}
@@ -736,10 +745,10 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
       \rule{8cm}{0.4pt} \\
       \membrodabancainome \\
       (\membrodabancaifuncaonome) \\[1cm]}%
-  \ifthenelse{\equal{\membrodabancaivnome}{}}{}{
-        \rule{10cm}{0.5pt} \\
-        \membrodabancaivnome \\
-        \membrodabancaivfuncaonome \\[1cm]}%
+  \ifthenelse{\equal{\membrodabancaivnome}{}}{}{%
+      \rule{8cm}{0.4pt} \\
+      \membrodabancaivnome \\
+      (\membrodabancaivfuncaonome) \\[1cm]}%
   \ifthenelse{\equal{\membrodabancaiinome}{}}{}{%
       \rule{8cm}{0.4pt} \\
       \membrodabancaiinome \\
@@ -756,12 +765,22 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
 }
 
 \newcommand{\codigocutter}[1]{\def\codigocutterstr{#1}}
+\def\orientadorfichastr{}
+\def\orientadorfichainversostr{}
 \newcommand{\orientadorficha}[1]{\def\orientadorfichastr{#1}}
 \newcommand{\coorientadorficha}[1]{\def\coorientadorfichastr{#1}}
-\coorientadorficha{} % Initializes empty to prevent compilation errors if unused
+\coorientadorficha{} % Inicializado vazio por padrão (opcional)
 \newcommand{\orientadorfichainverso}[1]{\def\orientadorfichainversostr{#1}}
 \newcommand{\coorientadorfichainverso}[1]{\def\coorientadorfichainversostr{#1}}
-\coorientadorfichainverso{} % Initializes empty
+\coorientadorfichainverso{} % Inicializado vazio por padrão (opcional)
+
+% Comando facilitador para configuração unificada de coorientador (opcional):
+\newcommand{\configurarcoorientador}[4][Co-orientador]{%
+  \coorientadorficha{#2}%
+  \coorientadorfichainverso{#3}%
+  \membrodabancaiv{#4}%
+  \membrodabancaivfuncao{#1}%
+}
 
 
 % -------------------------------------------------------------------------
@@ -787,7 +806,7 @@ ORIENTADOR:\space\MakeUppercase{\membrodabancainome}
   \begin{tabular}{|p{2cm} p{13cm}|}
     \hline
     & \vspace{-0.2cm} \autorreferenciacatalografica \\
-    \codigocutterstr & \quad {\begingroup\def\\{ }\@title\endgroup} / \nomecompletoautor; orientador \orientadorfichastr. Brasília, \anonome. \\[0.2cm]
+    \codigocutterstr & \quad {\begingroup\def\\{ }\@title\endgroup} / \nomecompletoautor; orientador \orientadorfichastr\ifthenelse{\equal{\coorientadorfichastr}{}}{}{; coorientador \coorientadorfichastr}. Brasília, \anonome. \\[0.2cm]
     & \quad \totalpgsstr\ p. \\[0.6cm]
     & \quad \tipodemonografianome \ (\titulacaostr\ em \areastr) Universidade de Brasília, \anonome.\\[0.6cm]
     & \quad 1. \palavrachaveistr. %

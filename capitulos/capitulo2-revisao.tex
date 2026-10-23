@@ -9,18 +9,46 @@ Apresente neste capítulo o estado da arte e a fundamentação teórica que subs
 O modelo do PPGT adota o sistema de chamada \textbf{Autor-Data}, totalmente gerenciado pelo pacote \texttt{biblatex} integrado ao motor \texttt{biber}. As citações no texto devem seguir estritamente duas modalidades de chamada:
 
 \begin{enumerate}
-  \item \textbf{Citação Textual (Narrativa / Indireta integrada ao texto):} Deve ser realizada com o comando \texttt{\textbackslash citet\{chave\}}. Neste formato, o nome do autor é integrado sintaticamente à oração com iniciais em maiúsculo e apenas o ano é posicionado entre parênteses.
+  \item \textbf{Citação Textual (Narrativa / Indireta integrada ao texto):} Deve ser realizada com o comando \texttt{\textbackslash citet\{chave\}} (ou \texttt{\textbackslash textcite\{chave\}}). Neste formato, o nome do autor é integrado sintaticamente à oração com iniciais em maiúsculo e apenas o ano é posicionado entre parênteses.
   \begin{itemize}
-    \item Exemplo com um autor: Segundo \citet{davis2004}, os acidentes de trânsito exigem abordagens desagregadas de análise.
-    \item Exemplo com dois autores (unidos automaticamente por \&): Conforme demonstrado por \citet{brackstone1999}, os modelos de perseguição veicular representam aspectos dinâmicos de tráfego.
-    \item Exemplo com três ou mais autores (com \textit{et al.} automático em itálico): De acordo com \citet{abdulsalam2015effect}, a automação de processos fiscalizatórios impacta diretamente os indicadores observados.
+    \item \textbf{Exemplo com um autor:}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{Segundo \textbackslash citet\{davis2004\}, os acidentes de trânsito...}
+      \item \textit{Como fica de verdade no PDF compilado:} Segundo Davis (2004), os acidentes de trânsito exigem abordagens desagregadas de análise.
+    \end{itemize}
+
+    \item \textbf{Exemplo com dois autores (unidos automaticamente por \&):}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{Conforme demonstrado por \textbackslash citet\{brackstone1999\}, os modelos...}
+      \item \textit{Como fica de verdade no PDF compilado:} Conforme demonstrado por Brackstone \& McDonald (1999), os modelos de perseguição veicular representam aspectos dinâmicos de tráfego.
+    \end{itemize}
+
+    \item \textbf{Exemplo com três ou mais autores (com \textit{et al.} automático em itálico):}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{De acordo com \textbackslash citet\{abdulsalam2015effect\}, a automação...}
+      \item \textit{Como fica de verdade no PDF compilado:} De acordo com Abdulsalam \textit{et al.} (2015), a automação de processos fiscalizatórios impacta diretamente os indicadores observados.
+    \end{itemize}
   \end{itemize}
 
-  \item \textbf{Citação Entre Parênteses (Parentética ao final do parágrafo ou oração):} Deve ser realizada com o comando \texttt{\textbackslash citep\{chave\}}. O sobrenome do autor é automaticamente convertido para \textbf{LETRAS MAIÚSCULAS} dentro dos parênteses.
+  \item \textbf{Citação Entre Parênteses (Parentética ao final do parágrafo ou oração):} Deve ser realizada com o comando \texttt{\textbackslash citep\{chave\}} (ou \texttt{\textbackslash parencite\{chave\}}). O sobrenome do autor é automaticamente convertido para \textbf{LETRAS MAIÚSCULAS} dentro dos parênteses.
   \begin{itemize}
-    \item Exemplo com um autor: A modelagem matemática de eventos viários requer cuidados metodológicos especiais \citep{davis2004}.
-    \item Exemplo com dois autores: O comportamento do motorista no seguimento veicular depende de múltiplos parâmetros perceptuais \citep{brackstone1999}.
-    \item Exemplo com três ou mais autores: Estudos empíricos evidenciam o papel de intervenções viárias estruturadas \citep{abdulsalam2015effect}.
+    \item \textbf{Exemplo com um autor:}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{...cuidados metodológicos especiais \textbackslash citep\{davis2004\}.}
+      \item \textit{Como fica de verdade no PDF compilado:} A modelagem matemática de eventos viários requer cuidados metodológicos especiais (DAVIS, 2004).
+    \end{itemize}
+
+    \item \textbf{Exemplo com dois autores:}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{...múltiplos parâmetros perceptuais \textbackslash citep\{brackstone1999\}.}
+      \item \textit{Como fica de verdade no PDF compilado:} O comportamento do motorista no seguimento veicular depende de múltiplos parâmetros perceptuais (BRACKSTONE \& MCDONALD, 1999).
+    \end{itemize}
+
+    \item \textbf{Exemplo com três ou mais autores:}
+    \begin{itemize}
+      \item \textit{Como escrever no código \LaTeX:} \texttt{...papel de intervenções viárias estruturadas \textbackslash citep\{abdulsalam2015effect\}.}
+      \item \textit{Como fica de verdade no PDF compilado:} Estudos empíricos evidenciam o papel de intervenções viárias estruturadas (ABDULSALAM \textit{et al.}, 2015).
+    \end{itemize}
   \end{itemize}
 \end{enumerate}
 
