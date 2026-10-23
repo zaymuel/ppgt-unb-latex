@@ -57,19 +57,25 @@ A seguir é apresentado um exemplo de elemento do tipo \textbf{Quadro} (definido
     Operação & Gerenciamento dinâmico e controle de tráfego em tempo real. & Melhoria da fluidez e segurança operacional de vias. \\
     \hline
   \end{tabular}
-  \fonte{Elaborado pelo autor (2026).}
+  % NOTA PPGT: Especifique \fonte{...} apenas para elementos retirados ou adaptados de terceiros
+  % (ex: \fonte{\citet{souza2012}} ou \fonte{adaptado de \citet{souza2012}}).
+  % Para quadros, tabelas e figuras elaborados pelo próprio autor, NÃO há necessidade de indicar fonte.
+  \fonte{adaptado de \citet{souza2012}}
 \end{quadro}
 
 A seguir é apresentado um exemplo ilustrativo de inserção de \textbf{Figura}:
 
 \begin{figure}[htbp]
   \centering
-  % Para inserir uma imagem real, descomente a linha abaixo e aponte para o arquivo correspondente:
-  % \includegraphics[width=0.8\textwidth]{imagens/fluxograma_pesquisa.png}
+  % Para inserir uma imagem real:
+  % 1. Crie a pasta "imagens/" na raiz do projeto e salve seu arquivo gráfico dentro dela;
+  % 2. Descomente a linha abaixo e aponte para o arquivo correspondente:
+  % \includegraphics[width=0.8\textwidth]{fluxograma_pesquisa.png}
   \framebox[0.7\textwidth]{\rule{0pt}{4cm}\centering\small [Espaço reservado para diagrama ou imagem ilustrativa]}
   \caption{Exemplo de representação gráfica ou fluxograma metodológico}
   \label{fig:exemplo_figura}
-  \fonte{Elaborado pelo autor (2026).}
+  % Se a figura for de autoria própria, remova ou comente a linha \fonte abaixo:
+  \fonte{\citet{abdulsalam2015effect}}
 \end{figure}
 
 \section{ESTRUTURA DA DISSERTAÇÃO}

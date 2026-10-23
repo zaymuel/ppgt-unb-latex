@@ -25,7 +25,9 @@
 \usepackage{mathptmx}
 
 \DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png,.gif,.eps}
-\graphicspath{{imagens/}} % Diretório de figuras e gráficos
+% Diretório de figuras e gráficos: crie uma pasta chamada "imagens" na raiz do projeto
+% (ou clique em "New Folder" -> "imagens" no Overleaf) para armazenar suas figuras.
+\graphicspath{{imagens/}}
 
 % Arquivo com lista de regras de hifenização customizadas
 \input{formatacao/hifenizacao}
@@ -170,15 +172,15 @@
   %\include{capitulos-pretextuais/00-resumoestendido}
 
   % SUMÁRIO (ÍNDICE)
-  \pdfbookmark[0]{Sumário}{indice}
+  \pdfbookmark[0]{\contentsname}{indice}
   \indice
 
   % LISTA DE TABELAS
-  \pdfbookmark[0]{Lista de Tabelas}{listatabelas}
+  \pdfbookmark[0]{\listtablename}{listatabelas}
   \listadetabelas
 
   % LISTA DE FIGURAS
-  \pdfbookmark[0]{Lista de Figuras}{listafiguras}
+  \pdfbookmark[0]{\listfigurename}{listafiguras}
   \listadefiguras
 
   % LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES
@@ -186,7 +188,7 @@
   \listadesimbolos
 
   % LISTA DE QUADROS (PPGT)
-  \pdfbookmark[0]{Lista de Quadros}{listaquadros}
+  \pdfbookmark[0]{\listquadroname}{listaquadros}
   \listadequadros
 
   % =======================================================================

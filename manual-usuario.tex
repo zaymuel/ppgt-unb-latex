@@ -5,12 +5,19 @@
 % Pacotes básicos 
 % encoding
 %--------------------------------------
-\usepackage[T1]{fontenc}		% Seleção de códigos de fonte.
-\usepackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
+\usepackage{iftex} % Carrega o pacote que permite detectar qual motor TeX está em uso
+
+\iftutex % Verifica se a compilação está sendo feita por um motor Unicode (XeTeX ou LuaTeX)
+  \usepackage{fontspec} % Carrega o pacote para manipulação de fontes do sistema operacional
+  % Define "EB Garamond" como fonte principal, com números proporcionais e o estilo alternativo ss06
+  \setmainfont{EB Garamond}[Numbers={Proportional},RawFeature={+ss06}]
+\else % Caso a compilação esteja usando o motor tradicional (pdfTeX)
+  \usepackage[T1]{fontenc}      % Configura a codificação da fonte para o padrão europeu T1
+  \usepackage[utf8]{inputenc}       % Define a codificação de entrada como UTF-8 para conversão automática de acentos
+\fi
 %--------------------------------------
 % ----------------------------------------------------------
 % \usepackage{lmodern}			% Usa a fonte Latin Modern	
-\usepackage{fontspec}
 \usepackage{Acorn}
 \usepackage{lettrine}
 
@@ -25,7 +32,6 @@
 % \renewcommand{\LettrineFontHook}{\color{BrickRed}\Typocapsfamily{}}
 \renewcommand{\LettrineFontHook}{\color{BrickRed}\Acornfamily{}}
 \setcounter{DefaultLines}{4}
-\setmainfont{EB Garamond}[Numbers={Proportional},RawFeature={+ss06}]
 
 % \newcommand*\initfamily{\usefont{U}{Acorn}{xl}{n}}
 
@@ -37,7 +43,7 @@
 \usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
 \usepackage{color}		    	% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
-\graphicspath{ {./images/} }      % define diretório raiz para imagens, então é só colocar o nome do arquivo em \includegraphics{nomedoarquivo}
+\graphicspath{ {./imagens/} }      % define diretório raiz para imagens, então é só colocar o nome do arquivo em \includegraphics{nomedoarquivo}
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{ifthen}		    	% para montar condicionais
 \usepackage[brazil]{babel}		% para utilizar termos em português
@@ -107,12 +113,13 @@
 
 \begin{document}
 \maketitle
-% \tableofcontents
+\tableofcontents
+\vspace{0.5cm}
 \ornamento
 
 \section{Introdução: A Transição do Microsoft Word}
 
-\lettrine{O}{} objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O PPGT possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
+\lettrine{O}{} objetivo primário desta base de código é eliminar a dependência de editores visuais como o Microsoft Word. O Programa de Pós-Graduação em Transportes (PPGT) do Departamento de Engenharia Civil e Ambiental da Faculdade de Tecnologia (FT) da Universidade de Brasília (UnB) possui diretrizes tipográficas rigorosas que frequentemente sofrem desconfiguração acidental em processadores de texto convencionais. O \LaTeX \ retira do autor a carga mental de microgerenciar a formatação página por página, permitindo foco total na pesquisa, na matemática e na qualidade do texto.
 
 \subsection{Quando o Orientador Exigir Arquivo Word (.docx): A Conversão Direta}
 
@@ -188,14 +195,14 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \item \textbf{Aspas Simples (\texttt{`...'}):} Para criar aspas simples tipograficamente corretas, utilize uma crase (\verb|`|) para abrir e um apóstrofo simples (\verb|'|) para fechar. O manual do PPGT recomenda o uso de aspas simples para citações dentro de citações, mantendo a consistência tipográfica.
     \item \textbf{Parágrafos e Quebras de Linha:} O \LaTeX \ separa drasticamente a forma como você digita da forma como o documento é impresso. No Word, apertar a tecla \texttt{Enter} quebra a linha imediatamente, mas se você fizer o mesmo no \LaTeX, você será solenemente ignorado e o texto continuará fluindo no mesmo parágrafo no PDF, porque uma única quebra de linha no código-fonte é para critérios de organização do código e não para espaçamento visual no documento final.
 
-    Para iniciar um novo parágrafo e garantir que o recuo da primeira linha seja aplicado corretamente (conforme exigido pelas normas do PPGT), é estritamente necessário \textbf{deixar uma linha em branco no código} (ou seja, apertar \texttt{Enter} duas vezes). Cada bloco de texto separado por uma linha em branco no código será interpretado como um novo parágrafo autônomo.
+    Para iniciar um novo parágrafo e garantir que o espaçamento entre parágrafos seja aplicado corretamente (conforme exigido pelas normas do PPGT), é estritamente necessário \textbf{deixar uma linha em branco no código} (ou seja, apertar \texttt{Enter} duas vezes). Cada bloco de texto separado por uma linha em branco no código será interpretado como um novo parágrafo autônomo.
 
     \begin{atencao}[A Ilusão do Espaçamento e a Quebra Forçada]
     A transição do Word geralmente traz dois vícios de formatação que quebram o documento no LaTeX:
 
     \textbf{1. Apertar Enter várias vezes para criar espaço:} No Word, se você apertar \texttt{Enter} dez vezes, criará um buraco enorme na página. No LaTeX, não importa se você deixou uma ou vinte linhas em branco no código; o compilador entenderá apenas que um novo parágrafo começou e aplicará exatamente o mesmo espaçamento padrão da norma. O motor tipográfico ignora espaços vazios redundantes.
 
-    \textbf{2. O uso indevido do \texttt{\textbackslash\textbackslash}:} Evite usar duas barras invertidas (\texttt{\textbackslash\textbackslash}) no meio de um texto corrido. Elas forçam uma quebra de linha bruta, jogando o texto para baixo sem o recuo semântico do novo parágrafo. O comando \texttt{\textbackslash\textbackslash} não significa ``novo parágrafo'', mas sim ``corte esta linha aqui'', devendo ser reservado para tabelas ou equações matemáticas.
+    \textbf{2. O uso indevido do \texttt{\textbackslash\textbackslash}:} Evite usar duas barras invertidas (\texttt{\textbackslash\textbackslash}) no meio de um texto corrido. Elas forçam uma quebra de linha bruta, jogando o texto para baixo sem o espaçamento semântico do novo parágrafo. O comando \texttt{\textbackslash\textbackslash} não significa ``novo parágrafo'', mas sim ``corte esta linha aqui'', devendo ser reservado para tabelas ou equações matemáticas.
 
     \vspace{0.3cm}
     \textbf{O QUE FAZER ENTÃO?} \\
@@ -208,7 +215,7 @@ Para os iniciantes na linguagem \LaTeX \, alguns comandos fundamentais substitue
     \end{atencao}
 
     \item \textbf{Fórmulas Matemáticas:} Para inserir equações na mesma linha do texto, envolva a expressão com cifrões (ex: \texttt{\$E=mc\textasciicircum 2\$}). Para equações destacadas, centralizadas e numeradas automaticamente, utilize o ambiente \texttt{\textbackslash begin\{equation\}} e \texttt{\textbackslash end\{equation\}}.
-    \item \textbf{O Desafio das Tabelas:} A formatação nativa de tabelas no \LaTeX \ pode ser frustrante inicialmente. A recomendação de ouro é utilizar ferramentas visuais online, como o \href{https://www.tablesgenerator.com/}{TablesGenerator.com}. Você constrói sua tabela graficamente (ou cola do Excel) e o site gera o código \LaTeX \ pronto para ser copiado para o seu documento.
+    \item \textbf{O Desafio das Tabelas e Quadros:} A formatação nativa de tabelas no \LaTeX \ pode ser frustrante inicialmente. A recomendação de ouro é utilizar ferramentas visuais online, como o \href{https://www.tablesgenerator.com/}{TablesGenerator.com}. Você constrói sua tabela graficamente (ou cola do Excel) e o site gera o código \LaTeX \ pronto para ser copiado para o seu documento. Para inserir um \textbf{Quadro} (destinado a conteúdo textual ou conceitual), basta envolver a estrutura com \texttt{\textbackslash begin\{quadro\}} e \texttt{\textbackslash end\{quadro\}} (em vez de \texttt{table}); o template cuidará de numerá-lo separadamente e listá-lo na Lista de Quadros.
 
     \item \textbf{Referências Cruzadas Inteligentes (\texttt{\textbackslash autoref}):} Jamais digite textualmente nomes e números como ``Figura 1'' ou ``Tabela 2''. O \LaTeX \ atualiza a numeração dinamicamente de acordo com a posição dos elementos. Adicione um \texttt{\textbackslash label\{nome-do-marcador\}} imediatamente após criar a legenda da sua figura ou tabela, e cite-a no texto exclusivamente com \\ \texttt{\textbackslash autoref\{nome-do-marcador\}}. O comando \texttt{\textbackslash autoref} identifica automaticamente a natureza do elemento e imprime o prefixo correto com a inicial maiúscula (ex: Figura 1, Tabela 2, Seção 3.1), transformando tudo em um link clicável e evitando inconsistências no texto.
     \item \textbf{Hifenização e Quebra de Palavras:} O motor moderno do \LaTeX \ (com os pacotes \texttt{babel} em português e codificação \texttt{T1}) separa silabicamente de forma automática quase 100\% das palavras da língua portuguesa com acentuação correta. Caso surja alguma palavra estrangeira em inglês, nome de software ou termo composto que quebre incorretamente na margem direita (ou cause aviso de \textit{Overfull \textbackslash hbox}), você dispõe de duas soluções:
@@ -225,15 +232,20 @@ Ao iniciar a redação da sua dissertação, o primeiro passo é preencher os me
 Localize e altere os seguintes comandos de declaração com os seus dados:
 
 \begin{itemize}
-    \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:).
+    \item \textbf{Título do Trabalho:} Utilize \texttt{\textbackslash title\{Seu Título Aqui\}}. Se houver subtítulo, a norma exige que seja separado do título principal por dois pontos (:). \textbf{Aviso crítico de geometria:} O título \textbf{não deve ultrapassar 5 linhas} para não comprometer o alinhamento da caixa geométrica azul da capa (caso precise forçar quebras de linha manuais, utilize \texttt{\textbackslash\textbackslash}).
     \item \textbf{Nome e Contato do Autor:} A lógica de partículas e Ficha Catalográfica exige que o nome seja dividido em \texttt{\textbackslash ultimosobrenomeautor\{...\}} e \texttt{\textbackslash prenomesautor\{...\}}. Preencha também \texttt{\textbackslash autoremail\{...\}} e \texttt{\textbackslash autorendereco\{...\}}.
+    \item \textbf{Código Cutter da BCE:} Acesse \url{https://ficha.bce.unb.br/ficha/}, gere sua ficha catalográfica na Biblioteca Central (BCE/UnB) e preencha o código fornecido no comando \\ \texttt{\textbackslash codigocutter\{XXXXX\}}.
     \item \textbf{Palavras-chave:} Declare os termos indexadores individualmente usando os comandos \\ \texttt{\textbackslash palavrachavei\{...\}} até \texttt{\textbackslash palavrachavevi\{...\}}.
-    \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto para a folha de rosto, invertido para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
-    \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-02} para o dia 2 de outubro de 2026), e o sistema separará dia, mês e ano de forma automática nas páginas iniciais.
+    \item \textbf{Orientador, Coorientador e Banca Examinadora:} Preencha os dados do orientador (nome direto em \texttt{\textbackslash orientadorficha\{...\}} para a folha de rosto, invertido em \texttt{\textbackslash orientadorfichainverso\{Sobrenome, Nome\}} para a ficha catalográfica e formato completo da banca em \texttt{\textbackslash membrodabancai\{...\}}). Caso haja coorientador, basta descomentar o bloco de 4 linhas correspondente (ele é opcional e vem comentado por padrão). Os demais examinadores são configurados em \texttt{\textbackslash membrodabancaii} e \texttt{\textbackslash membrodabancaiii}.
+    \item \textbf{Data da Defesa:} O template possui um extrator automático. Preencha rigorosamente no formato \texttt{\textbackslash date\{AAAA-MM-DD\}} (ex: \texttt{2026-10-23} para o dia 23 de outubro de 2026), e o sistema separará dia, mês por extenso e ano de forma automática nas páginas iniciais.
     \item \textbf{Dados Acadêmicos e Institucionais:} Defina o escopo do documento preenchendo os comandos \texttt{\textbackslash grau\{Mestre\}}, \texttt{\textbackslash area\{Transportes\}}, \texttt{\textbackslash siglaarea\{ENC\}}, \\ \texttt{\textbackslash tipodemonografia\{Dissertação\}} e \texttt{\textbackslash titulacao\{Mestrado\}}.
-    \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{...\}} é opcional, caso haja necessidade.
+    \item \textbf{Número da Publicação:} O campo \texttt{\textbackslash numpublicacao\{...\}} é opcional (fornecido pela secretaria após a defesa; deixe vazio se ainda não o tiver).
     \item \textbf{Regras de Hifenização:} O comando \texttt{\textbackslash input\{formatacao/hifenizacao\}} inclui o arquivo \texttt{formatacao/hifenizacao.tex}, onde você pode adicionar regras de separação silábica para estrangeirismos e termos técnicos incomuns à língua portuguesa.
-    \item \textbf{Seleção de Idioma (Português vs. Inglês) e Resumo Estendido:} Por padrão, o documento é redigido em português. Caso você vá defender sua dissertação em inglês, basta descomentar a linha \texttt{\textbackslash selectlanguage\{english\}} no preâmbulo do \texttt{principal.tex}. O template adaptará automaticamente todos os títulos estruturais (\textit{Chapter}, \textit{Table}, \textit{Figure}, \textit{Contents}, \textit{Appendix}, etc.). Conforme Resolução do CEPE/UnB, pesquisas em língua inglesa devem obrigatoriamente conter um \textbf{Resumo Estendido em Língua Portuguesa} (2 a 5 páginas), bastando descomentar a linha \texttt{\textbackslash include\{capitulos-pretextuais/00-resumoestendido\}} na seção pré-textual (linha 170).
+    \item \textbf{Seleção de Idioma (Português vs. Inglês) e Resumo Estendido:} Por padrão, o documento é redigido em português (\texttt{\textbackslash selectlanguage\{brazilian\}}). Caso você vá redigir sua dissertação em inglês:
+    \begin{enumerate}
+        \item Comente a linha \texttt{\textbackslash selectlanguage\{brazilian\}} e descomente \texttt{\textbackslash selectlanguage\{english\}} no preâmbulo do \texttt{principal.tex} (o template traduzirá títulos de capítulos, tabelas, figuras, apêndices e sumário automaticamente);
+        \item Descomente a linha \texttt{\textbackslash include\{capitulos-pretextuais/00-resumoestendido\}} na seção pré-textual (linha 172), que inclui o \textbf{Resumo Estendido em Língua Portuguesa} (2 a 5 páginas), obrigatório segundo a Resolução do CEPE/UnB para trabalhos em língua estrangeira.
+    \end{enumerate}
 \end{itemize}
 
 \section{Imagens, Citações e Nomenclaturas}
@@ -241,7 +253,7 @@ Localize e altere os seguintes comandos de declaração com os seus dados:
 O template conta com atalhos e pacotes configurados para otimizar o fluxo de trabalho e garantir aderência às normas sem esforço manual:
 
 \begin{itemize}
-    \item \textbf{Diretório de Imagens:} A declaração \texttt{\textbackslash graphicspath\{imagens/\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Assim, basta usar o nome do arquivo (ex: \\ \texttt{\textbackslash includegraphics\{foto.png\}}). 
+    \item \textbf{Diretório de Imagens (\texttt{imagens/}):} A declaração \texttt{\textbackslash graphicspath\{\{imagens/\}\}} no preâmbulo define a pasta raiz para os arquivos gráficos. Como sistemas de controle de versão (Git) não salvam diretórios vazios, \textbf{crie manualmente uma pasta chamada \texttt{imagens}} na raiz do seu projeto (no gerenciador de arquivos do seu computador ou clicando no botão \textbf{New Folder} no painel esquerdo do Overleaf) antes de inserir suas figuras. Assim, basta usar o nome do arquivo no comando (ex: \texttt{\textbackslash includegraphics[width=0.8\textbackslash textwidth]\{foto.png\}}). 
     
     \begin{atencao}[Nomes de Arquivos de Imagem]
     A mesma regra dos arquivos \texttt{.tex} se aplica rigorosamente aqui: jamais utilize espaços, acentos ou cedilha nos nomes das suas imagens. Um arquivo chamado \texttt{grafico fluxo.png} fará a compilação falhar silenciosamente. Renomeie sempre para formatos como \texttt{grafico-fluxo.png}.
@@ -279,11 +291,36 @@ O template conta com atalhos e pacotes configurados para otimizar o fluxo de tra
     \item \textbf{Siglas e Símbolos:} Para gerar as listas pré-textuais, declare os termos ao longo do texto usando o comando \texttt{\textbackslash nomenclature\{<símbolo ou sigla>\}\{<descrição>\}}. O template oferece os atalhos \texttt{\textbackslash simbolo} e \texttt{\textbackslash sigla}. Fique tranquilo: o motor do \LaTeX \ cuidará de organizar todas as entradas em estrita ordem alfabética de forma autônoma durante a compilação.
 \end{itemize}
 
-\section{Estrutura e Inclusão de Capítulos}
+\section{Estrutura do Projeto e Inclusão de Capítulos}
 
-Para manter o código organizado e facilitar a manutenção, o texto da dissertação não é escrito diretamente no arquivo principal. O documento é modularizado, com cada capítulo isolado em seu próprio arquivo \texttt{.tex} dentro da pasta \texttt{capitulos/}.
+Para manter o código organizado e facilitar a manutenção, o texto da dissertação não é escrito diretamente no arquivo principal. O repositório está organizado de forma modular:
 
-No meio do arquivo \texttt{principal.tex}, você encontrará o bloco responsável por unir todas essas partes:
+\begin{itemize}
+    \item \texttt{principal.tex}: Arquivo principal (template para sua dissertação/tese);
+    \item \texttt{manual-usuario.pdf}: Manual completo do usuário e guia de transição Word $\rightarrow$ \LaTeX;
+    \item \texttt{Makefile}: Automação de compilação (\texttt{make}) e limpeza (\texttt{make clean}) via terminal;
+    \item \texttt{.latexmkrc}: Configuração multiplataforma do \texttt{latexmk} para compilação automática de listas (\texttt{makeindex}/\texttt{nomencl});
+    \item \texttt{formatacao/}: Estilos, tipografia e diretrizes visuais:
+    \begin{itemize}
+        \item \texttt{ppgt-unb-format.sty}: Pacote mestre de formatação oficial do PPGT;
+        \item \texttt{hifenizacao.tex}: Regras manuais de separação silábica e termos técnicos;
+        \item \texttt{logotipos/}: Logomarcas oficiais da UnB em PDF vetorial.
+    \end{itemize}
+    \item \texttt{capitulos-pretextuais/}: Elementos pré-textuais da dissertação:
+    \begin{itemize}
+        \item \texttt{00-declaracao\_iag.tex}: Declaração obrigatória de uso de ferramentas de IAG;
+        \item \texttt{00-dedicatoria.tex}: Dedicatória (opcional);
+        \item \texttt{00-agradecimentos.tex}: Agradecimentos (opcional);
+        \item \texttt{00-resumo.tex}: Resumo em língua portuguesa e palavras-chave;
+        \item \texttt{00-abstract.tex}: Abstract em língua inglesa e keywords;
+        \item \texttt{00-resumoestendido.tex}: Resumo estendido em português (obrigatório caso o trabalho seja escrito em inglês).
+    \end{itemize}
+    \item \texttt{capitulos/}: Conteúdo dos capítulos da sua dissertação/tese (\texttt{capitulo1-introducao.tex} até \\ \texttt{capitulo5-conclusao.tex}, além de \texttt{zz-apendices.tex} e \texttt{zz-anexos.tex});
+    \item \texttt{bibliografia/referencias.bib}: Banco de dados de referências no formato BibLaTeX;
+    \item \texttt{imagens/}: Diretório reservado para figuras e gráficos (\textbf{crie esta pasta na raiz do projeto} quando for inserir imagens).
+\end{itemize}
+
+No meio do arquivo \texttt{principal.tex}, você encontrará o bloco responsável por unir os capítulos textuais:
 
 \begin{verbatim}
   \include{capitulos/capitulo1-introducao}
@@ -323,7 +360,7 @@ Assim como o Word precisa do aplicativo instalado no computador para abrir arqui
 
 \subsection{A Rota da Nuvem: Overleaf}
 
-Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{www.overleaf.com}) é o caminho com menor atrito. Trata-se de uma plataforma online que processa tudo nos servidores deles. Não requer instalação local, já possui todos os pacotes pré-carregados e salva seu progresso na nuvem.
+Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{https://www.overleaf.com/}) é o caminho com menor atrito. Trata-se de uma plataforma em nuvem colaborativa que processa tudo nos servidores remotos, sem exigir instalação local (embora sujeita a limites de tempo de compilação nas versões gratuitas).
 
 \subsubsection{Passo a Passo para Carregar o Projeto (.zip) no Overleaf}
 
@@ -335,28 +372,61 @@ Para a esmagadora maioria dos iniciantes, o \textbf{Overleaf} (\url{www.overleaf
     \item \textbf{Verificar Configurações do Menu:} Clique no botão \textbf{Menu} no canto superior esquerdo e confirme:
     \begin{itemize}
         \item \textbf{Compiler:} \texttt{pdfLaTeX};
-        \item \textbf{TeX Live version:} \texttt{2024} (ou a mais recente);
+        \item \textbf{TeX Live version:} \texttt{2026} (ou a mais recente);
         \item \textbf{Main document:} \texttt{principal.tex}.
     \end{itemize}
     \item \textbf{Compilar:} Abra o arquivo \texttt{principal.tex} e pressione o atalho \texttt{Ctrl + Enter} (ou clique no botão verde \textbf{Recompile}). O PDF da sua dissertação será renderizado no painel à direita.
-    \item \textbf{Edição Modular:} Edite seus dados em \texttt{principal.tex} e redija os capítulos dentro da pasta \texttt{capitulos/}. Todas as imagens devem ser inseridas na pasta \texttt{imagens/}.
+    \item \textbf{Edição Modular e Pasta de Imagens:} Edite seus dados em \texttt{principal.tex} e redija os capítulos dentro da pasta \texttt{capitulos/}. Quando for adicionar figuras ou gráficos, \textbf{crie a pasta \texttt{imagens}} na raiz do projeto clicando no ícone \textbf{New Folder} no painel lateral esquerdo do Overleaf e carregue seus arquivos de imagem dentro dela.
 \end{enumerate}
 
 \begin{atencao}[Atenção aos arquivos auxiliares no Overleaf]
 Se desejar limpar a árvore de arquivos no Overleaf, você pode apagar o arquivo \texttt{Makefile} (que é utilizado apenas em terminais locais de Linux/macOS). \textbf{Contudo, jamais apague o arquivo \texttt{.latexmkrc}}, pois o Overleaf o utiliza internamente para processar e gerar a Lista de Símbolos, Nomenclatura e Siglas (\texttt{nomencl}) de forma automática.
 \end{atencao}
 
-\subsection{A Rota Local: MiKTeX, Perl e IDEs (Windows)}
+\subsection{A Rota Local: Windows, Linux, macOS e IDEs}
 
-Para pesquisadores que preferem trabalhar \textit{offline}, precisam compilar documentos imensos mais rapidamente ou desejam usar o controle de versão do GitHub de forma nativa, é necessário preparar o ambiente local no Windows. Isso exige três ferramentas trabalhando em conjunto:
+Para pesquisadores que preferem trabalhar \textit{offline}, precisam compilar documentos imensos mais rapidamente ou desejam usar o controle de versão do GitHub de forma nativa, é necessário preparar o ambiente local com uma distribuição \LaTeX \ e um editor de código.
+
+\subsubsection{Distribuição \LaTeX \ por Sistema Operacional}
 
 \begin{itemize}
-    \item \textbf{O Motor Tipográfico (MiKTeX):} O núcleo do sistema. O MiKTeX é a distribuição \LaTeX \ padrão para Windows. Ele traduz os comandos matemáticos e textuais para a tela. Sua maior vantagem é a instalação de pacotes sob demanda (\textit{on-the-fly}): se o seu código pedir um pacote novo, o MiKTeX o baixa da internet automaticamente durante a compilação.
-    \item \textbf{A Dependência Oculta (Perl):} O \LaTeX \ depende de scripts externos para gerenciar tarefas pesadas, como compilações contínuas (\texttt{latexmk}), processamento avançado de bibliografias e índices. No Windows, o motor não consegue rodar essas ferramentas nativamente. É estritamente necessário instalar um interpretador, como o \textbf{Strawberry Perl}, para evitar que a compilação trave de forma silenciosa e inexplicável.
-    \item \textbf{O Editor de Código (IDE):} Você precisa de um programa desenhado para escrever código confortavelmente. O \textbf{Visual Studio Code (VS Code)} é uma das opções mais poderosas da atualidade; instalando a extensão \textbf{LaTeX Workshop}, você transforma o VS Code em uma máquina de escrever acadêmica com autocompletar de comandos, realce de sintaxe e pré-visualização sincronizada do PDF. Outra alternativa robusta e pronta para uso é o \textbf{TeXstudio}, um software independente inteiramente dedicado ao LaTeX.
+    \item \textbf{No Windows:}
+    \begin{itemize}
+        \item \textbf{O Motor Tipográfico (MiKTeX):} Baixe e instale o MiKTeX (\url{http://miktex.org}), a distribuição \LaTeX \ padrão para Windows com instalação automática de pacotes sob demanda (\textit{on-the-fly}).
+        \item \textbf{A Dependência Oculta (Strawberry Perl):} O \LaTeX \ depende de scripts externos para gerenciar compilações contínuas (\texttt{latexmk}). No Windows, instale o \textbf{Strawberry Perl} (\url{https://strawberryperl.com/}) para evitar que a compilação via \texttt{latexmk} trave.
+    \end{itemize}
+    \item \textbf{No Linux:} Instale a distribuição completa do TeX Live via gerenciador de pacotes do seu terminal:
+    \begin{itemize}
+        \item \textbf{Debian / Ubuntu / Mint:} \texttt{sudo apt-get install texlive-full}
+        \item \textbf{Fedora / RHEL:} \texttt{sudo dnf install texlive-scheme-full}
+        \item \textbf{Arch Linux:} \texttt{sudo pacman -S texlive-meta}
+    \end{itemize}
+    \item \textbf{No macOS:} Baixe e instale a distribuição completa \textbf{MacTeX} (\url{https://tug.org/mactex/}).
 \end{itemize}
 
-Após instalar essas três ferramentas, você estará pronto para compilar seus documentos localmente no Windows. Lembre-se de sempre testar a compilação com o arquivo \texttt{principal.tex} para garantir que todos os pacotes e scripts estão funcionando corretamente.
+\subsubsection{O Editor de Código (IDE)}
+
+Você precisa de um programa desenhado para escrever código confortavelmente (qualquer editor compatível com codificação UTF-8):
+\begin{itemize}
+    \item \textbf{Visual Studio Code (Recomendado):} Disponível em \url{https://code.visualstudio.com/}. Instalando a extensão oficial \textbf{LaTeX Workshop}, você transforma o VS Code em uma estação de escrita acadêmica leve e moderna, com autocompletar de comandos, realce de sintaxe e pré-visualização sincronizada do PDF.
+    \item \textbf{TeXstudio:} Disponível em \url{http://www.texstudio.org}. É uma alternativa dedicada e pronta para uso, com visualizador de PDF integrado.
+\end{itemize}
+
+\subsubsection{Opções de Compilação Local}
+
+\begin{itemize}
+    \item \textbf{Opção A --- Pelo Editor (VS Code / TeXstudio):} Basta abrir o arquivo \texttt{principal.tex} e acionar o comando padrão de compilação do seu editor. O arquivo \texttt{.latexmkrc} na raiz cuidará da compilação de bibliografia, índices e siglas automaticamente.
+    \item \textbf{Opção B --- Pelo Terminal com \texttt{latexmk}:}
+\begin{verbatim}
+latexmk -pdf principal.tex
+\end{verbatim}
+    \item \textbf{Opção C --- Via \texttt{Makefile} (Linux / macOS):}
+\begin{verbatim}
+make        # Compila principal.tex e gera principal.pdf
+make clean  # Limpa arquivos temporários e auxiliares
+\end{verbatim}
+    \item \textbf{Opção D --- Compilação Manual Sequencial (100\% sem Perl no Windows):} Veja o bloco detalhado mais abaixo.
+\end{itemize}
 
 \begin{atencao}[Regra de Ouro no VS Code: Clicar no Documento antes de Compilar]
 Ao utilizar o \textbf{Visual Studio Code} com a extensão \textbf{LaTeX Workshop}, há um detalhe operacional fundamental que confunde muitos iniciantes: \textbf{o cursor do teclado/mouse precisa estar ativo dentro do documento \texttt{.tex}} antes de acionar a compilação (seja pelo atalho \texttt{Ctrl+Alt+B}, pelo botão de \textit{Build LaTeX project} na aba lateral do LaTeX ou no menu da barra de status).
@@ -431,6 +501,15 @@ Uma das primeiras inclinações ao modernizar um documento acadêmico brasileiro
 \begin{itemize}
     \item \textbf{Divergência Normativa Explícita:} O manual de referências do programa é taxativo ao afirmar que estas normas não seguem o padrão definido pela Associação Brasileira de Normas Técnicas (ABNT). A simples inclusão do \texttt{abntex2} envenenaria o documento com padrões estruturais proibidos pela secretaria do programa, que exige formatações singulares como a ausência de ponto final após o ano e recuo de 1,25 cm nas referências.
     \item \textbf{Legado e Controle de Código:} Mesmo se adotássemos o \texttt{abntex2}, teríamos que modificar profundamente o seu comportamento padrão para forçar o enquadramento nas regras do PPGT. Alterar o núcleo de um pacote externo é tecnicamente custoso e extremamente frágil, pois qualquer atualização futura do \texttt{abntex2} poderia sobrescrever nossas customizações e quebrar a formatação da noite para o dia. Manter nossa própria camada de estilo \\ (\texttt{formatacao/ppgt-unb-format.sty} com BibLaTeX e Biber) isola o documento dessas instabilidades e garante controle total sobre regras críticas.
+\end{itemize}
+
+\section{Autoria, Histórico e Licença}
+
+\begin{itemize}
+    \item \textbf{Autor original da base FT-UnB:} \href{https://lara.unb.br/~gaborges/}{Prof. D.Sc. Geovany Araújo Borges (UnB)}.
+    \item \textbf{Colaboradores históricos:} Nathalie Pinheiro, André Calmon, Renan Utida, \href{https://github.com/manoelcampos}{Manoel Campos da Silva Filho} e Gabriel Amaro Baxto.
+    \item \textbf{Adequação às Normas PPGT, Motor Biber e Modelo Dual (2026):} \href{https://github.com/zaymuel}{Samuel Seixas Martin}.
+    \item \textbf{Licença:} \href{https://creativecommons.org/licenses/by-nc/4.0/}{Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)}.
 \end{itemize}
 
 \end{document}

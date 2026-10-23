@@ -32,6 +32,7 @@ Você pode utilizar qualquer editor compatível com codificação UTF-8:
    - Arraste e solte o arquivo `.zip` para carregar o projeto.
    - No menu lateral superior esquerdo (**Menu**), certifique-se de que o **Compiler** está definido como `pdfLaTeX`, **TeX Live version** como `2026` (ou mais recente) e **Main document** como `principal.tex`.
    - Clique em **Recompile** (ou pressione `Ctrl + Enter`).
+   - Quando for inserir figuras ou gráficos no trabalho, crie a pasta **`imagens`** na raiz do projeto (clicando no ícone **New Folder** no painel lateral esquerdo do Overleaf) e envie seus arquivos de imagem para dentro dela.
    - *Nota sobre arquivos extras:* Você pode excluir o arquivo `Makefile` no Overleaf se desejar, mas **mantenha o `.latexmkrc`**, pois o Overleaf precisa dele para compilar a Lista de Símbolos e Siglas automaticamente.
 2. **Visual Studio Code (Recomendado)**: Com a extensão oficial **LaTeX Workshop**. Para usuários mais experientes, que toleram a configuração manual de compilação e preferem um ambiente leve e moderno ([code.visualstudio.com](https://code.visualstudio.com/)).  
    - **Dica**: Instale a extensão **LaTeX Workshop** e configure o `latexmk` como compilador padrão. Certifique-se de que o cursor do mouse esteja clicado dentro do arquivo `.tex` base (nesse caso, o `principal.tex`) do atual projeto antes de compilar.
@@ -97,7 +98,7 @@ pdflatex -interaction=nonstopmode principal.tex
 
 ---
 
-## 5. Conversão Direta de PDF para Word (.docx)
+## 4. Conversão Direta de PDF para Word (.docx)
 
 Caso seu orientador solicite o documento em formato editável do Microsoft Word:
 
@@ -107,7 +108,7 @@ Caso seu orientador solicite o documento em formato editável do Microsoft Word:
 
 ---
 
-## 6. Estrutura do Projeto
+## 5. Estrutura do Projeto
 
 O repositório está organizado de forma modular para manter a raiz limpa:
 
@@ -137,19 +138,22 @@ O repositório está organizado de forma modular para manter a raiz limpa:
 │   └── 00-resumoestendido.tex     # Resumo estendido em português (obrigatório se o texto for em inglês)
 ├── bibliografia/
 │   └── referencias.bib            # Banco de dados de referências no formato BibLaTeX
-└── imagens/                       # Diretório reservado para imagens, figuras e gráficos
+└── imagens/                       # Diretório para figuras e gráficos (crie esta pasta na raiz)
 ```
+
+> [!TIP]
+> **Criação da pasta de imagens (`imagens/`):** Como sistemas de controle de versão (Git) não salvam pastas vazias, **crie manualmente uma pasta chamada `imagens`** na raiz do seu projeto (no gerenciador de arquivos do seu sistema ou clicando em **New Folder** no Overleaf) quando for adicionar figuras e gráficos. O comando `\graphicspath{{imagens/}}` já está configurado no `principal.tex`.
 
 ---
 
-## 7. Configuração Inicial dos Metadados
+## 6. Configuração Inicial dos Metadados
 
 No preâmbulo de `principal.tex`, preencha as variáveis institucionais:
 
 - **Idioma do Trabalho (Português vs. Inglês)**:  
   Por padrão, o template está em português (`\selectlanguage{brazilian}`). Caso vá redigir sua pesquisa em inglês:
   1. Comente `\selectlanguage{brazilian}` e descomente `\selectlanguage{english}` no preâmbulo de `principal.tex` (o template traduzirá títulos de capítulos, tabelas, figuras e sumário automaticamente);
-  2. Descomente `\include{capitulos-pretextuais/00-resumoestendido}` na seção pré-textual (linha 170), que é uma seção obrigatória pela Resolução CEPE/UnB para dissertações em inglês.
+  2. Descomente `\include{capitulos-pretextuais/00-resumoestendido}` na seção pré-textual (linha 172), que é uma seção obrigatória pela Resolução CEPE/UnB para dissertações em inglês.
 - **Título do Trabalho**: `\title{Seu Título Aqui}`.  
   *Aviso crítico:* O título **não deve ultrapassar 5 linhas** para não comprometer a caixa geométrica da capa.
 - **Autor e Partículas**:
@@ -159,7 +163,7 @@ No preâmbulo de `principal.tex`, preencha as variáveis institucionais:
   \prenomesautor{Nome e Outros Sobrenomes}
   ```
 
-- **Código Cutter da BCE**: Acesse [https://ficha.bce.unb.br/ficha/](https://ficha.bce.unb.br/ficha/), gere sua ficha na BCE e preencha o código fornecido (ex.: `\codigocutter{M379d}`).
+- **Código Cutter da BCE**: Acesse [https://ficha.bce.unb.br/ficha/](https://ficha.bce.unb.br/ficha/), gere sua ficha na BCE e preencha o código fornecido (ex.: `\codigocutter{XXXXX}`).
 - **Data da Defesa**: Preencha estritamente no formato `\date{AAAA-MM-DD}` (ex: `\date{2026-10-23}`). O template extrai o dia, mês por extenso e ano automaticamente.
 - **Orientador e Coorientador**:
   - `\orientadorficha{Nome}` e `\orientadorfichainverso{Sobrenome, Nome}`
@@ -167,7 +171,7 @@ No preâmbulo de `principal.tex`, preencha as variáveis institucionais:
 
 ---
 
-## 8. Citações e Referências
+## 7. Citações e Referências
 
 O template adota o sistema **Autor-Data** configurado em conformidade com as exigências do PPGT:
 
@@ -181,7 +185,7 @@ Para mais informações, consulte o guia completo no arquivo `manual-usuario.tex
 
 ---
 
-## 9. Autoria e Licença
+## 8. Autoria e Licença
 
 - **Autor original da base FT-UnB**: [Prof. D.Sc. Geovany Araújo Borges (UnB)](https://lara.unb.br/~gaborges/).
 - **Colaboradores históricos**: Nathalie Pinheiro, André Calmon, Renan Utida, [Manoel Campos da Silva Filho](https://github.com/manoelcampos), Gabriel Amaro Baxto.

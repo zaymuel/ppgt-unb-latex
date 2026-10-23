@@ -1,5 +1,6 @@
 "templates em outros formatos/**" export-ignore
-README.adoc export-ignore
-tests.tex export-ignore
+normas/** export-ignore
+comparativo.tex export-ignore
+capitulos-comparativo/** export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore

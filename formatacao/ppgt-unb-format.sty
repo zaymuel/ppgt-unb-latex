@@ -91,11 +91,12 @@
 \RequirePackage{caption}
 \captionsetup{font=small, labelfont=bf, justification=centering}
 
-% Comando obrigatório para indicação de fonte em elementos ilustrativos:
+% Comando para indicação de fonte em elementos ilustrativos (bilingue: Fonte / Source):
 % Fonte tamanho 10pt (footnotesize), centralizada, espaçada 6pt abaixo do elemento.
+\def\fontename{Fonte}
 \newcommand{\fonte}[1]{%
   \par\vspace{6pt}%
-  {\centering\footnotesize Fonte: #1\par}%
+  {\centering\footnotesize \fontename: #1\par}%
 }
 
 % Ambiente flutuante personalizado para "Quadros" (PPGT):
@@ -1010,8 +1011,10 @@
   \@inanexosfalse
   \iflanguage{english}{%
     \def\appendixname{APPENDIX}%
+    \gdef\Appendixautorefname{Appendix}%
   }{%
     \def\appendixname{APÊNDICE}%
+    \gdef\Appendixautorefname{Apêndice}%
   }%
 }
 
@@ -1022,9 +1025,11 @@
   \iflanguage{english}{%
     \def\appendixname{ANNEX}%
     \gdef\@chapapp{ANNEX}%
+    \gdef\Appendixautorefname{Annex}%
   }{%
     \def\appendixname{ANEXO}%
     \gdef\@chapapp{ANEXO}%
+    \gdef\Appendixautorefname{Anexo}%
   }%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
@@ -1145,8 +1150,6 @@
  \newpage
  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 
-\RequirePackage{listings}
-
 % =========================================================================
 % CONFIGURAÇÃO DINÂMICA DE IDIOMAS (PORTUGUÊS / INGLÊS) VIA BABEL
 % =========================================================================
@@ -1164,6 +1167,17 @@
   \def\appendixname{APÊNDICE}%
   \def\listquadroname{LISTA DE QUADROS}%
   \def\quadroname{Quadro}%
+  \def\fontename{Fonte}%
+  % Prefixos para referências cruzadas (\autoref) com inicial maiúscula (PPGT):
+  \def\chapterautorefname{Capítulo}%
+  \def\sectionautorefname{Seção}%
+  \def\subsectionautorefname{Subseção}%
+  \def\subsubsectionautorefname{Item}%
+  \def\figureautorefname{Figura}%
+  \def\tableautorefname{Tabela}%
+  \def\quadroautorefname{Quadro}%
+  \def\equationautorefname{Equação}%
+  \def\Appendixautorefname{Apêndice}%
 }
 
 \addto\captionsenglish{%
@@ -1180,6 +1194,17 @@
   \def\appendixname{APPENDIX}%
   \def\listquadroname{LIST OF CHARTS}%
   \def\quadroname{Chart}%
+  \def\fontename{Source}%
+  % Prefixos para referências cruzadas (\autoref) em inglês:
+  \def\chapterautorefname{Chapter}%
+  \def\sectionautorefname{Section}%
+  \def\subsectionautorefname{Subsection}%
+  \def\subsubsectionautorefname{Item}%
+  \def\figureautorefname{Figure}%
+  \def\tableautorefname{Table}%
+  \def\quadroautorefname{Chart}%
+  \def\equationautorefname{Equation}%
+  \def\Appendixautorefname{Appendix}%
 }
 
 % Ativação inicial conforme o idioma selecionado no preâmbulo:
@@ -1313,11 +1338,7 @@
 	\fi
 	\setcounter{secnumdepth}{3} % Numeração de seções no texto até nível 3
 	\setcounter{tocdepth}{2}    % Profundidade do Sumário até nível 2 (PPGT)
-	\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}
-	\@ifpackageloaded{babel}{%
-		\addto\captionsbrazil{\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}}%
-		\addto\captionsbrazilian{\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}}%
-	}{}%
+	\iflanguage{english}{\captionsenglish}{\captionsbrazilian}%
 	\pagestyle{empty}		
 	
 	\capaprincipal

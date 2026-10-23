@@ -19,7 +19,7 @@
 \usepackage{mathptmx}
 
 \DeclareGraphicsExtensions{.jpg,.pdf,.mps,.png,.gif,.eps}
-\graphicspath{imagens} % Define diretório de imagens
+\graphicspath{{imagens/}} % Define diretório de imagens
 
 % Arquivo com lista de hifenização correta de algumas palavras.
 % Defina novas palavras no arquivo à medida que verificar que a hifenização automática
@@ -44,7 +44,7 @@
 % \author{NOME DO AUTOR} será gerado automaticamente = prenomes + último sobrenome
 
 % Substitua pelo código gerado pelo sistema da biblioteca, em https://ficha.bce.unb.br/ficha/
-\codigocutter{M379d} 
+\codigocutter{XXXXX} 
 
 % Caso haja mais de um autor ou queira quebrar linha, use \\ :
 % \author{PRIMEIRO AUTOR \\ SEGUNDO AUTOR}
@@ -94,7 +94,7 @@
 % --------------------------------------------------------------------------------------------------
 
 % ------------------------------------------------------------------------
-% GUIA RÁPIDO DE CITAÇÕES (PACOTE NATBIB)
+% GUIA RÁPIDO DE CITAÇÕES (BIBER / BIBLATEX)
 % ------------------------------------------------------------------------
 % Use \citet{chave} para citações TEXTUAIS (citação indireta ou integrada). 
 % O autor faz parte da frase e apenas o ano fica entre parênteses.
@@ -162,15 +162,15 @@
   %\include{capitulos-pretextuais/00-resumoestendido}
 
   % ÍNDICE (sumário)
-  \pdfbookmark[0]{Sumário}{indice}
+  \pdfbookmark[0]{\contentsname}{indice}
   \indice
 
   % LISTA DE TABELAS
-  \pdfbookmark[0]{Lista de Tabelas}{listatabelas}
+  \pdfbookmark[0]{\listtablename}{listatabelas}
   \listadetabelas
 
   % LISTA DE FIGURAS
-  \pdfbookmark[0]{Lista de Figuras}{listafiguras}
+  \pdfbookmark[0]{\listfigurename}{listafiguras}
   \listadefiguras
 
   % LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES
@@ -179,7 +179,7 @@
   \listadesimbolos
 
   % LISTA DE QUADROS (PPGT)
-  \pdfbookmark[0]{Lista de Quadros}{listaquadros}
+  \pdfbookmark[0]{\listquadroname}{listaquadros}
   \listadequadros
 
   \mainmatter % Inicia a numeração normal cardinal
@@ -204,7 +204,7 @@
 
   % Inclui todas as referências no arquivo .bib, mesmo que não sejam citadas no texto
   \nocite{*}
-  % Impressão da Bibliografia gerenciada pelo biblatex / biber no ft2unb.sty
+  % Impressão da Bibliografia gerenciada pelo biblatex / biber no ppgt-unb-format.sty
   \printbibliography[heading=ppgt]
 
 
