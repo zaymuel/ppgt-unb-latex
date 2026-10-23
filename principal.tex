@@ -3,9 +3,20 @@
 % =========================================================================
 % CONFIGURAÇÕES REGIONAIS E TIPOGRÁFICAS
 % =========================================================================
-\usepackage[brazilian]{babel}
+% Suporte a múltiplos idiomas no babel (o último da lista é o ativo por padrão):
+\usepackage[english,brazilian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+
+% =========================================================================
+% SELEÇÃO DO IDIOMA DA DISSERTAÇÃO OU TESE:
+% - Por padrão, o documento é redigido em português (brazilian).
+% - Caso sua dissertação/tese seja redigida integralmente em inglês:
+%     1. Comente a linha \selectlanguage{brazilian} e descomente \selectlanguage{english};
+%     2. Descomente a inclusão do Resumo Estendido na seção pré-textual (linha 170).
+% =========================================================================
+\selectlanguage{brazilian}
+%\selectlanguage{english}
 
 % Pacote de formatação oficial do PPGT / FT / UnB (Biber + BibLaTeX)
 \usepackage{formatacao/ppgt-unb-format}
@@ -153,6 +164,10 @@
 
   % ABSTRACT EM INGLÊS (Obrigatório - pág. viii)
   \include{capitulos-pretextuais/00-abstract}
+
+  % RESUMO ESTENDIDO EM PORTUGUÊS (OBRIGATÓRIO SE A DISSERTAÇÃO FOR EM INGLÊS)
+  % Segundo normas da UnB, caso redija o trabalho em inglês, descomente a linha abaixo:
+  %\include{capitulos-pretextuais/00-resumoestendido}
 
   % SUMÁRIO (ÍNDICE)
   \pdfbookmark[0]{Sumário}{indice}

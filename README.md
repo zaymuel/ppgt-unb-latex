@@ -149,7 +149,7 @@ No preâmbulo de `principal.tex`, preencha as variáveis institucionais:
 - **Idioma do Trabalho (Português vs. Inglês)**:  
   Por padrão, o template está em português (`\selectlanguage{brazilian}`). Caso vá redigir sua pesquisa em inglês:
   1. Comente `\selectlanguage{brazilian}` e descomente `\selectlanguage{english}` no preâmbulo de `principal.tex` (o template traduzirá títulos de capítulos, tabelas, figuras e sumário automaticamente);
-  2. Descomente `\include{capitulos-pretextuais/00-resumoestendido}` na seção pré-textual (obrigatório pela Resolução CEPE/UnB para dissertações em inglês).
+  2. Descomente `\include{capitulos-pretextuais/00-resumoestendido}` na seção pré-textual (linha 170), que é uma seção obrigatória pela Resolução CEPE/UnB para dissertações em inglês.
 - **Título do Trabalho**: `\title{Seu Título Aqui}`.  
   *Aviso crítico:* O título **não deve ultrapassar 5 linhas** para não comprometer a caixa geométrica da capa.
 - **Autor e Partículas**:

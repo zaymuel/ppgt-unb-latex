@@ -3,7 +3,9 @@
 % \usepackage[english,brazil]{babel}
 % Define regra de gramática para separar sílabas {babel}
 % e altera os títulos (como chapters, sections, references) para português
-\usepackage[brazilian]{babel}
+\usepackage[english,brazilian]{babel}
+\selectlanguage{brazilian}
+%\selectlanguage{english}
 
 % Define uso de caracteres acentuados no PDF gerado
 % e permite copiar corretamente o texto do PDF.
@@ -156,6 +158,8 @@
   \include{capitulos-pretextuais/00-resumo}
   % ABSTRACT (pág. viii)
   \include{capitulos-pretextuais/00-abstract}
+  % RESUMO ESTENDIDO EM PORTUGUÊS (OBRIGATÓRIO SE A DISSERTAÇÃO FOR EM INGLÊS)
+  %\include{capitulos-pretextuais/00-resumoestendido}
 
   % ÍNDICE (sumário)
   \pdfbookmark[0]{Sumário}{indice}

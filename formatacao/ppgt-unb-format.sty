@@ -1008,17 +1008,26 @@
   \ft@orig@appendix
   \@inappendixtrue
   \@inanexosfalse
-  \renewcommand{\appendixname}{APÊNDICE}%
+  \iflanguage{english}{%
+    \def\appendixname{APPENDIX}%
+  }{%
+    \def\appendixname{APÊNDICE}%
+  }%
 }
 
 \newcommand{\anexos}{%
   \clearpage
   \@inanexostrue
   \@inappendixfalse
-  \renewcommand{\appendixname}{ANEXO}%
+  \iflanguage{english}{%
+    \def\appendixname{ANNEX}%
+    \gdef\@chapapp{ANNEX}%
+  }{%
+    \def\appendixname{ANEXO}%
+    \gdef\@chapapp{ANEXO}%
+  }%
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
-  \gdef\@chapapp{ANEXO}%
   \gdef\thechapter{\Alph{chapter}}%
   \renewcommand{\theHchapter}{anexo.\Alph{chapter}}%
 }
@@ -1047,13 +1056,11 @@
 \renewcommand*\l@subsubsection{\@dottedtocline{3}{1.5em}{3.6em}}
 
 \newcommand{\indice}{
-	\renewcommand{\contentsname}{ÍNDICE}
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\mdseries\scshape\tableofcontents}
 }
 
 % Lista de Figuras:
 \newcommand{\listadefiguras}{
-	\renewcommand{\listfigurename}{LISTA DE FIGURAS}
 	\begingroup
 	\makeatletter
 	\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{6.5em}}
@@ -1066,7 +1073,6 @@
 
 % Lista de Códigos fonte (por Manoel Campos):
 \newcommand{\listadecodigosfonte}{
-	\renewcommand{\lstlistlistingname}{LISTA DE CÓDIGOS FONTE}
 	\begingroup
 	\makeatletter
 	\renewcommand*\l@lstlisting{\@dottedtocline{1}{1.5em}{6.5em}}
@@ -1079,7 +1085,6 @@
 
 % Lista de Tabelas:
 \newcommand{\listadetabelas}{
-	\renewcommand{\listtablename}{LISTA DE TABELAS}
 	\begingroup
 	\makeatletter
 	\renewcommand*\l@table{\@dottedtocline{1}{1.5em}{6.5em}}
@@ -1103,16 +1108,14 @@
 	\makeatletter
 	\renewcommand*\l@quadro{\@dottedtocline{1}{1.5em}{6.5em}}
 	\let\oldnumberline\numberline
-	\renewcommand{\numberline}[1]{\oldnumberline{Quadro~##1 \textendash}}
+	\renewcommand{\numberline}[1]{\oldnumberline{\quadroname~##1 \textendash}}
 	\makeatother
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\listofquadros}
 	\endgroup
 }
 
 % Lista de símbolos, nomenclatura e abreviações (PPGT):
-\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}
 \newcommand{\listadesimbolos}[1][2.5cm]{%
-	\renewcommand{\nomname}{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}%
 	\pdfbookmark[0]{\nomname}{nomenclatura}%
 	{\renewcommand{\@dotsep}{0.5}\parskip=0pt\printnomenclature[#1]}%
 }
@@ -1142,15 +1145,45 @@
  \newpage
  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 
-% Nomes em português para elementos
-\renewcommand\figurename{Figura}
-\renewcommand\tablename{Tabela}
+\RequirePackage{listings}
 
-\RequirePackage{listings}  
-\renewcommand\lstlistingname{Listagem}
-\renewcommand{\chaptername}{Capítulo}
-\renewcommand{\nomname}{LISTA DE TERMOS E SIGLAS}
-\renewcommand{\bibname}{REFERÊNCIAS BIBLIOGRÁFICAS}
+% =========================================================================
+% CONFIGURAÇÃO DINÂMICA DE IDIOMAS (PORTUGUÊS / INGLÊS) VIA BABEL
+% =========================================================================
+\addto\captionsbrazilian{%
+  \def\contentsname{ÍNDICE}%
+  \def\listfigurename{LISTA DE FIGURAS}%
+  \def\listtablename{LISTA DE TABELAS}%
+  \def\lstlistlistingname{LISTA DE CÓDIGOS FONTE}%
+  \def\nomname{LISTA DE SÍMBOLOS, NOMENCLATURA E ABREVIAÇÕES}%
+  \def\figurename{Figura}%
+  \def\tablename{Tabela}%
+  \def\lstlistingname{Listagem}%
+  \def\chaptername{Capítulo}%
+  \def\bibname{REFERÊNCIAS BIBLIOGRÁFICAS}%
+  \def\appendixname{APÊNDICE}%
+  \def\listquadroname{LISTA DE QUADROS}%
+  \def\quadroname{Quadro}%
+}
+
+\addto\captionsenglish{%
+  \def\contentsname{CONTENTS}%
+  \def\listfigurename{LIST OF FIGURES}%
+  \def\listtablename{LIST OF TABLES}%
+  \def\lstlistlistingname{LIST OF SOURCE CODES}%
+  \def\nomname{LIST OF SYMBOLS, NOMENCLATURE AND ABBREVIATIONS}%
+  \def\figurename{Figure}%
+  \def\tablename{Table}%
+  \def\lstlistingname{Listing}%
+  \def\chaptername{Chapter}%
+  \def\bibname{BIBLIOGRAPHIC REFERENCES}%
+  \def\appendixname{APPENDIX}%
+  \def\listquadroname{LIST OF CHARTS}%
+  \def\quadroname{Chart}%
+}
+
+% Ativação inicial conforme o idioma selecionado no preâmbulo:
+\iflanguage{english}{\captionsenglish}{\captionsbrazilian}
 
 % =========================================================================
 % SEÇÃO 10: FORMATAÇÃO DE CAPÍTULOS E SEÇÕES (NORMAS PPGT)
