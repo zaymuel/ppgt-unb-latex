@@ -24,3 +24,51 @@ Apresente tabelas com o total de acidentes.
 \label{apendice:teste_t}
 
 Apresente os resultados detalhados do teste estatístico.
+
+\chapter{BATERIA DE TESTES: TRATAMENTO DE NOMES COMPLEXOS}
+\label{apendice:teste_nomes}
+
+Este apêndice documenta a bateria de testes automatizados para validação do motor de formatação de nomes de autores, extração de iniciais e tratamento de partículas conectivas (nacionais e estrangeiras) conforme implementado no pacote de formatação.
+
+\begingroup
+\newcommand{\testanome}[2]{%
+  \begingroup
+    \ultimosobrenomeautor{#1}%
+    \prenomesautor{#2}%
+    \noindent\textbf{Entrada:} \texttt{\textbackslash prenomesautor\{#2\}} e \texttt{\textbackslash ultimosobrenomeautor\{#1\}} \\
+    \textbf{Cessão de Direitos (Completo):} \nomecompletoautor \\
+    \textbf{Ficha Catalográfica:} \autorreferenciacatalografica \\
+    \textbf{Referência da Dissertação:} \autorreferenciabibliografica \par
+    \vspace{0.15cm}\hrule\vspace{0.3cm}
+  \endgroup
+}
+
+\section*{Casos de Teste Avaliados}
+
+% Teste 1: Padrão brasileiro com Grau de Parentesco
+\noindent\textbf{Teste 1: Padrão brasileiro com Grau de Parentesco}\par\vspace{0.1cm}
+\testanome{Silva Júnior}{José Augusto da}
+
+% Teste 2: Tamanho extremo com múltiplas partículas
+\noindent\textbf{Teste 2: Tamanho extremo com múltiplas partículas}\par\vspace{0.1cm}
+\testanome{Bragança}{Pedro de Alcântara Francisco Antônio João Carlos Xavier de Paula Miguel Rafael Joaquim José Gonzaga Pascoal Cipriano Serafim de}
+
+% Teste 3: Hífen (O motor extrai o 'J' de Jean-Jacques corretamente)
+\noindent\textbf{Teste 3: Prenome composto com hífen}\par\vspace{0.1cm}
+\testanome{Rousseau}{Jean-Jacques}
+
+% Teste 4: Partícula e Sobrenome duplo hífen
+\noindent\textbf{Teste 4: Partícula e sobrenome duplo composto}\par\vspace{0.1cm}
+\testanome{García-Márquez}{Gabriel José de la Concordia}
+
+% Teste 5: Partículas Germânicas e Holandesas (van, der, von)
+\noindent\textbf{Teste 5: Partículas germânicas e holandesas (\textit{van}, \textit{der}, \textit{von})}\par\vspace{0.1cm}
+\testanome{Gassen}{Win van der}
+\testanome{Helmholtz}{Hermann von}
+
+% Teste 6: Partículas Italianas e Espanholas (di, y)
+\noindent\textbf{Teste 6: Partículas italianas e espanholas (\textit{di}, \textit{y})}\par\vspace{0.1cm}
+\testanome{Vinci}{Leonardo di ser Piero}
+\testanome{Cervantes}{Miguel de Cervantes y Saavedra}
+
+\endgroup
